@@ -70,7 +70,7 @@ npm run build
 
 
 
-## 🎮 Usage
+## Usage
 
 1. Click the **Shield Icon** in your toolbar to open the quick popup.
 2. Type a URL pattern (e.g., `twitter.com`, `youtube.com/shorts`).
