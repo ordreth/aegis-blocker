@@ -88,7 +88,3 @@ Right now, Aegis relies on my own willpower not to disable it. In the future, I 
 ## License
 
 This project is open-source. Feel free to fork it, modify it, and forge your own shield.
-
----
-
-*"Focus on what matters. Let the Aegis handle the rest."*
