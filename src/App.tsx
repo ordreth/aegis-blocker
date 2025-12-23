@@ -112,7 +112,7 @@ export default function App({ isOptionsPage = false }: AppProps) {
             <Input
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ex: reddit.com/r/nsfw"
+              placeholder="Ex: reddit.com/r/memes"
               className="bg-slate-950 border-slate-700 text-white flex-1"
             />
             <Button
