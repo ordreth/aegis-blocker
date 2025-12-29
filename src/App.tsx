@@ -1,14 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Trash2,
   ShieldAlert,
   Plus,
   ExternalLink,
   Settings,
+  Download,
+  Upload,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { addRule, getRules, removeRule, type BlockRule } from "@/lib/rules";
+import {
+  addRule,
+  exportRulesJSON,
+  getRules,
+  importRulesJSON,
+  removeRule,
+  type BlockRule,
+} from "@/lib/rules";
 
 interface AppProps {
   isOptionsPage?: boolean;
@@ -18,6 +27,7 @@ export default function App({ isOptionsPage = false }: AppProps) {
   const [rules, setRules] = useState<BlockRule[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     loadRules();
@@ -46,6 +56,46 @@ export default function App({ isOptionsPage = false }: AppProps) {
     }
   };
 
+  const handleExport = async () => {
+    const json = await exportRulesJSON();
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "aegis-rules.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const text = e.target?.result;
+      if (typeof text === "string") {
+        try {
+          await importRulesJSON(text);
+          await loadRules();
+          alert("Backup importado com sucesso!");
+        } catch (error) {
+          alert("Erro ao importar arquivo. Verifique se é um JSON válido.");
+        }
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = "";
+  };
+
   const openOptions = () => {
     if (chrome.runtime.openOptionsPage) chrome.runtime.openOptionsPage();
     else window.open(chrome.runtime.getURL("options.html"));
@@ -61,6 +111,13 @@ export default function App({ isOptionsPage = false }: AppProps) {
 
   return (
     <div className={containerClass}>
+      <input
+        type="file"
+        accept=".json"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        style={{ display: "none" }}
+      />
       <div
         className={`flex justify-between items-center ${
           isOptionsPage
@@ -94,16 +151,37 @@ export default function App({ isOptionsPage = false }: AppProps) {
           </div>
         </div>
 
-        {!isOptionsPage && (
+        <div className="flex gap-2">
           <Button
-            variant="ghost"
+            variant="outline"
             size="icon"
-            onClick={openOptions}
-            title="Expandir"
+            onClick={handleExport}
+            title="Exportar Backup"
+            className="border-slate-700 hover:bg-slate-800 text-slate-300"
           >
-            <ExternalLink className="w-4 h-4 text-slate-400" />
+            <Download className="w-4 h-4 text-white" />
           </Button>
-        )}
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={handleImportClick}
+            title="Importar Backup"
+            className="border-slate-700 hover:bg-slate-800 text-slate-300 "
+          >
+            <Upload className="w-4 h-4 text-white" />
+          </Button>
+
+          {!isOptionsPage && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={openOptions}
+              title="Expandir"
+            >
+              <ExternalLink className="w-4 h-4 text-slate-400" />
+            </Button>
+          )}
+        </div>
       </div>
 
       <div className={cardClass}>
