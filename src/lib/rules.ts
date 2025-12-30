@@ -43,6 +43,25 @@ export async function enableLock(): Promise<void> {
   await chrome.storage.local.set({ [LOCK_KEY]: newState });
 }
 
+async function applyImmediateBlock(pattern: string) {
+  try {
+    const tabs = await chrome.tabs.query({});
+    const blockedUrl = getBlockedPageUrl();
+
+    const cleanPattern = pattern.toLowerCase().trim();
+
+    for (const tab of tabs) {
+      if (tab.id && tab.url) {
+        if (tab.url.toLowerCase().includes(cleanPattern)) {
+          chrome.tabs.update(tab.id, { url: blockedUrl });
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Error sanitizing tabs:", error);
+  }
+}
+
 export async function addRule(pattern: string): Promise<void> {
   const rules = await getRules();
 
@@ -75,6 +94,7 @@ export async function addRule(pattern: string): Promise<void> {
     ],
     removeRuleIds: [newId],
   });
+  await applyImmediateBlock(pattern);
 }
 
 export async function removeRule(id: number): Promise<void> {
