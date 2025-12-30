@@ -21,11 +21,13 @@ So, I forged my own shield.
   * **Block:** `reddit.com/r/memes`
 
 
+* **The "Nuclear" Option (Quick Block):** Caught doomscrolling? One click detects the current site and bans it instantly.
+* **Absolute Mode:** Need deep focus? Activate the **24-hour Lock**. You can add new rules, but you **cannot remove** existing ones until the timer runs out. No take-backs.
+* **Active Sanitization:** When you ban a site, Aegis instantly hunts down and redirects any open tabs matching that URL.
+* **Multi-Profile Sync:** Export your rules as JSON and import them to your Work, Personal, or other browser profiles.
 * **Local-First & Private:** No data leaves your machine. No servers. No tracking. It runs 100% on your hardware.
-* **Modern UI:** Built with a clean, dark-mode interface because protecting your peace shouldn't look ugly.
-* **Zero Latency:** The blocking happens at the browser's API level (C++), not via heavy JavaScript injection.
 
-## Forged With (Tech Stack)
+## Tech Stack
 
 This project wasn't just cobbled together; it was engineered with a modern stack:
 
@@ -35,9 +37,9 @@ This project wasn't just cobbled together; it was engineered with a modern stack
 * **Shadcn UI + Tailwind CSS** - For that crisp, accessible aesthetic.
 * **Chrome Manifest V3** - Future-proof extension architecture.
 
-## How to Wield the Shield (Installation)
+## Installation
 
-Since this is a personal tool, we run it in Developer Mode (for now).
+Since this is a personal tool, we run it in Developer Mode.
 
 1. **Clone the repo:**
 ```bash
@@ -60,6 +62,7 @@ npm run build
 
 ```
 
+
 *This creates a `dist` folder with the compiled extension.*
 
 4. **Equip in Chrome:**
@@ -67,24 +70,43 @@ npm run build
 * Enable **Developer mode** (top right toggle).
 * Click **Load unpacked**.
 * Select the `dist` folder.
+* **CRITICAL STEP:** Click "Details" on the extension and enable **"Allow in Incognito"**. (Otherwise, you can cheat by opening a private window).
 
 
 
 ## Usage
 
-1. Click the **Shield Icon** in your toolbar to open the quick popup.
+### Basic Defense
+
+1. Click the **Shield Icon** in your toolbar.
 2. Type a URL pattern (e.g., `twitter.com`, `youtube.com/shorts`).
 3. Click **Add**.
-4. Try to visit that link. You will be redirected to the "Blocked" screen.
-5. *Optional:* Right-click the icon and hit "Options" for the full-screen dashboard.
+4. Any open tab matching that pattern is instantly redirected to the "Focus" screen.
 
-## Future Plans (The "Hardcore" Mode)
+### The Nuclear Option (Quick Block)
 
-Right now, Aegis relies on my own willpower not to disable it. In the future, I plan to implement:
+If you are currently browsing a site you shouldn't be (e.g., TikTok):
 
-* **Registry Locking:** Using Windows Group Policies to make the extension impossible to uninstall without a complex process.
-* **Time-based Rules:** Only allowing Reddit after 6 PM.
+1. Open the extension popup.
+2. A large red button will appear: **"Block tiktok.com now"**.
+3. Click it. The tab closes instantly.
+
+### Absolute Mode (The Lock)
+
+1. Click the **Unlock Icon** in the header.
+2. Confirm that you want to lock your settings for **24 Hours**.
+3. The UI turns red, and a countdown begins.
+4. **Result:** You can *add* new blocks, but the "Delete" buttons are disabled until the timer expires.
+
+### Backup & Sync
+
+* **Download:** Click the ⬇️ icon to save your rules as a JSON file.
+* **Upload:** Click the ⬆️ icon to load rules into a different browser profile.
 
 ## License
 
 This project is open-source. Feel free to fork it, modify it, and forge your own shield.
+
+---
+
+*"Focus on what matters. Let the Aegis handle the rest."*
