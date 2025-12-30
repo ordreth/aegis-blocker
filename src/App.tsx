@@ -7,17 +7,33 @@ import {
   Settings,
   Download,
   Upload,
+  Unlock,
+  Lock,
+  Timer,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   addRule,
+  enableLock,
   exportRulesJSON,
+  getLockState,
   getRules,
   importRulesJSON,
   removeRule,
   type BlockRule,
 } from "@/lib/rules";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./components/ui/alert-dialog";
 
 interface AppProps {
   isOptionsPage?: boolean;
@@ -29,13 +45,48 @@ export default function App({ isOptionsPage = false }: AppProps) {
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [isLocked, setIsLocked] = useState(false);
+  const [timeLeft, setTimeLeft] = useState<string>("");
+
   useEffect(() => {
     loadRules();
+    checkLock();
+
+    const interval = setInterval(() => {
+      checkLock();
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const loadRules = async () => {
     const loaded = await getRules();
     setRules(loaded);
+  };
+
+  const checkLock = async () => {
+    const state = await getLockState();
+    setIsLocked(state.isLocked);
+
+    if (state.isLocked && state.unlockAt) {
+      const diff = state.unlockAt - Date.now();
+      if (diff <= 0) {
+        setTimeLeft("");
+        setIsLocked(false);
+      } else {
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        setTimeLeft(`${hours}h ${minutes}m ${seconds}s`);
+      }
+    } else {
+      setTimeLeft("");
+    }
+  };
+
+  const handleEnableLock = async () => {
+    await enableLock();
+    await checkLock();
   };
 
   const handleAdd = async (e: React.FormEvent) => {
@@ -53,6 +104,15 @@ export default function App({ isOptionsPage = false }: AppProps) {
       console.error(error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleRemove = async (id: number) => {
+    try {
+      await removeRule(id);
+      await loadRules();
+    } catch (error) {
+      alert("You cannot remove rules during Absolute Mode.");
     }
   };
 
@@ -86,9 +146,9 @@ export default function App({ isOptionsPage = false }: AppProps) {
         try {
           await importRulesJSON(text);
           await loadRules();
-          alert("Backup importado com sucesso!");
+          alert("Backup imported successfully!");
         } catch (error) {
-          alert("Erro ao importar arquivo. Verifique se é um JSON válido.");
+          alert("Error importing file. Please verify that it is a valid JSON.");
         }
       }
     };
@@ -122,7 +182,7 @@ export default function App({ isOptionsPage = false }: AppProps) {
         className={`flex justify-between items-center ${
           isOptionsPage
             ? "mb-8 py-4 border-b border-slate-800"
-            : "p-4 border-b border-slate-800 bg-slate-900/50"
+            : "p-4 border-b border-slate-800 bg-slate-900/50 flex-col gap-6"
         }`}
       >
         <div className="flex items-center gap-3">
@@ -141,17 +201,76 @@ export default function App({ isOptionsPage = false }: AppProps) {
                   : "text-lg text-slate-100"
               }`}
             >
-              Aegis Block
+              {isLocked ? "Aegis Locked" : "Aegis Blocker"}
             </h1>
             {isOptionsPage && (
               <p className="text-slate-400 text-sm">
-                Manage your browsing restrictions.
+                {isLocked
+                  ? `Active Absolute Mode. Releases in: ${timeLeft}`
+                  : "Manage your restrictions."}
               </p>
             )}
           </div>
         </div>
 
         <div className="flex gap-2">
+          {!isLocked && (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="border-slate-700 hover:bg-slate-800 text-amber-500 hover:text-amber-400"
+                  title="Activate Absolute Mode"
+                >
+                  <Unlock className="w-4 h-4" />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="bg-slate-900 border-slate-800 text-slate-100">
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-red-500 flex items-center gap-2">
+                    <Lock className="w-5 h-5" /> Activate Absolute Mode?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className="text-slate-400">
+                    By activating this mode, you{" "}
+                    <strong>will not be able to remove</strong> any existing
+                    rules for the next <strong>24 hours</strong>.
+                    <br />
+                    <br />
+                    You can still add new rules, but nothing can be undone until
+                    the time runs out.
+                    <br />
+                    <br />
+                    Are you sure you want to make this commitment?
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="bg-slate-800 text-white border-slate-700 hover:bg-slate-700 hover:text-white">
+                    Cancelar
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleEnableLock}
+                    className="bg-red-600 hover:bg-red-700 text-white border-none"
+                  >
+                    Yes, Lock the Shield
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
+
+          {isLocked && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-red-900/50 bg-red-900/20 text-red-500 cursor-not-allowed hover:bg-red-900/20 font-mono text-xs w-28"
+            >
+              <Timer className="w-3 h-3 mr-2" />
+              {timeLeft}
+            </Button>
+          )}
+
+          <div className="w-px h-6 bg-slate-800 mx-1 self-center"></div>
           <Button
             variant="outline"
             size="icon"
@@ -250,20 +369,25 @@ export default function App({ isOptionsPage = false }: AppProps) {
                   </div>
 
                   <div className={isOptionsPage ? "col-span-2 text-right" : ""}>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => {
-                        removeRule(rule.id).then(loadRules);
-                      }}
-                      className="text-slate-500 hover:text-red-500 hover:bg-red-500/10 opacity-0 group-hover:opacity-100 transition-all"
-                    >
-                      {isOptionsPage ? (
-                        "Remove"
-                      ) : (
-                        <Trash2 className="w-4 h-4" />
-                      )}
-                    </Button>
+                    {!isLocked && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          handleRemove(rule.id);
+                        }}
+                        className="text-slate-500 hover:text-red-500 hover:bg-red-500/10 opacity-0 group-hover:opacity-100 transition-all"
+                      >
+                        {isOptionsPage ? (
+                          "Remover"
+                        ) : (
+                          <Trash2 className="w-4 h-4" />
+                        )}
+                      </Button>
+                    )}
+                    {isLocked && (
+                      <Lock className="w-4 h-4 text-slate-700 ml-auto" />
+                    )}
                   </div>
                 </div>
               ))

@@ -5,13 +5,42 @@ export interface BlockRule {
   createdAt: number;
 }
 
+export interface LockState {
+  isLocked: boolean;
+  unlockAt: number | null;
+}
+
 const STORAGE_KEY = "block_rules";
+const LOCK_KEY = "aegis_lock_state";
 
 const getBlockedPageUrl = () => chrome.runtime.getURL("blocked.html");
 
 export async function getRules(): Promise<BlockRule[]> {
   const result = await chrome.storage.local.get(STORAGE_KEY);
   return (result[STORAGE_KEY] as BlockRule[]) || [];
+}
+
+export async function getLockState(): Promise<LockState> {
+  const result = await chrome.storage.local.get(LOCK_KEY);
+  const state = (result[LOCK_KEY] as LockState) || {
+    isLocked: false,
+    unlockAt: null,
+  };
+
+  if (state.isLocked && state.unlockAt && Date.now() > state.unlockAt) {
+    const newState = { isLocked: false, unlockAt: null };
+    await chrome.storage.local.set({ [LOCK_KEY]: newState });
+    return newState;
+  }
+
+  return state;
+}
+
+export async function enableLock(): Promise<void> {
+  const twentyFourHours = 24 * 60 * 60 * 1000;
+  const unlockAt = Date.now() + twentyFourHours;
+  const newState: LockState = { isLocked: true, unlockAt };
+  await chrome.storage.local.set({ [LOCK_KEY]: newState });
 }
 
 export async function addRule(pattern: string): Promise<void> {
@@ -49,6 +78,11 @@ export async function addRule(pattern: string): Promise<void> {
 }
 
 export async function removeRule(id: number): Promise<void> {
+  const lockState = await getLockState();
+  if (lockState.isLocked) {
+    throw new Error("ACTION BLOCKED: Absolute Mode is active.");
+  }
+
   const rules = await getRules();
   const updatedRules = rules.filter((r) => r.id !== id);
 
