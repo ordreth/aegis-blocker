@@ -92,6 +92,12 @@ export default function App({ isOptionsPage = false }: AppProps) {
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
+    if (inputValue.length < 4 || !inputValue.includes(".")) {
+      alert(
+        "For security reasons, the template should have at least 4 letters and include a period (e.g., site.com)"
+      );
+      return;
+    }
     setIsLoading(true);
     try {
       const cleanUrl = inputValue

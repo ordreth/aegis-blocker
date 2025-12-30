@@ -1,21 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>Access blocked</title>
+    <title>Aegis - Acesso Negado</title>
     <style>
       body {
-        font-family: sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        background-color: #020617;
+        color: #e2e8f0;
+        font-family: system-ui, -apple-system, sans-serif;
         height: 100vh;
-        background: #1a1a1a;
-        color: #fff;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .icon {
+        color: #6366f1;
+        width: 80px;
+        height: 80px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-size: 2.5rem;
+        margin: 0 0 10px 0;
+        font-weight: 800;
+      }
+      p {
+        font-size: 1.2rem;
+        color: #94a3b8;
+        max-width: 500px;
+        line-height: 1.6;
+      }
+      .quote {
+        margin-top: 40px;
+        font-style: italic;
+        opacity: 0.6;
+        font-size: 0.9rem;
+        border-top: 1px solid #334155;
+        padding-top: 20px;
       }
     </style>
   </head>
   <body>
-    <h1>Access blocked</h1>
+    <svg
+      class="icon"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      <path d="M12 8v4" />
+      <path d="M12 16h.01" />
+    </svg>
+    <h1>Aegis Active</h1>
+    <p>This site does not contribute to your current goals.</p>
+    <p class="quote">
+      "Discipline is the bridge between goals and achievements."
+    </p>
   </body>
 </html>
