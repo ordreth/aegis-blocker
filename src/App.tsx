@@ -83,17 +83,26 @@ export default function App({ isOptionsPage = false }: AppProps) {
 
       if (activeTab && activeTab.url) {
         const urlObj = new URL(activeTab.url);
+
         if (
           urlObj.protocol === "chrome:" ||
           urlObj.protocol === "chrome-extension:"
         )
           return;
 
-        const domain = urlObj.hostname.replace(/^www\./, "");
-        setCurrentDomain(domain);
+        const cleanHostname = urlObj.hostname.replace(/^www\./, "");
+        const path = urlObj.pathname;
+
+        const search = urlObj.search;
+        let fullUrl = cleanHostname + path + search;
+        if (fullUrl.endsWith("/")) {
+          fullUrl = fullUrl.slice(0, -1);
+        }
+
+        setCurrentDomain(fullUrl);
       }
     } catch (e) {
-      console.log("Could not detect tab (dev mode?)");
+      console.log("Could not detect tab");
     }
   };
 

@@ -11,8 +11,9 @@ const QuickBlockButton = ({ domain, onBlock }: QuickBlockButtonProps) => {
     <div className="mb-2 animate-in fade-in slide-in-from-top-2 duration-300">
       <Button
         onClick={onBlock}
-        className="w-full bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/50
-        flex items-center justify-center gap-2 h-10 transition-all shadow-[0_0_15px_rgba(239,68,68,0.1)]"
+        className="w-full bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/50 flex
+        items-center justify-center gap-2 min-h-10 h-auto px-3 whitespace-normal break-all text-center
+        transition-all shadow-[0_0_15px_rgba(239,68,68,0.1)]"
       >
         <Ban className="w-4 h-4" />
         <span>
