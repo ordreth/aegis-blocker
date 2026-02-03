@@ -3,6 +3,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* --- 1. RESET ESTRUTURAL --- */
 html,
 body,
 #root {
@@ -10,115 +11,179 @@ body,
   width: 100%;
   margin: 0;
   padding: 0;
-  background-color: #020617;
 }
 
+/* --- 2. DEFINIÇÃO DE VARIÁVEIS (:root) --- */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+
+  /* ========================================= */
+  /* 🎨 PALETA AEGIS (PRIMITIVAS)           */
+  /* Baseada nos Hex Codes fornecidos       */
+  /* ========================================= */
+
+  /* NEUTRAL (Midnight/Void Scale) */
+  /* Do mais claro (texto) ao mais escuro (fundo) */
+  --aegis-neutral-50: #F5F7FA;
+  /* Off-white (Gerado para contraste de texto) */
+  --aegis-neutral-100: #E2E8F0;
+  --aegis-neutral-200: #CBD5E1;
+  --aegis-neutral-400: #94A3B8;
+  --aegis-neutral-500: #5D7CA6;
+  /* Muted Blue (Fornecido) */
+  --aegis-neutral-600: #404B59;
+  /* Greyish Blue (Fornecido) */
+  --aegis-neutral-700: #33394D;
+  --aegis-neutral-800: #252940;
+  /* Dark Purple/Blue (Fornecido) */
+  --aegis-neutral-900: #171C26;
+  /* Dark Blue/Grey (Fornecido) */
+  --aegis-neutral-950: #0D0D0D;
+  /* Very Dark Grey/Black (Fornecido) */
+
+  /* BRAND (Gold/Bronze Scale) */
+  --aegis-brand-400: #EBB673;
+  /* Gold Claro (Hover light) */
+  --aegis-brand-500: #D99543;
+  /* Gold Principal (Fornecido) */
+  --aegis-brand-600: #D97E4A;
+  /* Dark Orange (Fornecido) */
+  --aegis-brand-900: #4A2B15;
+  /* Bronze Profundo */
+
+  /* DANGER (Blood Scale) */
+  --aegis-danger-500: #8C0712;
+  /* Vibrant Deep Red (Fornecido) */
+  --aegis-danger-900: #400A14;
+  /* Deep Dark Red (Fornecido) */
+
+  /* ========================================= */
+  /* 🧩 MAPEAMENTO SHADCN (SEMÂNTICO)       */
+  /* ========================================= */
+
+  /* --- MODO CLARO (LIGHT) --- */
+  /* Adaptado para usar tons claros, mas mantendo a identidade das cores */
+  --background: var(--aegis-neutral-50);
+  --foreground: var(--aegis-neutral-950);
+
+  --card: #FFFFFF;
+  --card-foreground: var(--aegis-neutral-950);
+
+  --popover: #FFFFFF;
+  --popover-foreground: var(--aegis-neutral-950);
+
+  --primary: var(--aegis-brand-600);
+  /* Laranja mais escuro para contraste no branco */
+  --primary-foreground: #FFFFFF;
+
+  --secondary: var(--aegis-neutral-100);
+  --secondary-foreground: var(--aegis-neutral-900);
+
+  --muted: var(--aegis-neutral-100);
+  --muted-foreground: var(--aegis-neutral-600);
+
+  --accent: var(--aegis-neutral-100);
+  --accent-foreground: var(--aegis-brand-600);
+
+  --destructive: var(--aegis-danger-500);
+  --destructive-foreground: #FFFFFF;
+
+  --border: var(--aegis-neutral-200);
+  --input: var(--aegis-neutral-200);
+
+  --ring: var(--aegis-brand-600);
+
+  /* Gráficos Light */
+  --chart-1: var(--aegis-brand-600);
+  --chart-2: var(--aegis-neutral-600);
+  --chart-3: var(--aegis-neutral-500);
+  --chart-4: var(--aegis-danger-500);
+  --chart-5: var(--aegis-brand-500);
+
+  /* Sidebar Light */
+  --sidebar: var(--aegis-neutral-50);
+  --sidebar-foreground: var(--aegis-neutral-950);
+  --sidebar-primary: var(--aegis-brand-600);
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: var(--aegis-neutral-100);
+  --sidebar-accent-foreground: var(--aegis-neutral-900);
+  --sidebar-border: var(--aegis-neutral-200);
+  --sidebar-ring: var(--aegis-brand-600);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+/* --- MODO ESCURO (DARK) - A MAGIA ACONTECE AQUI --- */
+.dark {
+  --background: var(--aegis-neutral-950);
+  /* #0D0D0D */
+  --foreground: var(--aegis-neutral-100);
+
+  --card: var(--aegis-neutral-900);
+  /* #171C26 */
+  --card-foreground: var(--aegis-neutral-100);
+
+  --popover: var(--aegis-neutral-900);
+  --popover-foreground: var(--aegis-neutral-100);
+
+  --primary: var(--aegis-brand-500);
+  /* #D99543 (Gold) */
+  --primary-foreground: var(--aegis-neutral-950);
+  /* Texto escuro no botão dourado */
+
+  --secondary: var(--aegis-neutral-800);
+  /* #252940 */
+  --secondary-foreground: var(--aegis-neutral-100);
+
+  --muted: var(--aegis-neutral-800);
+  --muted-foreground: var(--aegis-neutral-500);
+  /* #5D7CA6 (Muted Blue) */
+
+  --accent: var(--aegis-neutral-800);
+  --accent-foreground: var(--aegis-brand-500);
+
+  --destructive: var(--aegis-danger-900);
+  /* #400A14 (Fundo do erro) */
+  --destructive-foreground: var(--aegis-danger-500);
+  /* #8C0712 (Texto/Ícone do erro) - Ajuste sutil para leitura */
+
+  /* Se o botão destrutivo for sólido, usamos a cor vibrante no fundo: */
+  /* --destructive: var(--aegis-danger-500); */
+  /* --destructive-foreground: #FFFFFF; */
+
+  --border: var(--aegis-neutral-800);
+  /* #252940 */
+  --input: var(--aegis-neutral-800);
+
+  --ring: var(--aegis-brand-500);
+  /* Anel de foco Dourado */
+
+  /* Gráficos Dark */
+  --chart-1: var(--aegis-brand-500);
+  --chart-2: var(--aegis-neutral-500);
+  --chart-3: var(--aegis-brand-600);
+  --chart-4: var(--aegis-danger-500);
+  --chart-5: var(--aegis-neutral-600);
+
+  /* Sidebar Dark */
+  --sidebar: var(--aegis-neutral-950);
+  --sidebar-foreground: var(--aegis-neutral-100);
+  --sidebar-primary: var(--aegis-brand-500);
+  --sidebar-primary-foreground: var(--aegis-neutral-950);
+  --sidebar-accent: var(--aegis-neutral-800);
+  --sidebar-accent-foreground: var(--aegis-neutral-100);
+  --sidebar-border: var(--aegis-neutral-800);
+  --sidebar-ring: var(--aegis-brand-500);
 }
 
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-
-button:hover {
-  border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-
-  a:hover {
-    color: #747bff;
-  }
-
-  button {
-    background-color: #f9f9f9;
-  }
-}
-
+/* --- CONFIGURAÇÃO DO TEMA TAILWIND --- */
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -127,6 +192,8 @@ button:focus-visible {
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+
+  /* Semântico (Shadcn) */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -158,42 +225,25 @@ button:focus-visible {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Primitivas (Aegis) - Para uso direto se precisar */
+  --color-aegis-neutral-50: var(--aegis-neutral-50);
+  --color-aegis-neutral-100: var(--aegis-neutral-100);
+  --color-aegis-neutral-400: var(--aegis-neutral-400);
+  --color-aegis-neutral-500: var(--aegis-neutral-500);
+  --color-aegis-neutral-600: var(--aegis-neutral-600);
+  --color-aegis-neutral-800: var(--aegis-neutral-800);
+  --color-aegis-neutral-900: var(--aegis-neutral-900);
+  --color-aegis-neutral-950: var(--aegis-neutral-950);
+
+  --color-aegis-brand-500: var(--aegis-brand-500);
+  --color-aegis-brand-600: var(--aegis-brand-600);
+
+  --color-aegis-danger-500: var(--aegis-danger-500);
+  --color-aegis-danger-900: var(--aegis-danger-900);
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
+/* --- ESTILOS GLOBAIS --- */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -204,6 +254,7 @@ button:focus-visible {
   }
 }
 
+/* --- UTILITÁRIOS --- */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
@@ -213,6 +264,12 @@ button:focus-visible {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #334155;
+  background-color: var(--muted-foreground);
   border-radius: 20px;
+  opacity: 0.3;
+}
+
+.container-size {
+  min-height: calc(100vh - 204px);
+  height: calc(100vh - 204px);
 }

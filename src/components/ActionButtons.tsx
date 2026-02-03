@@ -19,27 +19,30 @@ const ActionButtons = ({
         size="icon"
         onClick={onExport}
         title="Export Backup"
-        className="border-slate-700 hover:bg-slate-800 text-slate-300"
+        className="border-input hover:bg-accent hover:text-foreground text-muted-foreground transition-colors"
       >
-        <Download className="w-4 h-4 text-white" />
+        <Download className="w-4 h-4" />
       </Button>
+
       <Button
         variant="outline"
         size="icon"
         onClick={onImport}
         title="Import Backup"
-        className="border-slate-700 hover:bg-slate-800 text-slate-300"
+        className="border-input hover:bg-accent hover:text-foreground text-muted-foreground transition-colors"
       >
-        <Upload className="w-4 h-4 text-white" />
+        <Upload className="w-4 h-4" />
       </Button>
+
       {onOpenOptions && (
         <Button
           variant="ghost"
           size="icon"
           onClick={onOpenOptions}
           title="Expand"
+          className="text-muted-foreground hover:text-foreground hover:bg-accent"
         >
-          <ExternalLink className="w-4 h-4 text-slate-400" />
+          <ExternalLink className="w-4 h-4" />
         </Button>
       )}
     </>

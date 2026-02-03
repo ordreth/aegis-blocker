@@ -24,34 +24,45 @@ const Header = ({
   onOpenOptions,
 }: HeaderProps) => {
   return (
-    <div
+    <header
       className={cn(
-        "flex justify-between items-center p-4 border-b border-slate-800 bg-slate-900/50 flex-col gap-6",
+        "flex justify-between items-center border-b transition-colors duration-500 p-4 border-border bg-transparent",
+        "backdrop-blur-sm",
         {
-          "mb-8 py-4 border-b border-slate-800": isOptionsPage,
-        }
+          "mb-8 py-6 border-border": isOptionsPage,
+          "bg-destructive/10 border-destructive/20": isLocked,
+        },
       )}
     >
       <div className="flex items-center gap-3">
-        <div className="p-2 bg-indigo-500/10 rounded-lg">
+        <div
+          className={cn(
+            "p-2 rounded-lg transition-colors duration-300 bg-primary/10",
+            { "bg-destructive/40": isLocked },
+          )}
+        >
           <ShieldAlert
-            className={`text-indigo-500 ${
-              isOptionsPage ? "w-8 h-8" : "w-6 h-6"
-            }`}
+            className={cn(
+              "transition-colors duration-300 w-6 h-6 text-primary",
+              {
+                "w-8 h-8": isOptionsPage,
+                "text-destructive-foreground": isLocked,
+              },
+            )}
+            aria-hidden="true"
           />
         </div>
+
         <div>
           <h1
-            className={`font-bold ${
-              isOptionsPage
-                ? "text-2xl text-slate-100"
-                : "text-lg text-slate-100"
-            }`}
+            className={cn("font-bold text-foreground tracking-tight text-lg", {
+              "text-2xl": isOptionsPage,
+            })}
           >
             {isLocked ? "Aegis Locked" : "Aegis Blocker"}
           </h1>
           {isOptionsPage && (
-            <p className="text-slate-400 text-sm">
+            <p className="text-muted-foreground text-sm font-medium">
               {isLocked
                 ? `Active Absolute Mode. Releases in: ${timeLeft}`
                 : "Manage your restrictions."}
@@ -60,11 +71,11 @@ const Header = ({
         </div>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center">
         {!isLocked && <LockButton onEnableLock={onEnableLock} />}
         {isLocked && <LockTimer timeLeft={timeLeft} />}
 
-        <div className="w-px h-6 bg-slate-800 mx-1 self-center" />
+        <div className="w-px h-6 bg-border mx-1" role="separator" />
 
         <ActionButtons
           onExport={onExport}
@@ -72,7 +83,7 @@ const Header = ({
           onOpenOptions={onOpenOptions}
         />
       </div>
-    </div>
+    </header>
   );
 };
 

@@ -17,36 +17,54 @@ const RuleItem = ({
   onRemove,
 }: RuleItemProps) => {
   return (
-    <div
+    <li
       className={cn(
-        "flex justify-between items-center p-3 bg-slate-900 border border-slate-800 rounded group hover:border-slate-600 transition-colors",
+        "flex justify-between items-center p-3 bg-secondary/5 border border-border rounded group hover:border-primary/40 transition-all duration-300",
         {
-          "grid grid-cols-12 gap-4 p-4 items-center hover:bg-slate-900/50 transition-colors group":
+          "grid grid-cols-12 gap-4 p-4 items-center hover:bg-secondary/10":
             isOptionsPage,
-        }
+        },
       )}
     >
-      <div className={isOptionsPage ? "col-span-10" : "flex-1 min-w-0"}>
-        <span className="font-mono text-sm text-slate-300 truncate block">
+      <div
+        className={cn({
+          "col-span-10": isOptionsPage,
+          "flex-1 min-w-0 pr-3": !isOptionsPage,
+        })}
+      >
+        <span
+          className={cn(
+            "font-mono text-sm text-foreground block tracking-tight",
+            {
+              truncate: !isOptionsPage,
+              "break-all": isOptionsPage,
+            },
+          )}
+          title={rule.urlPattern}
+        >
           {rule.urlPattern}
         </span>
       </div>
 
-      <div className={isOptionsPage ? "col-span-2 text-right" : ""}>
+      <div className={isOptionsPage ? "col-span-2 text-right" : "shrink-0"}>
         {!isLocked ? (
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onRemove(rule.id)}
-            className="text-slate-500 hover:text-red-500 hover:bg-red-500/10 opacity-0 group-hover:opacity-100 transition-all"
+            className="text-muted-foreground hover:text-aegis-danger-500 hover:bg-destructive transition-all"
+            aria-label={`Remove rule for ${rule.urlPattern}`}
           >
             {isOptionsPage ? "Remove" : <Trash2 className="w-4 h-4" />}
           </Button>
         ) : (
-          <Lock className="w-4 h-4 text-slate-700 ml-auto" />
+          <Lock
+            className="w-4 h-4 text-muted-foreground/30 ml-auto"
+            aria-hidden="true"
+          />
         )}
       </div>
-    </div>
+    </li>
   );
 };
 

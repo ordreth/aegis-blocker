@@ -132,7 +132,7 @@ export default function App({ isOptionsPage = false }: AppProps) {
 
     if (!isValidPattern(inputValue)) {
       alert(
-        "For security reasons, the template should have at least 4 letters and include a period (e.g., site.com)"
+        "For security reasons, the template should have at least 4 letters and include a period (e.g., site.com)",
       );
       return;
     }
@@ -169,7 +169,7 @@ export default function App({ isOptionsPage = false }: AppProps) {
   };
 
   const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -195,10 +195,13 @@ export default function App({ isOptionsPage = false }: AppProps) {
   };
 
   return (
-    <div
-      className={cn("w-100 h-125 bg-slate-950 flex flex-col text-slate-100", {
-        "w-full max-w-5xl mx-auto h-full flex flex-col": isOptionsPage,
-      })}
+    <main
+      className={cn(
+        "w-100 h-125 bg-background flex flex-col text-foreground font-sans",
+        {
+          "w-full max-w-5xl mx-auto justify-start": isOptionsPage,
+        },
+      )}
     >
       <input
         type="file"
@@ -220,7 +223,7 @@ export default function App({ isOptionsPage = false }: AppProps) {
 
       <div
         className={cn("flex-1 overflow-hidden flex flex-col p-4 gap-4", {
-          "bg-slate-900/50 border border-slate-800 rounded-xl p-6 flex-1 shadow-sm":
+          "bg-aegis-neutral-900/50 border border-border rounded-xl p-6 flex-none shadown-none z-auto container-size":
             isOptionsPage,
         })}
       >
@@ -243,6 +246,6 @@ export default function App({ isOptionsPage = false }: AppProps) {
           onRemove={handleRemove}
         />
       </div>
-    </div>
+    </main>
   );
 }

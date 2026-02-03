@@ -24,12 +24,12 @@ const AddRuleForm = ({
           value={inputValue}
           onChange={(e) => onInputChange(e.target.value)}
           placeholder="Ex: reddit.com/r/memes"
-          className="bg-slate-950 border-slate-700 text-white flex-1"
+          className="bg-background border-input text-foreground placeholder:text-muted-foreground flex-1"
         />
         <Button
           type="submit"
           disabled={isLoading || !inputValue}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold"
         >
           <Plus className="w-4 h-4 mr-2" />
           Add
