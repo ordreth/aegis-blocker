@@ -15,7 +15,7 @@ export interface SecurityConfig {
 
 const SECURITY_KEY = "aegis_security_config";
 const SESSION_KEY = "aegis_auth_session";
-const SESSION_TIMEOUT_MS = 6 * 1000;
+const SESSION_TIMEOUT_MS = 5 * 60 * 1000;
 
 function useSecurity() {
   const [config, setConfig] = useState<SecurityConfig>({
