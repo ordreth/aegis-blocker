@@ -1,103 +1,358 @@
 {
-  "appName": { "message": "Aegis Blocker", "description": "The name of the extension" },
-  "appDesc": { "message": "Absolute focus shield. Block distractions with mythological strength.", "description": "Description for the store" },
-  "status_locked": { "message": "Aegis Locked" },
-  "status_active": { "message": "Aegis Blocker" },
-  "header_desc_locked": { "message": "Active Absolute Mode. Releases in:" },
-  "header_desc_normal": { "message": "Manage your restrictions." },
-  "btn_lock": { "message": "Lock Shield" },
-  "btn_cancel": { "message": "Cancel" },
-  "tooltip_unlocks_in": { "message": "Unlocks in" },
-  "absolute_mode_active": { "message": "Absolute Mode Active" },
-  "modal_title": { "message": "Activate Absolute Mode?" },
-  "modal_description_styled": {
-    "message": "By activating this mode, you {text-foreground:will not be able to remove} any existing rules for the next {text-foreground:$1}.\n\nYou can still add new rules, but nothing can be undone until the time runs out.\n\nAre you sure you want to make this commitment?"
+  "appName": {
+    "message": "Aegis Blocker",
+    "description": "The name of the extension as it appears in the store and permission dialogs."
   },
-  "modal_confirm": { "message": "Yes, Lock the Shield" },
-  "btn_activate_absolute_mode_tooltip": { "message": "Activate Absolute Mode" },
-  "btn_export_backup": { "message": "Export Backup" },
-  "btn_import_backup": { "message": "Import Backup" },
-  "btn_expand_options": { "message": "Expand" },
-  "btn_quick_block_template": { "message": "Block {domain} now", "description": "Template for the quick block button. Keep {domain} placeholder." },
-  "input_placeholder_example": { "message": "Ex: reddit.com/r/memes" },
-  "btn_add": { "message": "Add" },
-  "table_header_url": { "message": "URL pattern" },
-  "table_header_action": { "message": "Action" },
-  "empty_state_title": { "message": "No active rules." },
-  "empty_state_desc": { "message": "Your browsing is now completely unrestricted." },
-  "btn_remove": { "message": "Remove" },
-  "aria_remove_rule": { "message": "Remove rule for {pattern}" },
-
-  "alert_invalid_pattern": { "message": "For security reasons, the pattern must match a URL structure." },
-  "alert_action_blocked": { "message": "Action blocked by Absolute Mode." },
-  "alert_import_success": { "message": "Backup imported successfully!" },
-  "alert_import_error": { "message": "Error importing file. Check if the JSON is valid." },
-  "btn_open_settings": { "message": "Settings" },
-
-  "settings_title": { "message": "Settings" },
-  "settings_subtitle": { "message": "Customize your Aegis experience" },
-  "loading_settings": { "message": "Loading settings..." },
-
-  "tab_general": { "message": "General" },
-  "tab_appearance": { "message": "Appearance & Language" },
-  "tab_security": { "message": "Security" },
-
-  "general_behavior_title": { "message": "Behavior" },
-  "general_behavior_desc": { "message": "How Aegis handles rules and interactions." },
-  "setting_double_check": { "message": "Double-check deletion" },
-  "setting_double_check_desc": { "message": "Ask for confirmation before removing a rule." },
-
-  "appearance_interface_title": { "message": "Interface" },
-  "appearance_interface_desc": { "message": "Make Aegis look and speak the way you want." },
-  "setting_theme": { "message": "Theme" },
-  "setting_theme_placeholder": { "message": "Select theme" },
-  "theme_system": { "message": "System Default" },
-  "theme_dark": { "message": "Dark (Midnight)" },
-  "theme_light": { "message": "Light" },
-  "setting_language": { "message": "Language" },
-  "setting_language_placeholder": { "message": "Select language" },
-  "setting_language_note": { "message": "Note: Changing language will reload the extension." },
-
-  "security_config_title": { "message": "Absolute Mode Configuration" },
-  "security_config_desc": { "message": "Customize the intensity of the lock." },
-  "security_lock_duration": { "message": "Lock Duration" },
-  "security_duration_note": { "message": "Adjustable duration coming soon. Currently fixed at 24h." },
-  "security_require_password": { "message": "Require Password" },
-  "security_password_desc": { "message": "Require a password to unlock or remove rules." },
-
-  "modal_delete_title": { "message": "Delete Rule?" },
-  "modal_delete_desc": { "message": "This action cannot be undone immediately if you change your mind later." },
-  "btn_confirm_delete": { "message": "Delete" },
-
-  "time_unit_year": { "message": "Year" },
-  "time_unit_months": { "message": "Months" },
-  "time_unit_days": { "message": "Days" },
-  "time_unit_hours": { "message": "Hours" },
-
-  "vault_title": { "message": "Aegis Vault" },
-  "vault_desc": { "message": "Authentication required to access controls." },
-  "label_master_password": { "message": "Master Password" },
-  "btn_unlock": { "message": "Unlock Vault" },
-  "error_wrong_password": { "message": "Incorrect password." },
-  "link_forgot_password": { "message": "Forgot Password?" },
-  "recovery_title": { "message": "Emergency Reset" },
-  "recovery_desc": { "message": "Enter your Recovery Code to reset the vault. All security settings will be wiped." },
-  "label_recovery_code": { "message": "Recovery Code" },
-  "btn_reset_vault": { "message": "Reset Vault" },
-  "btn_back_to_login": { "message": "Back to Login" },
-  "error_invalid_code": { "message": "Invalid Recovery Code." },
-
-  "setup_password_title": { "message": "Setup Master Password" },
-  "setup_password_desc": { "message": "Create a password to protect your rules and settings." },
-  "label_new_password": { "message": "New Password" },
-  "label_confirm_password": { "message": "Confirm Password" },
-  "btn_create_vault": { "message": "Create Vault" },
-  "error_password_mismatch": { "message": "Passwords do not match." },
-  "recovery_step_title": { "message": "Save your Recovery Code" },
-  "recovery_step_desc": { "message": "This is the ONLY way to recover your account if you forget your password." },
-  "recovery_warning": { "message": "We do not store your password. If you lose this code, you will lose access to your data." },
-  "btn_copy_code": { "message": "Copy Code" },
-  "btn_copied": { "message": "Copied!" },
-  "checkbox_saved_confirmation": { "message": "I have securely saved my recovery code." },
-  "btn_finish_setup": { "message": "Finish & Activate" }
+  "appDesc": {
+    "message": "A strict distraction blocker for deep work. Open source and privacy-focused.",
+    "description": "The short description of the extension shown in the Chrome Web Store."
+  },
+  "status_locked": {
+    "message": "Aegis Locked",
+    "description": "Status text shown in the header when the lock is active."
+  },
+  "status_active": {
+    "message": "Aegis Blocker",
+    "description": "Status text shown in the header when the extension is idle/active."
+  },
+  "header_desc_locked": {
+    "message": "Absolute Mode engaged. Release in:",
+    "description": "Subtitle in the header when locked, followed by the countdown timer."
+  },
+  "header_desc_normal": {
+    "message": "Rule management.",
+    "description": "Subtitle in the header during normal operation."
+  },
+  "btn_lock": {
+    "message": "Lock Shield",
+    "description": "Button text to enable Absolute Mode."
+  },
+  "btn_cancel": {
+    "message": "Cancel",
+    "description": "Generic cancel button text."
+  },
+  "tooltip_unlocks_in": {
+    "message": "Unlocks in",
+    "description": "Tooltip text showing remaining lock time."
+  },
+  "absolute_mode_active": {
+    "message": "Absolute Mode Active",
+    "description": "Label indicating the restrictive mode is currently on."
+  },
+  "modal_title": {
+    "message": "Engage Absolute Mode?",
+    "description": "Title of the confirmation modal for locking the extension."
+  },
+  "modal_description_styled": {
+    "message": "Absolute Mode prevents rule modification for the next {text-foreground:$1}.\n\nYou can add new blocks, but existing rules {text-foreground:cannot be removed} until the timer expires.\n\nThis action is irreversible.",
+    "description": "Detailed warning in the lock modal. $1 is the duration (e.g., '24 Hours'). Text inside {text-foreground:...} is styled for emphasis."
+  },
+  "modal_confirm": {
+    "message": "Confirm Lock",
+    "description": "Action button to confirm locking."
+  },
+  "btn_activate_absolute_mode_tooltip": {
+    "message": "Activate Absolute Mode",
+    "description": "Tooltip for the lock icon button."
+  },
+  "btn_export_backup": {
+    "message": "Export Rules",
+    "description": "Tooltip/Button for exporting the JSON configuration."
+  },
+  "btn_import_backup": {
+    "message": "Import Rules",
+    "description": "Tooltip/Button for importing a JSON configuration."
+  },
+  "btn_expand_options": {
+    "message": "Settings",
+    "description": "Tooltip/Button to open the full options page."
+  },
+  "btn_quick_block_template": {
+    "message": "Block {domain}",
+    "description": "Button text for quickly blocking the current site. {domain} is replaced by the website URL."
+  },
+  "input_placeholder_example": {
+    "message": "e.g., reddit.com/r/memes",
+    "description": "Placeholder text in the input field showing an example URL."
+  },
+  "btn_add": {
+    "message": "Add Rule",
+    "description": "Button to add a new blocking rule."
+  },
+  "table_header_url": {
+    "message": "URL Pattern",
+    "description": "Column header for the rule URL."
+  },
+  "table_header_action": {
+    "message": "Action",
+    "description": "Column header for the delete/edit buttons."
+  },
+  "empty_state_title": {
+    "message": "No active rules.",
+    "description": "Title shown when the block list is empty."
+  },
+  "empty_state_desc": {
+    "message": "No restrictions applied.",
+    "description": "Description shown when the block list is empty."
+  },
+  "btn_remove": {
+    "message": "Remove",
+    "description": "Button text to delete a rule."
+  },
+  "aria_remove_rule": {
+    "message": "Remove rule for {pattern}",
+    "description": "Accessibility label for the delete button. {pattern} is the URL being deleted."
+  },
+  "alert_invalid_pattern": {
+    "message": "Invalid format. Please enter a valid URL pattern.",
+    "description": "Error message shown when user inputs a bad URL."
+  },
+  "alert_action_blocked": {
+    "message": "Operation denied by Absolute Mode.",
+    "description": "Error message shown when user tries to delete a rule while locked."
+  },
+  "alert_import_success": {
+    "message": "Configuration imported successfully.",
+    "description": "Success message after importing a JSON file."
+  },
+  "alert_import_error": {
+    "message": "Import failed. Invalid JSON format.",
+    "description": "Error message when import fails."
+  },
+  "btn_open_settings": {
+    "message": "Settings",
+    "description": "Button to navigate to the settings page."
+  },
+  "settings_title": {
+    "message": "Settings",
+    "description": "Main title of the settings page."
+  },
+  "settings_subtitle": {
+    "message": "Extension configuration.",
+    "description": "Subtitle of the settings page."
+  },
+  "loading_settings": {
+    "message": "Loading configuration...",
+    "description": "Loading state text."
+  },
+  "tab_general": {
+    "message": "General",
+    "description": "Tab label for general settings."
+  },
+  "tab_appearance": {
+    "message": "Appearance",
+    "description": "Tab label for visual settings."
+  },
+  "tab_security": {
+    "message": "Security",
+    "description": "Tab label for security/vault settings."
+  },
+  "general_behavior_title": {
+    "message": "Behavior",
+    "description": "Section title for behavioral settings."
+  },
+  "general_behavior_desc": {
+    "message": "Configure rule management and interactions.",
+    "description": "Description for behavioral settings."
+  },
+  "setting_double_check": {
+    "message": "Confirm deletion",
+    "description": "Label for the toggle to confirm before deleting."
+  },
+  "setting_double_check_desc": {
+    "message": "Require confirmation before removing a rule.",
+    "description": "Description for the confirm deletion toggle."
+  },
+  "appearance_interface_title": {
+    "message": "Interface",
+    "description": "Section title for interface settings."
+  },
+  "appearance_interface_desc": {
+    "message": "Visual and language preferences.",
+    "description": "Description for interface settings."
+  },
+  "setting_theme": {
+    "message": "Theme",
+    "description": "Label for theme selector."
+  },
+  "setting_theme_placeholder": {
+    "message": "Select theme",
+    "description": "Placeholder for theme dropdown."
+  },
+  "theme_system": {
+    "message": "System Default",
+    "description": "Option to follow OS theme."
+  },
+  "theme_dark": {
+    "message": "Dark (Midnight)",
+    "description": "Option for dark theme."
+  },
+  "theme_light": {
+    "message": "Light",
+    "description": "Option for light theme."
+  },
+  "setting_language": {
+    "message": "Language",
+    "description": "Label for language selector."
+  },
+  "setting_language_placeholder": {
+    "message": "Select language",
+    "description": "Placeholder for language dropdown."
+  },
+  "setting_language_note": {
+    "message": "Reload required to apply changes.",
+    "description": "Warning note about reloading for language change."
+  },
+  "security_config_title": {
+    "message": "Absolute Mode & Access",
+    "description": "Section title for security settings."
+  },
+  "security_config_desc": {
+    "message": "Configure lock duration and access control.",
+    "description": "Description for security settings."
+  },
+  "security_lock_duration": {
+    "message": "Lock Duration",
+    "description": "Label for the duration slider."
+  },
+  "security_duration_note": {
+    "message": "Determines how long the shield remains active once enabled.",
+    "description": "Note explaining the lock duration slider."
+  },
+  "security_require_password": {
+    "message": "Require Password",
+    "description": "Label for the password protection toggle."
+  },
+  "security_password_desc": {
+    "message": "Enforce authentication to modify rules or settings.",
+    "description": "Description for the password protection toggle."
+  },
+  "modal_delete_title": {
+    "message": "Delete Rule?",
+    "description": "Title of the delete confirmation modal."
+  },
+  "modal_delete_desc": {
+    "message": "This action removes the restriction immediately.",
+    "description": "Warning in the delete confirmation modal."
+  },
+  "btn_confirm_delete": {
+    "message": "Delete",
+    "description": "Confirm button in delete modal."
+  },
+  "time_unit_year": {
+    "message": "Year",
+    "description": "Time unit: Year."
+  },
+  "time_unit_months": {
+    "message": "Months",
+    "description": "Time unit: Months."
+  },
+  "time_unit_days": {
+    "message": "Days",
+    "description": "Time unit: Days."
+  },
+  "time_unit_hours": {
+    "message": "Hours",
+    "description": "Time unit: Hours."
+  },
+  "vault_title": {
+    "message": "Aegis Vault",
+    "description": "Title of the lock screen."
+  },
+  "vault_desc": {
+    "message": "Identity verification required.",
+    "description": "Subtitle of the lock screen."
+  },
+  "label_master_password": {
+    "message": "Master Password",
+    "description": "Label for password input on lock screen."
+  },
+  "btn_unlock": {
+    "message": "Unlock",
+    "description": "Button to unlock the vault."
+  },
+  "error_wrong_password": {
+    "message": "Incorrect password.",
+    "description": "Error shown on lock screen for bad password."
+  },
+  "link_forgot_password": {
+    "message": "Lost Password?",
+    "description": "Link to switch to recovery mode."
+  },
+  "recovery_title": {
+    "message": "Emergency Reset",
+    "description": "Title of the recovery screen."
+  },
+  "recovery_desc": {
+    "message": "Enter your Recovery Code to wipe security settings.",
+    "description": "Subtitle of the recovery screen."
+  },
+  "label_recovery_code": {
+    "message": "Recovery Code",
+    "description": "Label for recovery code input."
+  },
+  "btn_reset_vault": {
+    "message": "Reset Vault",
+    "description": "Button to execute the reset."
+  },
+  "btn_back_to_login": {
+    "message": "Back",
+    "description": "Button to go back to login screen."
+  },
+  "error_invalid_code": {
+    "message": "Invalid code.",
+    "description": "Error shown for bad recovery code."
+  },
+  "setup_password_title": {
+    "message": "Set Master Password",
+    "description": "Title for the password creation modal."
+  },
+  "setup_password_desc": {
+    "message": "Secure your rules and configuration.",
+    "description": "Subtitle for the password creation modal."
+  },
+  "label_new_password": {
+    "message": "New Password",
+    "description": "Label for new password input."
+  },
+  "label_confirm_password": {
+    "message": "Confirm",
+    "description": "Label for password confirmation input."
+  },
+  "btn_create_vault": {
+    "message": "Set Password",
+    "description": "Button to proceed to next step in password setup."
+  },
+  "error_password_mismatch": {
+    "message": "Passwords do not match.",
+    "description": "Error when passwords differ."
+  },
+  "recovery_step_title": {
+    "message": "Recovery Code",
+    "description": "Title for the recovery code display step."
+  },
+  "recovery_step_desc": {
+    "message": "Save this code safely. It is the only way to recover access if the password is lost.",
+    "description": "Warning about the importance of the code."
+  },
+  "recovery_warning": {
+    "message": "We do not store your password. Without this code, data cannot be recovered.",
+    "description": "Critical warning about data loss."
+  },
+  "btn_copy_code": {
+    "message": "Copy",
+    "description": "Button to copy code to clipboard."
+  },
+  "btn_copied": {
+    "message": "Copied",
+    "description": "Feedback text after copying."
+  },
+  "checkbox_saved_confirmation": {
+    "message": "I have saved my recovery code.",
+    "description": "Checkbox text to confirm the user saved the code."
+  },
+  "btn_finish_setup": {
+    "message": "Activate",
+    "description": "Final button to enable security."
+  }
 }

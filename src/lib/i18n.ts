@@ -97,6 +97,49 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     time_unit_months: { message: "Months" },
     time_unit_days: { message: "Days" },
     time_unit_hours: { message: "Hours" },
+
+    vault_title: { message: "Aegis Vault" },
+    vault_desc: { message: "Authentication required to access controls." },
+    label_master_password: { message: "Master Password" },
+    btn_unlock: { message: "Unlock Vault" },
+    error_wrong_password: { message: "Incorrect password." },
+    link_forgot_password: { message: "Forgot Password?" },
+
+    recovery_title: { message: "Emergency Reset" },
+    recovery_desc: {
+      message:
+        "Enter your Recovery Code to reset the vault. All security settings will be wiped.",
+    },
+    label_recovery_code: { message: "Recovery Code" },
+    btn_reset_vault: { message: "Reset Vault" },
+    btn_back_to_login: { message: "Back to Login" },
+    error_invalid_code: { message: "Invalid Recovery Code." },
+
+    setup_password_title: { message: "Setup Master Password" },
+    setup_password_desc: {
+      message: "Create a password to protect your rules and settings.",
+    },
+    label_new_password: { message: "New Password" },
+    label_confirm_password: { message: "Confirm Password" },
+    btn_create_vault: { message: "Create Vault" },
+    error_password_mismatch: { message: "Passwords do not match." },
+
+    recovery_step_title: { message: "Save your Recovery Code" },
+    recovery_step_desc: {
+      message:
+        "This is the ONLY way to recover your account if you forget your password.",
+    },
+    recovery_warning: {
+      message:
+        "We do not store your password. If you lose this code, you will lose access to your data.",
+    },
+
+    btn_copy_code: { message: "Copy Code" },
+    btn_copied: { message: "Copied!" },
+    checkbox_saved_confirmation: {
+      message: "I have securely saved my recovery code.",
+    },
+    btn_finish_setup: { message: "Finish & Activate" },
   },
 
   pt: {
@@ -200,6 +243,51 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     time_unit_months: { message: "Meses" },
     time_unit_days: { message: "Dias" },
     time_unit_hours: { message: "Horas" },
+
+    vault_title: { message: "Cofre do Aegis" },
+    vault_desc: {
+      message: "Autenticação necessária para acessar os controles.",
+    },
+    label_master_password: { message: "Senha Mestra" },
+    btn_unlock: { message: "Desbloquear Cofre" },
+    error_wrong_password: { message: "Senha incorreta." },
+    link_forgot_password: { message: "Esqueceu a senha?" },
+
+    recovery_title: { message: "Redefinição de Emergência" },
+    recovery_desc: {
+      message:
+        "Insira seu Código de Recuperação para redefinir o cofre. Todas as configurações de segurança serão apagadas.",
+    },
+    label_recovery_code: { message: "Código de Recuperação" },
+    btn_reset_vault: { message: "Redefinir Cofre" },
+    btn_back_to_login: { message: "Voltar ao Login" },
+    error_invalid_code: { message: "Código de recuperação inválido." },
+
+    setup_password_title: { message: "Configurar Senha Mestra" },
+    setup_password_desc: {
+      message: "Crie uma senha para proteger suas regras e configurações.",
+    },
+    label_new_password: { message: "Nova Senha" },
+    label_confirm_password: { message: "Confirmar Senha" },
+    btn_create_vault: { message: "Criar Cofre" },
+    error_password_mismatch: { message: "As senhas não coincidem." },
+
+    recovery_step_title: { message: "Salve seu Código de Recuperação" },
+    recovery_step_desc: {
+      message:
+        "Esta é a ÚNICA forma de recuperar sua conta se você esquecer a senha.",
+    },
+    recovery_warning: {
+      message:
+        "Não armazenamos sua senha. Se você perder este código, perderá o acesso aos seus dados.",
+    },
+
+    btn_copy_code: { message: "Copiar Código" },
+    btn_copied: { message: "Copiado!" },
+    checkbox_saved_confirmation: {
+      message: "Salvei meu código de recuperação com segurança.",
+    },
+    btn_finish_setup: { message: "Finalizar e Ativar" },
   },
 
   es: {
@@ -309,6 +397,52 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     time_unit_months: { message: "Meses" },
     time_unit_days: { message: "Días" },
     time_unit_hours: { message: "Horas" },
+
+    vault_title: { message: "Bóveda de Aegis" },
+    vault_desc: {
+      message: "Se requiere autenticación para acceder a los controles.",
+    },
+    label_master_password: { message: "Contraseña Maestra" },
+    btn_unlock: { message: "Desbloquear Bóveda" },
+    error_wrong_password: { message: "Contraseña incorrecta." },
+    link_forgot_password: { message: "¿Olvidaste tu contraseña?" },
+
+    recovery_title: { message: "Restablecimiento de Emergencia" },
+    recovery_desc: {
+      message:
+        "Introduce tu Código de Recuperación para restablecer la bóveda. Todas las configuraciones de seguridad serán eliminadas.",
+    },
+    label_recovery_code: { message: "Código de Recuperación" },
+    btn_reset_vault: { message: "Restablecer Bóveda" },
+    btn_back_to_login: { message: "Volver al Inicio de Sesión" },
+    error_invalid_code: { message: "Código de recuperación inválido." },
+
+    setup_password_title: { message: "Configurar Contraseña Maestra" },
+    setup_password_desc: {
+      message:
+        "Crea una contraseña para proteger tus reglas y configuraciones.",
+    },
+    label_new_password: { message: "Nueva Contraseña" },
+    label_confirm_password: { message: "Confirmar Contraseña" },
+    btn_create_vault: { message: "Crear Bóveda" },
+    error_password_mismatch: { message: "Las contraseñas no coinciden." },
+
+    recovery_step_title: { message: "Guarda tu Código de Recuperación" },
+    recovery_step_desc: {
+      message:
+        "Esta es la ÚNICA forma de recuperar tu cuenta si olvidas tu contraseña.",
+    },
+    recovery_warning: {
+      message:
+        "No almacenamos tu contraseña. Si pierdes este código, perderás el acceso a tus datos.",
+    },
+
+    btn_copy_code: { message: "Copiar Código" },
+    btn_copied: { message: "¡Copiado!" },
+    checkbox_saved_confirmation: {
+      message: "He guardado mi código de recuperación de forma segura.",
+    },
+    btn_finish_setup: { message: "Finalizar y Activar" },
   },
 
   de: {
@@ -420,6 +554,58 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     time_unit_months: { message: "Monate" },
     time_unit_days: { message: "Tage" },
     time_unit_hours: { message: "Stunden" },
+
+    vault_title: { message: "Aegis-Tresor" },
+    vault_desc: {
+      message:
+        "Authentifizierung erforderlich, um auf die Steuerungen zuzugreifen.",
+    },
+
+    label_master_password: { message: "Master-Passwort" },
+    btn_unlock: { message: "Tresor entsperren" },
+    error_wrong_password: { message: "Falsches Passwort." },
+    link_forgot_password: { message: "Passwort vergessen?" },
+
+    recovery_title: { message: "Notfall-Zurücksetzung" },
+    recovery_desc: {
+      message:
+        "Geben Sie Ihren Wiederherstellungscode ein, um den Tresor zurückzusetzen. Alle Sicherheitseinstellungen werden gelöscht.",
+    },
+    label_recovery_code: { message: "Wiederherstellungscode" },
+    btn_reset_vault: { message: "Tresor zurücksetzen" },
+    btn_back_to_login: { message: "Zurück zur Anmeldung" },
+    error_invalid_code: { message: "Ungültiger Wiederherstellungscode." },
+
+    setup_password_title: { message: "Master-Passwort einrichten" },
+    setup_password_desc: {
+      message:
+        "Erstellen Sie ein Passwort, um Ihre Regeln und Einstellungen zu schützen.",
+    },
+    label_new_password: { message: "Neues Passwort" },
+    label_confirm_password: { message: "Passwort bestätigen" },
+    btn_create_vault: { message: "Tresor erstellen" },
+    error_password_mismatch: {
+      message: "Die Passwörter stimmen nicht überein.",
+    },
+
+    recovery_step_title: {
+      message: "Speichern Sie Ihren Wiederherstellungscode",
+    },
+    recovery_step_desc: {
+      message:
+        "Dies ist der EINZIGE Weg, Ihr Konto wiederherzustellen, falls Sie Ihr Passwort vergessen.",
+    },
+    recovery_warning: {
+      message:
+        "Wir speichern Ihr Passwort nicht. Wenn Sie diesen Code verlieren, verlieren Sie den Zugriff auf Ihre Daten.",
+    },
+
+    btn_copy_code: { message: "Code kopieren" },
+    btn_copied: { message: "Kopiert!" },
+    checkbox_saved_confirmation: {
+      message: "Ich habe meinen Wiederherstellungscode sicher gespeichert.",
+    },
+    btn_finish_setup: { message: "Fertigstellen & Aktivieren" },
   },
 
   zh_CN: {
@@ -518,6 +704,40 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     time_unit_months: { message: "个月" },
     time_unit_days: { message: "天" },
     time_unit_hours: { message: "小时" },
+
+    vault_title: { message: "Aegis 密钥库" },
+    vault_desc: { message: "需要身份验证才能访问控制项。" },
+    label_master_password: { message: "主密码" },
+    btn_unlock: { message: "解锁密钥库" },
+    error_wrong_password: { message: "密码错误。" },
+    link_forgot_password: { message: "忘记密码？" },
+
+    recovery_title: { message: "紧急重置" },
+    recovery_desc: {
+      message: "请输入您的恢复代码以重置密钥库。所有安全设置将被清除。",
+    },
+    label_recovery_code: { message: "恢复代码" },
+    btn_reset_vault: { message: "重置密钥库" },
+    btn_back_to_login: { message: "返回登录" },
+    error_invalid_code: { message: "恢复代码无效。" },
+
+    setup_password_title: { message: "设置主密码" },
+    setup_password_desc: { message: "创建一个密码以保护您的规则和设置。" },
+    label_new_password: { message: "新密码" },
+    label_confirm_password: { message: "确认密码" },
+    btn_create_vault: { message: "创建密钥库" },
+    error_password_mismatch: { message: "两次输入的密码不一致。" },
+
+    recovery_step_title: { message: "保存您的恢复代码" },
+    recovery_step_desc: { message: "这是在您忘记密码时恢复账户的唯一方式。" },
+    recovery_warning: {
+      message: "我们不会存储您的密码。如果您丢失此代码，将无法访问您的数据。",
+    },
+
+    btn_copy_code: { message: "复制代码" },
+    btn_copied: { message: "已复制！" },
+    checkbox_saved_confirmation: { message: "我已安全保存我的恢复代码。" },
+    btn_finish_setup: { message: "完成并激活" },
   },
 };
 
