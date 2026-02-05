@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import type { BlockRule } from "../lib/rules";
 import { Button } from "./ui/button";
 import { Trash2, Lock } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 interface RuleItemProps {
   rule: BlockRule;
@@ -52,10 +53,13 @@ const RuleItem = ({
             variant="ghost"
             size="sm"
             onClick={() => onRemove(rule.id)}
-            className="text-muted-foreground hover:text-aegis-danger-500 hover:bg-destructive transition-all"
-            aria-label={`Remove rule for ${rule.urlPattern}`}
+            className="text-muted-foreground hover:text-aegis-danger-500  transition-all"
+            aria-label={t("aria_remove_rule").replace(
+              "{pattern}",
+              rule.urlPattern,
+            )}
           >
-            {isOptionsPage ? "Remove" : <Trash2 className="w-4 h-4" />}
+            {isOptionsPage ? t("btn_remove") : <Trash2 className="w-4 h-4" />}
           </Button>
         ) : (
           <Lock

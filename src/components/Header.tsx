@@ -3,6 +3,7 @@ import { ShieldAlert } from "lucide-react";
 import LockButton from "./LockButton";
 import LockTimer from "./LockTimer";
 import ActionButtons from "./ActionButtons";
+import { t } from "@/lib/i18n";
 
 interface HeaderProps {
   isOptionsPage: boolean;
@@ -59,13 +60,13 @@ const Header = ({
               "text-2xl": isOptionsPage,
             })}
           >
-            {isLocked ? "Aegis Locked" : "Aegis Blocker"}
+            {isLocked ? t("status_locked") : t("status_active")}
           </h1>
           {isOptionsPage && (
             <p className="text-muted-foreground text-sm font-medium">
               {isLocked
-                ? `Active Absolute Mode. Releases in: ${timeLeft}`
-                : "Manage your restrictions."}
+                ? `${t("header_desc_locked")} ${timeLeft}`
+                : t("header_desc_normal")}
             </p>
           )}
         </div>

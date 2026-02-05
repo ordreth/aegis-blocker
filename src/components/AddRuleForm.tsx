@@ -1,6 +1,7 @@
 import { Plus } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { t } from "@/lib/i18n";
 
 interface AddRuleFormProps {
   isOptionsPage: boolean;
@@ -23,16 +24,16 @@ const AddRuleForm = ({
         <Input
           value={inputValue}
           onChange={(e) => onInputChange(e.target.value)}
-          placeholder="Ex: reddit.com/r/memes"
+          placeholder={t("input_placeholder_example")}
           className="bg-background border-input text-foreground placeholder:text-muted-foreground flex-1"
         />
         <Button
           type="submit"
           disabled={isLoading || !inputValue}
-          className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold"
+          className="bg-primary hover:bg-primary/90 font-bold text-primary-foreground"
         >
           <Plus className="w-4 h-4 mr-2" />
-          Add
+          {t("btn_add")}
         </Button>
       </form>
     </div>

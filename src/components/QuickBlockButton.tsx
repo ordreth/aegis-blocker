@@ -1,5 +1,6 @@
 import { Ban } from "lucide-react";
-import { Button } from "./button";
+import { t } from "@/lib/i18n";
+import { Button } from "./ui/button";
 
 interface QuickBlockButtonProps {
   domain: string;
@@ -7,6 +8,10 @@ interface QuickBlockButtonProps {
 }
 
 const QuickBlockButton = ({ domain, onBlock }: QuickBlockButtonProps) => {
+  const template = t("btn_quick_block_template");
+
+  const [prefix, suffix] = template.split("{domain}");
+
   return (
     <div className="mb-2 animate-in fade-in slide-in-from-top-2 duration-300">
       <Button
@@ -17,7 +22,9 @@ const QuickBlockButton = ({ domain, onBlock }: QuickBlockButtonProps) => {
       >
         <Ban className="w-4 h-4 shrink-0" />
         <span>
-          Block <strong>{domain}</strong> now
+          {prefix}
+          <strong>{domain}</strong>
+          {suffix}
         </span>
       </Button>
     </div>

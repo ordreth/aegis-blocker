@@ -37,7 +37,8 @@ export async function getLockState(): Promise<LockState> {
 }
 
 export async function enableLock(): Promise<void> {
-  const twentyFourHours = 24 * 60 * 60 * 1000;
+  // const twentyFourHours = 24 * 60 * 60 * 1000;
+  const twentyFourHours = 60 * 1000;
   const unlockAt = Date.now() + twentyFourHours;
   const newState: LockState = { isLocked: true, unlockAt };
   await chrome.storage.local.set({ [LOCK_KEY]: newState });
@@ -136,7 +137,7 @@ export async function importRulesJSON(jsonString: string): Promise<void> {
       (item: any) =>
         item.urlPattern &&
         typeof item.urlPattern === "string" &&
-        !currentPatterns.has(item.urlPattern)
+        !currentPatterns.has(item.urlPattern),
     );
 
     if (newItems.length === 0) return;

@@ -20,7 +20,8 @@ import {
 import Header from "./components/Header";
 import AddRuleForm from "./components/AddRuleForm";
 import RulesList from "./components/RulesList";
-import QuickBlockButton from "./components/ui/QuickBlockButton";
+import QuickBlockButton from "./components/QuickBlockButton";
+import { getCurrentLocale, setDevLocale, t } from "./lib/i18n";
 
 interface AppProps {
   isOptionsPage?: boolean;
@@ -28,13 +29,61 @@ interface AppProps {
 
 const LOCK_CHECK_INTERVAL = 1000;
 
+const DevLanguageSwitcher = () => {
+  const isDev = true;
+
+  if (!isDev) return null;
+
+  const current = getCurrentLocale();
+
+  return (
+    <div className="fixed bottom-0 left-0 w-full bg-black/80 backdrop-blur text-white p-1 text-xs flex justify-center gap-2 z-50 border-t border-white/10">
+      <span className="opacity-50 self-center mr-2">Dev Locales:</span>
+
+      <button
+        onClick={() => setDevLocale(null)}
+        className={`px-2 py-1 rounded hover:bg-white/20 ${current.includes("System") ? "bg-primary text-black" : ""}`}
+      >
+        System (EN)
+      </button>
+
+      <button
+        onClick={() => setDevLocale("pt")}
+        className={`px-2 py-1 rounded hover:bg-white/20 ${current === "pt" ? "bg-primary text-black" : ""}`}
+      >
+        PT
+      </button>
+
+      <button
+        onClick={() => setDevLocale("es")}
+        className={`px-2 py-1 rounded hover:bg-white/20 ${current === "es" ? "bg-primary text-black" : ""}`}
+      >
+        ES
+      </button>
+
+      <button
+        onClick={() => setDevLocale("de")}
+        className={`px-2 py-1 rounded hover:bg-white/20 ${current === "de" ? "bg-primary text-black" : ""}`}
+      >
+        DE
+      </button>
+
+      <button
+        onClick={() => setDevLocale("zn_CH")}
+        className={`px-2 py-1 rounded hover:bg-white/20 ${current === "zn_CH" ? "bg-primary text-black" : ""}`}
+      >
+        zn_CH
+      </button>
+    </div>
+  );
+};
+
 export default function App({ isOptionsPage = false }: AppProps) {
   const [rules, setRules] = useState<BlockRule[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
-
   const [currentDomain, setCurrentDomain] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -43,7 +92,6 @@ export default function App({ isOptionsPage = false }: AppProps) {
     loadRules();
     checkLock();
     detectCurrentTab();
-
     const interval = setInterval(checkLock, LOCK_CHECK_INTERVAL);
     return () => clearInterval(interval);
   }, []);
@@ -56,10 +104,8 @@ export default function App({ isOptionsPage = false }: AppProps) {
   const checkLock = async () => {
     const state = await getLockState();
     setIsLocked(state.isLocked);
-
     if (state.isLocked && state.unlockAt) {
       const diff = state.unlockAt - Date.now();
-
       if (diff <= 0) {
         setTimeLeft("");
         setIsLocked(false);
@@ -73,17 +119,14 @@ export default function App({ isOptionsPage = false }: AppProps) {
 
   const detectCurrentTab = async () => {
     if (isOptionsPage) return;
-
     try {
       const tabs = await chrome.tabs.query({
         active: true,
         currentWindow: true,
       });
       const activeTab = tabs[0];
-
       if (activeTab && activeTab.url) {
         const urlObj = new URL(activeTab.url);
-
         if (
           urlObj.protocol === "chrome:" ||
           urlObj.protocol === "chrome-extension:"
@@ -92,12 +135,9 @@ export default function App({ isOptionsPage = false }: AppProps) {
 
         const cleanHostname = urlObj.hostname.replace(/^www\./, "");
         const path = urlObj.pathname;
-
         const search = urlObj.search;
         let fullUrl = cleanHostname + path + search;
-        if (fullUrl.endsWith("/")) {
-          fullUrl = fullUrl.slice(0, -1);
-        }
+        if (fullUrl.endsWith("/")) fullUrl = fullUrl.slice(0, -1);
 
         setCurrentDomain(fullUrl);
       }
@@ -114,7 +154,7 @@ export default function App({ isOptionsPage = false }: AppProps) {
       setCurrentDomain(null);
       await loadRules();
     } catch (error) {
-      console.error("Failed to quick block:", error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -127,16 +167,11 @@ export default function App({ isOptionsPage = false }: AppProps) {
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!inputValue.trim()) return;
-
     if (!isValidPattern(inputValue)) {
-      alert(
-        "For security reasons, the template should have at least 4 letters and include a period (e.g., site.com)",
-      );
+      alert(t("alert_invalid_pattern"));
       return;
     }
-
     setIsLoading(true);
     try {
       const cleanUrl = sanitizeUrl(inputValue);
@@ -144,7 +179,7 @@ export default function App({ isOptionsPage = false }: AppProps) {
       setInputValue("");
       await loadRules();
     } catch (error) {
-      console.error("Failed to add rule:", error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -155,7 +190,7 @@ export default function App({ isOptionsPage = false }: AppProps) {
       await removeRule(id);
       await loadRules();
     } catch (error) {
-      alert("You cannot remove rules during Absolute Mode.");
+      alert(t("alert_action_blocked"));
     }
   };
 
@@ -173,25 +208,21 @@ export default function App({ isOptionsPage = false }: AppProps) {
   ) => {
     const file = event.target.files?.[0];
     if (!file) return;
-
     try {
       const text = await readFileAsText(file);
       await importRulesJSON(text);
       await loadRules();
-      alert("Backup imported successfully!");
+      alert(t("alert_import_success"));
     } catch (error) {
-      alert("Error importing file. Please verify that it is a valid JSON.");
+      alert(t("alert_import_error"));
     } finally {
       event.target.value = "";
     }
   };
 
   const openOptions = () => {
-    if (chrome.runtime.openOptionsPage) {
-      chrome.runtime.openOptionsPage();
-    } else {
-      window.open(chrome.runtime.getURL("options.html"));
-    }
+    if (chrome.runtime.openOptionsPage) chrome.runtime.openOptionsPage();
+    else window.open(chrome.runtime.getURL("options.html"));
   };
 
   return (
@@ -210,7 +241,7 @@ export default function App({ isOptionsPage = false }: AppProps) {
         onChange={handleFileChange}
         className="hidden"
       />
-
+      <DevLanguageSwitcher />
       <Header
         isOptionsPage={isOptionsPage}
         isLocked={isLocked}

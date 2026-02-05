@@ -12,17 +12,15 @@ import {
 } from "./ui/alert-dialog";
 import { Button } from "./ui/button";
 import Parsers from "@/lib/parsers";
+import { t } from "@/lib/i18n";
 
 interface LockButtonProps {
   onEnableLock: () => void;
 }
 
-const descriptionText =
-  "By activating this mode, you {text-foreground:will not be able to remove} any existing rules for the next {text-foreground:24 hours}.\n\n" +
-  "You can still add new rules, but nothing can be undone until the time runs out.\n\n" +
-  "Are you sure you want to make this commitment?";
-
 const LockButton = ({ onEnableLock }: LockButtonProps) => {
+  const descriptionText = t("modal_description_styled");
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -30,7 +28,7 @@ const LockButton = ({ onEnableLock }: LockButtonProps) => {
           variant="outline"
           size="icon"
           className="border-input hover:bg-accent hover:text-primary text-primary transition-all duration-300"
-          title="Activate Absolute Mode"
+          title={t("btn_activate_absolute_mode_tooltip")}
         >
           <Unlock className="w-4 h-4" />
         </Button>
@@ -39,21 +37,21 @@ const LockButton = ({ onEnableLock }: LockButtonProps) => {
       <AlertDialogContent className="bg-card border-border text-card-foreground">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-destructive-foreground flex items-center gap-2">
-            <Lock className="w-5 h-5" /> Activate Absolute Mode?
+            <Lock className="w-5 h-5" /> {t("modal_title")}
           </AlertDialogTitle>
-          <AlertDialogDescription className="text-muted-foreground text-sm font-medium">
+          <AlertDialogDescription className="text-muted-foreground text-sm font-medium whitespace-pre-line">
             {Parsers.parseStyledText(descriptionText)}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel className="border-border bg-secondary text-secondary-foreground hover:bg-secondary/80">
-            Cancel
+            {t("btn_cancel")}
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={onEnableLock}
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90 border-none font-bold"
           >
-            Yes, Lock the Shield
+            {t("modal_confirm")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -2,6 +2,7 @@ import type { BlockRule } from "@/lib/rules";
 import { cn } from "@/lib/utils";
 import { Settings } from "lucide-react";
 import RuleItem from "./RuleItem";
+import { t } from "@/lib/i18n";
 
 interface RulesListProps {
   isOptionsPage: boolean;
@@ -22,18 +23,22 @@ const RulesList = ({
     >
       {isOptionsPage && (
         <div className="grid grid-cols-12 gap-4 p-4 border-b border-border text-muted-foreground text-sm font-medium">
-          <div className="col-span-10">URL pattern</div>
-          <div className="col-span-2 text-right">Action</div>
+          <div className="col-span-10">{t("table_header_url")}</div>
+          <div className="col-span-2 text-right">
+            {t("table_header_action")}
+          </div>
         </div>
       )}
 
-      <div className="space-y-2">
+      <div className={isOptionsPage ? "divide-y divide-border" : "space-y-2"}>
         {rules.length === 0 ? (
           <div className="text-center py-12 text-muted-foreground/50">
             <Settings className="w-12 h-12 mx-auto mb-3 opacity-20" />
-            <p className="text-foreground font-medium">No active rules.</p>
+            <p className="text-foreground font-medium">
+              {t("empty_state_title")}
+            </p>
             <p className="text-xs mt-1 text-muted-foreground">
-              Your browsing is now completely unrestricted.
+              {t("empty_state_desc")}
             </p>
           </div>
         ) : (
