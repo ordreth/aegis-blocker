@@ -8,8 +8,8 @@ export interface AppSettings {
 }
 
 const DEFAULT_SETTINGS: AppSettings = {
-  theme: "system",
-  language: "system",
+  theme: "dark",
+  language: "en",
   doubleCheckDelete: true,
   absoluteModeDurationHours: 24,
 };

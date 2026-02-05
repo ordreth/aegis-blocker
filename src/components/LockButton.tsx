@@ -13,13 +13,19 @@ import {
 import { Button } from "./ui/button";
 import Parsers from "@/lib/parsers";
 import { t } from "@/lib/i18n";
+import { useSettings } from "@/hooks";
+import { formatDuration } from "@/lib/utils";
 
 interface LockButtonProps {
   onEnableLock: () => void;
 }
 
 const LockButton = ({ onEnableLock }: LockButtonProps) => {
-  const descriptionText = t("modal_description_styled");
+  const { settings } = useSettings();
+
+  const durationText = formatDuration(settings.absoluteModeDurationHours);
+
+  const descriptionText = t("modal_description_styled", [durationText]);
 
   return (
     <AlertDialog>

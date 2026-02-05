@@ -86,7 +86,10 @@ export default function SettingsView({
           </TabsContent>
 
           <TabsContent value="security" className="mt-0 space-y-6">
-            <SettingsSecurity />
+            <SettingsSecurity
+              settings={settings}
+              updateSetting={updateSetting}
+            />
           </TabsContent>
         </div>
       </Tabs>

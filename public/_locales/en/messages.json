@@ -10,7 +10,9 @@
   "tooltip_unlocks_in": { "message": "Unlocks in" },
   "absolute_mode_active": { "message": "Absolute Mode Active" },
   "modal_title": { "message": "Activate Absolute Mode?" },
-  "modal_description_styled": { "message": "By activating this mode, you {text-foreground:will not be able to remove} any existing rules for the next {text-foreground:24 hours}.\n\nYou can still add new rules, but nothing can be undone until the time runs out.\n\nAre you sure you want to make this commitment?" },
+  "modal_description_styled": {
+    "message": "By activating this mode, you {text-foreground:will not be able to remove} any existing rules for the next {text-foreground:$1}.\n\nYou can still add new rules, but nothing can be undone until the time runs out.\n\nAre you sure you want to make this commitment?"
+  },
   "modal_confirm": { "message": "Yes, Lock the Shield" },
   "btn_activate_absolute_mode_tooltip": { "message": "Activate Absolute Mode" },
   "btn_export_backup": { "message": "Export Backup" },
@@ -38,7 +40,7 @@
 
   "tab_general": { "message": "General" },
   "tab_appearance": { "message": "Appearance & Language" },
-  "tab_security": { "message": "Security (Absolute Mode)" },
+  "tab_security": { "message": "Security" },
 
   "general_behavior_title": { "message": "Behavior" },
   "general_behavior_desc": { "message": "How Aegis handles rules and interactions." },
@@ -65,5 +67,10 @@
 
   "modal_delete_title": { "message": "Delete Rule?" },
   "modal_delete_desc": { "message": "This action cannot be undone immediately if you change your mind later." },
-  "btn_confirm_delete": { "message": "Delete" }
+  "btn_confirm_delete": { "message": "Delete" },
+
+  "time_unit_year": { "message": "Year" },
+  "time_unit_months": { "message": "Months" },
+  "time_unit_days": { "message": "Days" },
+  "time_unit_hours": { "message": "Hours" }
 }

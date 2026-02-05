@@ -37,13 +37,16 @@ export async function getLockState(): Promise<LockState> {
 }
 
 export async function enableLock(): Promise<void> {
-  // const twentyFourHours = 24 * 60 * 60 * 1000;
-  const twentyFourHours = 60 * 1000;
-  const unlockAt = Date.now() + twentyFourHours;
+  const settingsResult = await chrome.storage.sync.get(["aegis_settings"]);
+  const hours =
+    (settingsResult.aegis_settings as { absoluteModeDurationHours?: number })
+      ?.absoluteModeDurationHours || 24;
+  const durationMs = hours * 60 * 60 * 1000;
+
+  const unlockAt = Date.now() + durationMs;
   const newState: LockState = { isLocked: true, unlockAt };
   await chrome.storage.local.set({ [LOCK_KEY]: newState });
 }
-
 async function applyImmediateBlock(pattern: string) {
   try {
     const tabs = await chrome.tabs.query({});

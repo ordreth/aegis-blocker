@@ -97,10 +97,12 @@ export default function App({ isOptionsPage = false }: AppProps) {
     syncRules().catch(console.error);
   }, []);
 
+  console.log(settings);
+
   return (
     <main
       className={cn(
-        "w-100 h-125 bg-background flex flex-col text-foreground font-sans animate-in fade-in slide-in-from-right-4 duration-300",
+        "w-115 h-130 bg-background flex flex-col text-foreground font-sans animate-in fade-in slide-in-from-right-4 duration-300",
         {
           "w-full max-w-5xl mx-auto justify-start": isOptionsPage,
         },

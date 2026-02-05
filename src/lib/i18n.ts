@@ -16,7 +16,7 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     modal_title: { message: "Activate Absolute Mode?" },
     modal_description_styled: {
       message:
-        "By activating this mode, you {text-foreground:will not be able to remove} any existing rules for the next {text-foreground:24 hours}.\n\nYou can still add new rules, but nothing can be undone until the time runs out.\n\nAre you sure you want to make this commitment?",
+        "By activating this mode, you {text-foreground:will not be able to remove} any existing rules for the next {text-foreground:$1}.\n\nYou can still add new rules, but nothing can be undone until the time runs out.\n\nAre you sure you want to make this commitment?",
     },
     modal_confirm: { message: "Yes, Lock the Shield" },
     btn_activate_absolute_mode_tooltip: { message: "Activate Absolute Mode" },
@@ -49,7 +49,7 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
 
     tab_general: { message: "General" },
     tab_appearance: { message: "Appearance & Language" },
-    tab_security: { message: "Security (Absolute Mode)" },
+    tab_security: { message: "Security" },
 
     general_behavior_title: { message: "Behavior" },
     general_behavior_desc: {
@@ -92,6 +92,11 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
         "This action cannot be undone immediately if you change your mind later.",
     },
     btn_confirm_delete: { message: "Delete" },
+
+    time_unit_year: { message: "Year" },
+    time_unit_months: { message: "Months" },
+    time_unit_days: { message: "Days" },
+    time_unit_hours: { message: "Hours" },
   },
 
   pt: {
@@ -111,7 +116,7 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     modal_title: { message: "Ativar Modo Absoluto?" },
     modal_description_styled: {
       message:
-        "Ao ativar este modo, você {text-foreground:não poderá remover} nenhuma regra existente pelas próximas {text-foreground:24 horas}.\n\nVocê ainda poderá adicionar novas regras, mas nada poderá ser desfeito até o tempo acabar.\n\nTem certeza que deseja assumir este compromisso?",
+        "Ao ativar este modo, você {text-foreground:não poderá remover} nenhuma regra existente pelas próximas {text-foreground:$1}.\n\nVocê ainda poderá adicionar novas regras, mas nada poderá ser desfeito até o tempo acabar.\n\nTem certeza que deseja assumir este compromisso?",
     },
     modal_confirm: { message: "Sim, Travar o Escudo" },
     btn_activate_absolute_mode_tooltip: { message: "Ativar Modo Absoluto" },
@@ -145,7 +150,7 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
 
     tab_general: { message: "Geral" },
     tab_appearance: { message: "Aparência e Idioma" },
-    tab_security: { message: "Segurança (Modo Absoluto)" },
+    tab_security: { message: "Segurança" },
 
     general_behavior_title: { message: "Comportamento" },
     general_behavior_desc: {
@@ -190,6 +195,11 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
         "Esta ação não poderá ser desfeita imediatamente caso você mude de ideia depois.",
     },
     btn_confirm_delete: { message: "Excluir" },
+
+    time_unit_year: { message: "Ano" },
+    time_unit_months: { message: "Meses" },
+    time_unit_days: { message: "Dias" },
+    time_unit_hours: { message: "Horas" },
   },
 
   es: {
@@ -209,7 +219,7 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     modal_title: { message: "¿Activar Modo Absoluto?" },
     modal_description_styled: {
       message:
-        "Al activar este modo, {text-foreground:no podrás eliminar} ninguna regla existente durante las próximas {text-foreground:24 horas}.\n\nAún podrás añadir nuevas reglas, pero nada podrá deshacerse hasta que se agote el tiempo.\n\n¿Estás seguro de que quieres hacer este compromiso?",
+        "Al activar este modo, {text-foreground:no podrás eliminar} ninguna regla existente durante las próximas {text-foreground:$1}.\n\nAún podrás añadir nuevas reglas, pero nada podrá deshacerse hasta que se agote el tiempo.\n\n¿Estás seguro de que quieres hacer este compromiso?",
     },
     modal_confirm: { message: "Sí, Bloquear el Escudo" },
     btn_activate_absolute_mode_tooltip: { message: "Activar Modo Absoluto" },
@@ -247,7 +257,7 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
 
     tab_general: { message: "General" },
     tab_appearance: { message: "Apariencia e Idioma" },
-    tab_security: { message: "Seguridad (Modo Absoluto)" },
+    tab_security: { message: "Seguridad" },
 
     general_behavior_title: { message: "Comportamiento" },
     general_behavior_desc: {
@@ -294,6 +304,11 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
         "Esta acción no podrá deshacerse inmediatamente si cambias de opinión más tarde.",
     },
     btn_confirm_delete: { message: "Eliminar" },
+
+    time_unit_year: { message: "Año" },
+    time_unit_months: { message: "Meses" },
+    time_unit_days: { message: "Días" },
+    time_unit_hours: { message: "Horas" },
   },
 
   de: {
@@ -313,7 +328,7 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     modal_title: { message: "Absoluten Modus aktivieren?" },
     modal_description_styled: {
       message:
-        "Wenn Sie diesen Modus aktivieren, können Sie für die nächsten {text-foreground:24 Stunden} keine bestehenden Regeln {text-foreground:entfernen}.\n\nSie können weiterhin neue Regeln hinzufügen, aber nichts kann rückgängig gemacht werden, bis die Zeit abgelaufen ist.\n\nSind Sie sicher, dass Sie diese Verpflichtung eingehen wollen?",
+        "Wenn Sie diesen Modus aktivieren, können Sie für die nächsten {text-foreground:$1} keine bestehenden Regeln {text-foreground:entfernen}.\n\nSie können weiterhin neue Regeln hinzufügen, aber nichts kann rückgängig gemacht werden, bis die Zeit abgelaufen ist.\n\nSind Sie sicher, dass Sie diese Verpflichtung eingehen wollen?",
     },
     modal_confirm: { message: "Ja, Schild verriegeln" },
     btn_activate_absolute_mode_tooltip: {
@@ -352,7 +367,7 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
 
     tab_general: { message: "Allgemein" },
     tab_appearance: { message: "Erscheinungsbild & Sprache" },
-    tab_security: { message: "Sicherheit (Absoluter Modus)" },
+    tab_security: { message: "Sicherheit" },
 
     general_behavior_title: { message: "Verhalten" },
     general_behavior_desc: {
@@ -400,9 +415,14 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
         "Diese Aktion kann nicht sofort rückgängig gemacht werden, falls Sie es sich später anders überlegen.",
     },
     btn_confirm_delete: { message: "Löschen" },
+
+    time_unit_year: { message: "Jahr" },
+    time_unit_months: { message: "Monate" },
+    time_unit_days: { message: "Tage" },
+    time_unit_hours: { message: "Stunden" },
   },
 
-  zn_CH: {
+  zh_CN: {
     appName: { message: "Aegis 拦截器" },
     appDesc: { message: "绝对专注护盾。以神话般的力量阻挡干扰。" },
     status_locked: { message: "Aegis 已锁定" },
@@ -416,7 +436,7 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     modal_title: { message: "激活绝对模式？" },
     modal_description_styled: {
       message:
-        "激活此模式后，您在接下来的 {text-foreground:24 小时}内将{text-foreground:无法删除}任何现有规则。\n\n您仍然可以添加新规则，但在时间结束前无法撤销任何操作。\n\n您确定要做出这个承诺吗？",
+        "激活此模式后，您在接下来的 {text-foreground:$1} 内将{text-foreground:无法删除}任何现有规则。\n\n您仍然可以添加新规则，但在时间结束前无法撤销任何操作。\n\n您确定要做出这个承诺吗？",
     },
     modal_confirm: { message: "是的，锁定护盾" },
     btn_activate_absolute_mode_tooltip: { message: "激活绝对模式" },
@@ -449,7 +469,7 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
 
     tab_general: { message: "通用" },
     tab_appearance: { message: "外观与语言" },
-    tab_security: { message: "安全（绝对模式）" },
+    tab_security: { message: "安全" },
 
     general_behavior_title: { message: "行为" },
     general_behavior_desc: {
@@ -493,6 +513,11 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
       message: "如果您之后改变主意，此操作将无法立即撤销。",
     },
     btn_confirm_delete: { message: "删除" },
+
+    time_unit_year: { message: "年" },
+    time_unit_months: { message: "个月" },
+    time_unit_days: { message: "天" },
+    time_unit_hours: { message: "小时" },
   },
 };
 
@@ -510,15 +535,28 @@ export const getCurrentLocale = () => {
 };
 
 export const t = (key: string, placeholders?: string[]): string => {
-  const forcedLocale = localStorage.getItem("aegis_dev_locale");
+  let locale = localStorage.getItem("aegis_dev_locale");
 
-  if (forcedLocale && TEST_LOCALES[forcedLocale]) {
-    const entry = TEST_LOCALES[forcedLocale][key];
+  if (!locale && (typeof chrome === "undefined" || !chrome.i18n)) {
+    const browserLang = navigator.language.split("-")[0];
+    if (TEST_LOCALES[browserLang]) {
+      locale = browserLang;
+    } else {
+      locale = "en";
+    }
+  }
+
+  if (locale && TEST_LOCALES[locale]) {
+    const entry = TEST_LOCALES[locale][key];
     if (entry) {
       let msg = entry.message;
       if (placeholders) {
         placeholders.forEach((val, idx) => {
           msg = msg.replace(`$${idx + 1}`, val);
+        });
+        placeholders.forEach((val) => {
+          msg = msg.replace("{domain}", val);
+          msg = msg.replace("{pattern}", val);
         });
       }
       return msg;
