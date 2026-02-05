@@ -109,8 +109,31 @@ export async function removeRule(id: number): Promise<void> {
 
   await chrome.storage.local.set({ [STORAGE_KEY]: updatedRules });
 
+  await syncRules();
+}
+
+export async function syncRules(): Promise<void> {
+  const storedRules = await getRules();
+
+  const activeRules = await chrome.declarativeNetRequest.getDynamicRules();
+  const activeIds = activeRules.map((r) => r.id);
+
+  const rulesToAdd = storedRules.map((r) => ({
+    id: r.id,
+    priority: 1,
+    action: {
+      type: chrome.declarativeNetRequest.RuleActionType.REDIRECT,
+      redirect: { url: getBlockedPageUrl() },
+    },
+    condition: {
+      urlFilter: `*${r.urlPattern}*`,
+      resourceTypes: [chrome.declarativeNetRequest.ResourceType.MAIN_FRAME],
+    },
+  }));
+
   await chrome.declarativeNetRequest.updateDynamicRules({
-    removeRuleIds: [id],
+    removeRuleIds: activeIds,
+    addRules: rulesToAdd,
   });
 }
 

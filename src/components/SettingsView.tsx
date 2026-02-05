@@ -1,4 +1,3 @@
-import { useSettings } from "@/hooks/use-settings";
 import { Button } from "./ui/button";
 import { ArrowLeft, Globe, Monitor, Shield } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
@@ -6,21 +5,22 @@ import SettingsAppearance from "./settings/SettingsAppearance";
 import SettingsGeneral from "./settings/SettingsGeneral";
 import SettingsSecurity from "./settings/SettingsSecurity";
 import { t } from "@/lib/i18n";
+import type { AppSettings } from "@/hooks/useSettings";
 
 interface SettingsViewProps {
   onBack: () => void;
+  settings: AppSettings;
+  updateSetting: <K extends keyof AppSettings>(
+    key: K,
+    value: AppSettings[K],
+  ) => void;
 }
 
-export default function SettingsView({ onBack }: SettingsViewProps) {
-  const { settings, updateSetting, loading } = useSettings();
-
-  if (loading)
-    return (
-      <div className="p-8 text-center text-muted-foreground">
-        {t("loading_settings")}
-      </div>
-    );
-
+export default function SettingsView({
+  onBack,
+  settings,
+  updateSetting,
+}: SettingsViewProps) {
   return (
     <div className="flex flex-col h-full animate-in fade-in slide-in-from-right-4 duration-300">
       <div className="flex items-center gap-4 mb-6 pb-4 border-b border-border">

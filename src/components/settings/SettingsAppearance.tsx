@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { t } from "@/lib/i18n";
-import type { AppSettings } from "@/hooks/use-settings";
+import type { AppSettings } from "@/hooks/useSettings";
 
 interface SettingsAppearanceProps {
   settings: AppSettings;

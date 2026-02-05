@@ -1,5 +1,3 @@
-// --- DICIONÁRIOS DE TESTE (Copie o conteúdo dos JSONs aqui) ---
-// Em produção, isso não será usado, o Chrome fará o trabalho.
 const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
   en: {
     appName: { message: "Aegis Blocker" },
@@ -87,6 +85,13 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     security_password_desc: {
       message: "Require a password to unlock or remove rules.",
     },
+
+    modal_delete_title: { message: "Delete Rule?" },
+    modal_delete_desc: {
+      message:
+        "This action cannot be undone immediately if you change your mind later.",
+    },
+    btn_confirm_delete: { message: "Delete" },
   },
 
   pt: {
@@ -178,6 +183,13 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     security_password_desc: {
       message: "Exigir senha para desbloquear ou remover regras.",
     },
+
+    modal_delete_title: { message: "Excluir regra?" },
+    modal_delete_desc: {
+      message:
+        "Esta ação não poderá ser desfeita imediatamente caso você mude de ideia depois.",
+    },
+    btn_confirm_delete: { message: "Excluir" },
   },
 
   es: {
@@ -275,6 +287,13 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     security_password_desc: {
       message: "Requiere una contraseña para desbloquear o eliminar reglas.",
     },
+
+    modal_delete_title: { message: "¿Eliminar regla?" },
+    modal_delete_desc: {
+      message:
+        "Esta acción no podrá deshacerse inmediatamente si cambias de opinión más tarde.",
+    },
+    btn_confirm_delete: { message: "Eliminar" },
   },
 
   de: {
@@ -374,6 +393,13 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
       message:
         "Ein Passwort zum Entsperren oder Entfernen von Regeln verlangen.",
     },
+
+    modal_delete_title: { message: "Regel löschen?" },
+    modal_delete_desc: {
+      message:
+        "Diese Aktion kann nicht sofort rückgängig gemacht werden, falls Sie es sich später anders überlegen.",
+    },
+    btn_confirm_delete: { message: "Löschen" },
   },
 
   zn_CH: {
@@ -461,6 +487,12 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     security_password_desc: {
       message: "解锁或移除规则时需要输入密码。",
     },
+
+    modal_delete_title: { message: "删除规则？" },
+    modal_delete_desc: {
+      message: "如果您之后改变主意，此操作将无法立即撤销。",
+    },
+    btn_confirm_delete: { message: "删除" },
   },
 };
 

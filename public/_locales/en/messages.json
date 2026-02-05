@@ -61,5 +61,9 @@
   "security_lock_duration": { "message": "Lock Duration" },
   "security_duration_note": { "message": "Adjustable duration coming soon. Currently fixed at 24h." },
   "security_require_password": { "message": "Require Password" },
-  "security_password_desc": { "message": "Require a password to unlock or remove rules." }
+  "security_password_desc": { "message": "Require a password to unlock or remove rules." },
+
+  "modal_delete_title": { "message": "Delete Rule?" },
+  "modal_delete_desc": { "message": "This action cannot be undone immediately if you change your mind later." },
+  "btn_confirm_delete": { "message": "Delete" }
 }

@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import type { AppSettings } from "@/hooks/use-settings";
+import type { AppSettings } from "@/hooks/useSettings";
 import { t } from "@/lib/i18n";
 
 interface SettingsGeneralProps {

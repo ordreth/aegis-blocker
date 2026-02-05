@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { t } from "@/lib/i18n";
-import type { AppSettings } from "@/hooks/use-settings";
+import type { AppSettings } from "@/hooks/useSettings";
 
 interface SettingsSecurityProps {
   settings: AppSettings;
