@@ -1,4 +1,4 @@
-import { Download, Upload, ExternalLink } from "lucide-react";
+import { Download, Upload, ExternalLink, Settings } from "lucide-react";
 import { Button } from "./ui/button";
 import { t } from "@/lib/i18n";
 
@@ -6,12 +6,16 @@ interface ActionButtonsProps {
   onExport: () => void;
   onImport: () => void;
   onOpenOptions?: () => void;
+  onOpenSettings?: () => void;
+  isOptionsPage?: boolean;
 }
 
 const ActionButtons = ({
   onExport,
   onImport,
   onOpenOptions,
+  onOpenSettings,
+  isOptionsPage,
 }: ActionButtonsProps) => {
   return (
     <>
@@ -34,6 +38,17 @@ const ActionButtons = ({
       >
         <Upload className="w-4 h-4" />
       </Button>
+      {isOptionsPage && (
+        <Button
+          variant={"outline"}
+          size="icon"
+          onClick={onOpenSettings}
+          title={t("btn_expand_options")}
+          className="text-muted-foreground hover:text-foreground hover:bg-accent border-input"
+        >
+          <Settings className="w-4 h-4" />
+        </Button>
+      )}
 
       {onOpenOptions && (
         <Button

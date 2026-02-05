@@ -44,6 +44,49 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     alert_import_error: {
       message: "Error importing file. Check if the JSON is valid.",
     },
+    btn_open_settings: { message: "Settings" },
+    settings_title: { message: "Settings" },
+    settings_subtitle: { message: "Customize your Aegis experience" },
+    loading_settings: { message: "Loading settings..." },
+
+    tab_general: { message: "General" },
+    tab_appearance: { message: "Appearance & Language" },
+    tab_security: { message: "Security (Absolute Mode)" },
+
+    general_behavior_title: { message: "Behavior" },
+    general_behavior_desc: {
+      message: "How Aegis handles rules and interactions.",
+    },
+    setting_double_check: { message: "Double-check deletion" },
+    setting_double_check_desc: {
+      message: "Ask for confirmation before removing a rule.",
+    },
+
+    appearance_interface_title: { message: "Interface" },
+    appearance_interface_desc: {
+      message: "Make Aegis look and speak the way you want.",
+    },
+    setting_theme: { message: "Theme" },
+    setting_theme_placeholder: { message: "Select theme" },
+    theme_system: { message: "System Default" },
+    theme_dark: { message: "Dark (Midnight)" },
+    theme_light: { message: "Light" },
+    setting_language: { message: "Language" },
+    setting_language_placeholder: { message: "Select language" },
+    setting_language_note: {
+      message: "Note: Changing language will reload the extension.",
+    },
+
+    security_config_title: { message: "Absolute Mode Configuration" },
+    security_config_desc: { message: "Customize the intensity of the lock." },
+    security_lock_duration: { message: "Lock Duration" },
+    security_duration_note: {
+      message: "Adjustable duration coming soon. Currently fixed at 24h.",
+    },
+    security_require_password: { message: "Require Password" },
+    security_password_desc: {
+      message: "Require a password to unlock or remove rules.",
+    },
   },
 
   pt: {
@@ -89,6 +132,51 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     alert_import_success: { message: "Backup importado com sucesso!" },
     alert_import_error: {
       message: "Erro ao importar arquivo. Verifique se o JSON é válido.",
+    },
+    btn_open_settings: { message: "Configurações" },
+    settings_title: { message: "Configurações" },
+    settings_subtitle: { message: "Personalize sua experiência com o Aegis" },
+    loading_settings: { message: "Carregando configurações..." },
+
+    tab_general: { message: "Geral" },
+    tab_appearance: { message: "Aparência e Idioma" },
+    tab_security: { message: "Segurança (Modo Absoluto)" },
+
+    general_behavior_title: { message: "Comportamento" },
+    general_behavior_desc: {
+      message: "Como o Aegis lida com regras e interações.",
+    },
+    setting_double_check: { message: "Confirmar remoção" },
+    setting_double_check_desc: {
+      message: "Solicitar confirmação antes de remover uma regra.",
+    },
+
+    appearance_interface_title: { message: "Interface" },
+    appearance_interface_desc: {
+      message: "Faça o Aegis parecer e falar do jeito que você quiser.",
+    },
+    setting_theme: { message: "Tema" },
+    setting_theme_placeholder: { message: "Selecionar tema" },
+    theme_system: { message: "Padrão do Sistema" },
+    theme_dark: { message: "Escuro (Meia-noite)" },
+    theme_light: { message: "Claro" },
+    setting_language: { message: "Idioma" },
+    setting_language_placeholder: { message: "Selecionar idioma" },
+    setting_language_note: {
+      message: "Nota: Alterar o idioma recarrega a extensão.",
+    },
+
+    security_config_title: { message: "Configuração do Modo Absoluto" },
+    security_config_desc: {
+      message: "Personalize a intensidade do bloqueio.",
+    },
+    security_lock_duration: { message: "Duração do Bloqueio" },
+    security_duration_note: {
+      message: "Duração ajustável em breve. Atualmente fixo em 24h.",
+    },
+    security_require_password: { message: "Exigir Senha" },
+    security_password_desc: {
+      message: "Exigir senha para desbloquear ou remover regras.",
     },
   },
 
@@ -137,6 +225,55 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     },
     alert_import_error: {
       message: "Error al importar el archivo. Verifica si el JSON es válido.",
+    },
+    btn_open_settings: { message: "Ajustes" },
+    settings_title: { message: "Configuración" },
+    settings_subtitle: {
+      message: "Personaliza tu experiencia con Aegis",
+    },
+    loading_settings: { message: "Cargando configuración..." },
+
+    tab_general: { message: "General" },
+    tab_appearance: { message: "Apariencia e Idioma" },
+    tab_security: { message: "Seguridad (Modo Absoluto)" },
+
+    general_behavior_title: { message: "Comportamiento" },
+    general_behavior_desc: {
+      message: "Cómo Aegis gestiona reglas e interacciones.",
+    },
+    setting_double_check: { message: "Confirmar eliminación" },
+    setting_double_check_desc: {
+      message: "Solicitar confirmación antes de eliminar una regla.",
+    },
+
+    appearance_interface_title: { message: "Interfaz" },
+    appearance_interface_desc: {
+      message: "Haz que Aegis se vea y hable como tú quieras.",
+    },
+    setting_theme: { message: "Tema" },
+    setting_theme_placeholder: { message: "Seleccionar tema" },
+    theme_system: { message: "Predeterminado del sistema" },
+    theme_dark: { message: "Oscuro (Medianoche)" },
+    theme_light: { message: "Claro" },
+    setting_language: { message: "Idioma" },
+    setting_language_placeholder: { message: "Seleccionar idioma" },
+    setting_language_note: {
+      message: "Nota: Cambiar el idioma recargará la extensión.",
+    },
+
+    security_config_title: {
+      message: "Configuración del Modo Absoluto",
+    },
+    security_config_desc: {
+      message: "Personaliza la intensidad del bloqueo.",
+    },
+    security_lock_duration: { message: "Duración del Bloqueo" },
+    security_duration_note: {
+      message: "Duración ajustable próximamente. Actualmente fija en 24h.",
+    },
+    security_require_password: { message: "Requerir contraseña" },
+    security_password_desc: {
+      message: "Requiere una contraseña para desbloquear o eliminar reglas.",
     },
   },
 
@@ -187,6 +324,56 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
       message:
         "Fehler beim Importieren der Datei. Prüfen Sie, ob das JSON gültig ist.",
     },
+    btn_open_settings: { message: "Einstellungen" },
+    settings_title: { message: "Einstellungen" },
+    settings_subtitle: {
+      message: "Passen Sie Ihr Aegis-Erlebnis an",
+    },
+    loading_settings: { message: "Einstellungen werden geladen..." },
+
+    tab_general: { message: "Allgemein" },
+    tab_appearance: { message: "Erscheinungsbild & Sprache" },
+    tab_security: { message: "Sicherheit (Absoluter Modus)" },
+
+    general_behavior_title: { message: "Verhalten" },
+    general_behavior_desc: {
+      message: "Wie Aegis Regeln und Interaktionen behandelt.",
+    },
+    setting_double_check: { message: "Löschen bestätigen" },
+    setting_double_check_desc: {
+      message: "Vor dem Entfernen einer Regel eine Bestätigung anfordern.",
+    },
+
+    appearance_interface_title: { message: "Oberfläche" },
+    appearance_interface_desc: {
+      message: "Lassen Sie Aegis so aussehen und sprechen, wie Sie möchten.",
+    },
+    setting_theme: { message: "Design" },
+    setting_theme_placeholder: { message: "Design auswählen" },
+    theme_system: { message: "Systemstandard" },
+    theme_dark: { message: "Dunkel (Mitternacht)" },
+    theme_light: { message: "Hell" },
+    setting_language: { message: "Sprache" },
+    setting_language_placeholder: { message: "Sprache auswählen" },
+    setting_language_note: {
+      message: "Hinweis: Das Ändern der Sprache lädt die Erweiterung neu.",
+    },
+
+    security_config_title: {
+      message: "Konfiguration des Absoluten Modus",
+    },
+    security_config_desc: {
+      message: "Passen Sie die Intensität der Sperre an.",
+    },
+    security_lock_duration: { message: "Sperrdauer" },
+    security_duration_note: {
+      message: "Einstellbare Dauer kommt bald. Aktuell fest auf 24h.",
+    },
+    security_require_password: { message: "Passwort erforderlich" },
+    security_password_desc: {
+      message:
+        "Ein Passwort zum Entsperren oder Entfernen von Regeln verlangen.",
+    },
   },
 
   zn_CH: {
@@ -228,6 +415,51 @@ const TEST_LOCALES: Record<string, Record<string, { message: string }>> = {
     alert_import_success: { message: "备份导入成功！" },
     alert_import_error: {
       message: "导入文件出错。请检查 JSON 是否有效。",
+    },
+    btn_open_settings: { message: "设置" },
+    settings_title: { message: "设置" },
+    settings_subtitle: { message: "自定义你的 Aegis 使用体验" },
+    loading_settings: { message: "正在加载设置…" },
+
+    tab_general: { message: "通用" },
+    tab_appearance: { message: "外观与语言" },
+    tab_security: { message: "安全（绝对模式）" },
+
+    general_behavior_title: { message: "行为" },
+    general_behavior_desc: {
+      message: "Aegis 如何处理规则和交互。",
+    },
+    setting_double_check: { message: "删除前确认" },
+    setting_double_check_desc: {
+      message: "在移除规则前请求确认。",
+    },
+
+    appearance_interface_title: { message: "界面" },
+    appearance_interface_desc: {
+      message: "让 Aegis 按你想要的方式显示和交流。",
+    },
+    setting_theme: { message: "主题" },
+    setting_theme_placeholder: { message: "选择主题" },
+    theme_system: { message: "系统默认" },
+    theme_dark: { message: "深色（午夜）" },
+    theme_light: { message: "浅色" },
+    setting_language: { message: "语言" },
+    setting_language_placeholder: { message: "选择语言" },
+    setting_language_note: {
+      message: "注意：更改语言将重新加载扩展。",
+    },
+
+    security_config_title: { message: "绝对模式配置" },
+    security_config_desc: {
+      message: "自定义锁定的强度。",
+    },
+    security_lock_duration: { message: "锁定时长" },
+    security_duration_note: {
+      message: "可调节时长即将推出，目前固定为 24 小时。",
+    },
+    security_require_password: { message: "需要密码" },
+    security_password_desc: {
+      message: "解锁或移除规则时需要输入密码。",
     },
   },
 };

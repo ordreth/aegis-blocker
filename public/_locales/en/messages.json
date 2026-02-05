@@ -29,5 +29,37 @@
   "alert_invalid_pattern": { "message": "For security reasons, the pattern must match a URL structure." },
   "alert_action_blocked": { "message": "Action blocked by Absolute Mode." },
   "alert_import_success": { "message": "Backup imported successfully!" },
-  "alert_import_error": { "message": "Error importing file. Check if the JSON is valid." }
+  "alert_import_error": { "message": "Error importing file. Check if the JSON is valid." },
+  "btn_open_settings": { "message": "Settings" },
+
+  "settings_title": { "message": "Settings" },
+  "settings_subtitle": { "message": "Customize your Aegis experience" },
+  "loading_settings": { "message": "Loading settings..." },
+
+  "tab_general": { "message": "General" },
+  "tab_appearance": { "message": "Appearance & Language" },
+  "tab_security": { "message": "Security (Absolute Mode)" },
+
+  "general_behavior_title": { "message": "Behavior" },
+  "general_behavior_desc": { "message": "How Aegis handles rules and interactions." },
+  "setting_double_check": { "message": "Double-check deletion" },
+  "setting_double_check_desc": { "message": "Ask for confirmation before removing a rule." },
+
+  "appearance_interface_title": { "message": "Interface" },
+  "appearance_interface_desc": { "message": "Make Aegis look and speak the way you want." },
+  "setting_theme": { "message": "Theme" },
+  "setting_theme_placeholder": { "message": "Select theme" },
+  "theme_system": { "message": "System Default" },
+  "theme_dark": { "message": "Dark (Midnight)" },
+  "theme_light": { "message": "Light" },
+  "setting_language": { "message": "Language" },
+  "setting_language_placeholder": { "message": "Select language" },
+  "setting_language_note": { "message": "Note: Changing language will reload the extension." },
+
+  "security_config_title": { "message": "Absolute Mode Configuration" },
+  "security_config_desc": { "message": "Customize the intensity of the lock." },
+  "security_lock_duration": { "message": "Lock Duration" },
+  "security_duration_note": { "message": "Adjustable duration coming soon. Currently fixed at 24h." },
+  "security_require_password": { "message": "Require Password" },
+  "security_password_desc": { "message": "Require a password to unlock or remove rules." }
 }

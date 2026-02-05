@@ -21,62 +21,14 @@ import Header from "./components/Header";
 import AddRuleForm from "./components/AddRuleForm";
 import RulesList from "./components/RulesList";
 import QuickBlockButton from "./components/QuickBlockButton";
-import { getCurrentLocale, setDevLocale, t } from "./lib/i18n";
+import { t } from "./lib/i18n";
+import SettingsView from "./components/SettingsView";
 
 interface AppProps {
   isOptionsPage?: boolean;
 }
 
 const LOCK_CHECK_INTERVAL = 1000;
-
-const DevLanguageSwitcher = () => {
-  const isDev = true;
-
-  if (!isDev) return null;
-
-  const current = getCurrentLocale();
-
-  return (
-    <div className="fixed bottom-0 left-0 w-full bg-black/80 backdrop-blur text-white p-1 text-xs flex justify-center gap-2 z-50 border-t border-white/10">
-      <span className="opacity-50 self-center mr-2">Dev Locales:</span>
-
-      <button
-        onClick={() => setDevLocale(null)}
-        className={`px-2 py-1 rounded hover:bg-white/20 ${current.includes("System") ? "bg-primary text-black" : ""}`}
-      >
-        System (EN)
-      </button>
-
-      <button
-        onClick={() => setDevLocale("pt")}
-        className={`px-2 py-1 rounded hover:bg-white/20 ${current === "pt" ? "bg-primary text-black" : ""}`}
-      >
-        PT
-      </button>
-
-      <button
-        onClick={() => setDevLocale("es")}
-        className={`px-2 py-1 rounded hover:bg-white/20 ${current === "es" ? "bg-primary text-black" : ""}`}
-      >
-        ES
-      </button>
-
-      <button
-        onClick={() => setDevLocale("de")}
-        className={`px-2 py-1 rounded hover:bg-white/20 ${current === "de" ? "bg-primary text-black" : ""}`}
-      >
-        DE
-      </button>
-
-      <button
-        onClick={() => setDevLocale("zn_CH")}
-        className={`px-2 py-1 rounded hover:bg-white/20 ${current === "zn_CH" ? "bg-primary text-black" : ""}`}
-      >
-        zn_CH
-      </button>
-    </div>
-  );
-};
 
 export default function App({ isOptionsPage = false }: AppProps) {
   const [rules, setRules] = useState<BlockRule[]>([]);
@@ -85,8 +37,16 @@ export default function App({ isOptionsPage = false }: AppProps) {
   const [isLocked, setIsLocked] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
   const [currentDomain, setCurrentDomain] = useState<string | null>(null);
+  const [currentView, setCurrentView] = useState<"dashboard" | "settings">(
+    "dashboard",
+  );
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleBackToDashboard = () => setCurrentView("dashboard");
+  const handleOpenSettings = () => {
+    setCurrentView("settings");
+  };
 
   useEffect(() => {
     loadRules();
@@ -228,55 +188,65 @@ export default function App({ isOptionsPage = false }: AppProps) {
   return (
     <main
       className={cn(
-        "w-100 h-125 bg-background flex flex-col text-foreground font-sans",
+        "w-100 h-125 bg-background flex flex-col text-foreground font-sans animate-in fade-in slide-in-from-right-4 duration-300",
         {
           "w-full max-w-5xl mx-auto justify-start": isOptionsPage,
         },
       )}
     >
-      <input
-        type="file"
-        accept=".json"
-        ref={fileInputRef}
-        onChange={handleFileChange}
-        className="hidden"
-      />
-      <DevLanguageSwitcher />
-      <Header
-        isOptionsPage={isOptionsPage}
-        isLocked={isLocked}
-        timeLeft={timeLeft}
-        onEnableLock={handleEnableLock}
-        onExport={handleExport}
-        onImport={handleImportClick}
-        onOpenOptions={!isOptionsPage ? openOptions : undefined}
-      />
+      {isOptionsPage && currentView === "settings" ? (
+        <div className="flex-1 p-6">
+          <SettingsView onBack={handleBackToDashboard} />
+        </div>
+      ) : (
+        <>
+          <input
+            type="file"
+            accept=".json"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            className="hidden"
+          />
+          <Header
+            isOptionsPage={isOptionsPage}
+            isLocked={isLocked}
+            timeLeft={timeLeft}
+            onEnableLock={handleEnableLock}
+            onExport={handleExport}
+            onImport={handleImportClick}
+            onOpenOptions={!isOptionsPage ? openOptions : undefined}
+            onOpenSettings={handleOpenSettings}
+          />
+          <div
+            className={cn("flex-1 overflow-hidden flex flex-col p-4 gap-4", {
+              "bg-aegis-neutral-900/50 border border-border rounded-xl p-6 flex-none shadown-none z-auto container-size":
+                isOptionsPage,
+            })}
+          >
+            {!isOptionsPage && currentDomain && (
+              <QuickBlockButton
+                domain={currentDomain}
+                onBlock={handleQuickBlock}
+              />
+            )}
 
-      <div
-        className={cn("flex-1 overflow-hidden flex flex-col p-4 gap-4", {
-          "bg-aegis-neutral-900/50 border border-border rounded-xl p-6 flex-none shadown-none z-auto container-size":
-            isOptionsPage,
-        })}
-      >
-        {!isOptionsPage && currentDomain && (
-          <QuickBlockButton domain={currentDomain} onBlock={handleQuickBlock} />
-        )}
+            <AddRuleForm
+              isOptionsPage={isOptionsPage}
+              inputValue={inputValue}
+              isLoading={isLoading}
+              onInputChange={setInputValue}
+              onSubmit={handleAdd}
+            />
 
-        <AddRuleForm
-          isOptionsPage={isOptionsPage}
-          inputValue={inputValue}
-          isLoading={isLoading}
-          onInputChange={setInputValue}
-          onSubmit={handleAdd}
-        />
-
-        <RulesList
-          isOptionsPage={isOptionsPage}
-          rules={rules}
-          isLocked={isLocked}
-          onRemove={handleRemove}
-        />
-      </div>
+            <RulesList
+              isOptionsPage={isOptionsPage}
+              rules={rules}
+              isLocked={isLocked}
+              onRemove={handleRemove}
+            />
+          </div>
+        </>
+      )}
     </main>
   );
 }

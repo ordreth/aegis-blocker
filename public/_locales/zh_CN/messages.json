@@ -28,5 +28,6 @@
   "alert_invalid_pattern": { "message": "出于安全原因，该模式必须符合 URL 结构。" },
   "alert_action_blocked": { "message": "操作被绝对模式阻止。" },
   "alert_import_success": { "message": "备份导入成功！" },
-  "alert_import_error": { "message": "导入文件出错。请检查 JSON 是否有效。" }
+  "alert_import_error": { "message": "导入文件出错。请检查 JSON 是否有效。" },
+  "btn_open_settings": { "message": "设置" }
 }

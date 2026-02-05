@@ -13,6 +13,7 @@ interface HeaderProps {
   onExport: () => void;
   onImport: () => void;
   onOpenOptions?: () => void;
+  onOpenSettings?: () => void;
 }
 
 const Header = ({
@@ -23,6 +24,7 @@ const Header = ({
   onExport,
   onImport,
   onOpenOptions,
+  onOpenSettings,
 }: HeaderProps) => {
   return (
     <header
@@ -82,6 +84,8 @@ const Header = ({
           onExport={onExport}
           onImport={onImport}
           onOpenOptions={onOpenOptions}
+          onOpenSettings={onOpenSettings}
+          isOptionsPage={isOptionsPage}
         />
       </div>
     </header>

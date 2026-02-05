@@ -28,5 +28,6 @@
   "alert_invalid_pattern": { "message": "Aus Sicherheitsgründen muss das Muster einer URL-Struktur entsprechen." },
   "alert_action_blocked": { "message": "Aktion durch Absoluten Modus blockiert." },
   "alert_import_success": { "message": "Backup erfolgreich importiert!" },
-  "alert_import_error": { "message": "Fehler beim Importieren der Datei. Prüfen Sie, ob das JSON gültig ist." }
+  "alert_import_error": { "message": "Fehler beim Importieren der Datei. Prüfen Sie, ob das JSON gültig ist." },
+  "btn_open_settings": { "message": "Einstellungen" }
 }
