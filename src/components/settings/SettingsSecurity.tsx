@@ -12,6 +12,10 @@ import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
 import { t } from "@/lib/i18n";
 import type { AppSettings } from "@/hooks/useSettings";
+import { formatDuration } from "@/lib/utils";
+import { useSecurity } from "@/hooks";
+import { useState } from "react";
+import PasswordSetupModal from "../modals/PasswordSetupModal";
 
 interface SettingsSecurityProps {
   settings: AppSettings;
@@ -21,23 +25,25 @@ interface SettingsSecurityProps {
   ) => void;
 }
 
-const formatDuration = (hours: number) => {
-  const days = Math.floor(hours / 24);
-
-  if (days >= 365) return `${hours}h (~1 ${t("time_unit_year")})`;
-  if (days >= 30)
-    return `${hours}h (~${Math.floor(days / 30)} ${t("time_unit_months")})`;
-  if (days > 0) return `${hours}h (${days} ${t("time_unit_days")})`;
-
-  return `${hours} ${t("time_unit_hours")}`;
-};
-
 const SettingsSecurity = ({
   settings,
   updateSetting,
 }: SettingsSecurityProps) => {
+  const { isSecurityEnabled } = useSecurity(); // Verifica se JÁ tem senha
+  const [showSetupModal, setShowSetupModal] = useState(false);
+
+  const handleToggleSecurity = (checked: boolean) => {
+    if (checked) {
+      setShowSetupModal(true);
+    }
+  };
+
   return (
     <Card className="bg-card border-border">
+      <PasswordSetupModal
+        isOpen={showSetupModal}
+        onClose={() => setShowSetupModal(false)}
+      />
       <CardHeader>
         <CardTitle>{t("security_config_title")}</CardTitle>
         <CardDescription>{t("security_config_desc")}</CardDescription>
@@ -72,7 +78,7 @@ const SettingsSecurity = ({
 
         <Separator className="bg-border" />
 
-        <div className="flex items-center justify-between opacity-50 pointer-events-none">
+        <div className="flex items-center justify-between">
           <div className="space-y-0.5">
             <Label className="text-base flex items-center gap-2">
               <Lock className="w-3 h-3" /> {t("security_require_password")}
@@ -81,8 +87,20 @@ const SettingsSecurity = ({
               {t("security_password_desc")}
             </p>
           </div>
-          <Switch disabled checked={false} />
+
+          <Switch
+            checked={isSecurityEnabled}
+            disabled={isSecurityEnabled}
+            onCheckedChange={handleToggleSecurity}
+          />
         </div>
+
+        {isSecurityEnabled && (
+          <p className="text-xs text-amber-500 mt-2 text-right">
+            To disable password protection, use "Reset Vault" on the lock
+            screen.
+          </p>
+        )}
       </CardContent>
     </Card>
   );

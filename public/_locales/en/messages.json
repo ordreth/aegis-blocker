@@ -72,5 +72,32 @@
   "time_unit_year": { "message": "Year" },
   "time_unit_months": { "message": "Months" },
   "time_unit_days": { "message": "Days" },
-  "time_unit_hours": { "message": "Hours" }
+  "time_unit_hours": { "message": "Hours" },
+
+  "vault_title": { "message": "Aegis Vault" },
+  "vault_desc": { "message": "Authentication required to access controls." },
+  "label_master_password": { "message": "Master Password" },
+  "btn_unlock": { "message": "Unlock Vault" },
+  "error_wrong_password": { "message": "Incorrect password." },
+  "link_forgot_password": { "message": "Forgot Password?" },
+  "recovery_title": { "message": "Emergency Reset" },
+  "recovery_desc": { "message": "Enter your Recovery Code to reset the vault. All security settings will be wiped." },
+  "label_recovery_code": { "message": "Recovery Code" },
+  "btn_reset_vault": { "message": "Reset Vault" },
+  "btn_back_to_login": { "message": "Back to Login" },
+  "error_invalid_code": { "message": "Invalid Recovery Code." },
+
+  "setup_password_title": { "message": "Setup Master Password" },
+  "setup_password_desc": { "message": "Create a password to protect your rules and settings." },
+  "label_new_password": { "message": "New Password" },
+  "label_confirm_password": { "message": "Confirm Password" },
+  "btn_create_vault": { "message": "Create Vault" },
+  "error_password_mismatch": { "message": "Passwords do not match." },
+  "recovery_step_title": { "message": "Save your Recovery Code" },
+  "recovery_step_desc": { "message": "This is the ONLY way to recover your account if you forget your password." },
+  "recovery_warning": { "message": "We do not store your password. If you lose this code, you will lose access to your data." },
+  "btn_copy_code": { "message": "Copy Code" },
+  "btn_copied": { "message": "Copied!" },
+  "checkbox_saved_confirmation": { "message": "I have securely saved my recovery code." },
+  "btn_finish_setup": { "message": "Finish & Activate" }
 }

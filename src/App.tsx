@@ -7,8 +7,15 @@ import RulesList from "./components/RulesList";
 import QuickBlockButton from "./components/QuickBlockButton";
 import { t } from "./lib/i18n";
 import SettingsView from "./components/SettingsView";
-import { useCurrentTab, useLockState, useRules, useSettings } from "./hooks";
+import {
+  useCurrentTab,
+  useLockState,
+  useRules,
+  useSecurity,
+  useSettings,
+} from "./hooks";
 import { ConfirmationDeleteModal } from "./components";
+import LockScreen from "./components/LockScreen";
 
 interface AppProps {
   isOptionsPage?: boolean;
@@ -27,6 +34,13 @@ export default function App({ isOptionsPage = false }: AppProps) {
   const { rules, isLoading, handleAdd, handleRemove, loadRules } = useRules();
   const { currentDomain, clearDomain } = useCurrentTab(isOptionsPage);
   const { settings, updateSetting } = useSettings();
+  const {
+    isSecurityEnabled,
+    isAuthenticated,
+    isLoading: isAuthLoading,
+    login,
+    recoverAccount,
+  } = useSecurity();
 
   const handleRemoveRequest = async (id: number) => {
     if (isLocked) {
@@ -96,6 +110,14 @@ export default function App({ isOptionsPage = false }: AppProps) {
   useEffect(() => {
     syncRules().catch(console.error);
   }, []);
+
+  if (isAuthLoading) {
+    return <div className="w-full h-full bg-background" />;
+  }
+
+  if (isSecurityEnabled && !isAuthenticated) {
+    return <LockScreen onUnlock={login} onRecover={recoverAccount} />;
+  }
 
   console.log(settings);
 
