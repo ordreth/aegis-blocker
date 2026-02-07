@@ -16,6 +16,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { t } from "@/lib/i18n";
 import type { AppSettings } from "@/hooks/useSettings";
+import { useTheme } from "@/components/theme-provider"; // Importe seu hook customizado
+import { useEffect } from "react";
 
 interface SettingsAppearanceProps {
   settings: AppSettings;
@@ -29,6 +31,19 @@ const SettingsAppearance = ({
   settings,
   updateSetting,
 }: SettingsAppearanceProps) => {
+  const { setTheme, theme: currentVisualTheme } = useTheme();
+
+  useEffect(() => {
+    if (settings.theme && settings.theme !== currentVisualTheme) {
+      setTheme(settings.theme);
+    }
+  }, [settings.theme, currentVisualTheme, setTheme]);
+
+  const handleThemeChange = (val: "system" | "dark" | "light") => {
+    setTheme(val);
+    updateSetting("theme", val);
+  };
+
   return (
     <Card className="bg-card border-border">
       <CardHeader>
@@ -38,12 +53,7 @@ const SettingsAppearance = ({
       <CardContent className="space-y-6">
         <div className="space-y-2">
           <Label>{t("setting_theme")}</Label>
-          <Select
-            value={settings.theme}
-            onValueChange={(val: "system" | "dark" | "light") =>
-              updateSetting("theme", val)
-            }
-          >
+          <Select value={currentVisualTheme} onValueChange={handleThemeChange}>
             <SelectTrigger className="w-50 bg-background border-input">
               <SelectValue placeholder={t("setting_theme_placeholder")} />
             </SelectTrigger>
@@ -61,9 +71,7 @@ const SettingsAppearance = ({
           <Label>{t("setting_language")}</Label>
           <Select
             value={settings.language}
-            onValueChange={(
-              val: "system" | "pt" | "en" | "es" | "de" | "zh_CN",
-            ) => updateSetting("language", val)}
+            onValueChange={(val: any) => updateSetting("language", val)}
           >
             <SelectTrigger className="w-50 bg-background border-input">
               <SelectValue placeholder={t("setting_language_placeholder")} />
@@ -85,4 +93,5 @@ const SettingsAppearance = ({
     </Card>
   );
 };
+
 export default SettingsAppearance;

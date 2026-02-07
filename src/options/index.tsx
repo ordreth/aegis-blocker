@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="min-h-screen text-slate-100 p-8 md:p-12 bg-aegis-neutral-950">
+      <div className="min-h-screen text-slate-100 p-8 md:p-12 bg-background">
         <App isOptionsPage={true} />
       </div>
     </ThemeProvider>

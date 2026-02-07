@@ -4,7 +4,55 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>aegis-blocker</title>
+    <title>Aegis Blocker</title>
+
+    <script>
+      (function () {
+        const savedTheme = localStorage.getItem("vite-ui-theme");
+        const systemDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+
+        let themeToApply = "dark";
+
+        if (savedTheme === "light") {
+          themeToApply = "light";
+        } else if (savedTheme === "system") {
+          themeToApply = systemDark ? "dark" : "light";
+        } else if (savedTheme === "dark") {
+          themeToApply = "dark";
+        } else if (!savedTheme) {
+          themeToApply = "dark";
+        }
+
+        document.documentElement.classList.add(themeToApply);
+      })();
+    </script>
+
+    <style>
+      html,
+      body,
+      #root {
+        margin: 0;
+        padding: 0;
+        width: 460px;
+        height: 520px;
+        overflow: hidden;
+      }
+
+      html {
+        background-color: #f5f7fa;
+      }
+
+      html.dark {
+        background-color: #0d0d0d;
+      }
+
+      body,
+      #root {
+        background-color: transparent;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

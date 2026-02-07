@@ -55,7 +55,7 @@ const LockButton = ({ onEnableLock }: LockButtonProps) => {
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={onEnableLock}
-            className="bg-destructive text-destructive-foreground hover:bg-destructive/90 border-none font-bold"
+            className="bg-destructive dark:text-destructive-foreground text-white hover:bg-destructive/90 border-none font-bold"
           >
             {t("modal_confirm")}
           </AlertDialogAction>

@@ -39,7 +39,7 @@ const ConfirmationDeleteModal = ({
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={onConfirm}
-            className="bg-destructive text-destructive-foreground hover:bg-destructive/90 border-none font-bold"
+            className="bg-destructive dark:text-destructive-foreground text-white hover:bg-destructive/90 border-none font-bold"
           >
             {t("btn_confirm_delete")}
           </AlertDialogAction>

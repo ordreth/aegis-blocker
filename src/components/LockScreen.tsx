@@ -48,13 +48,13 @@ const LockScreen = ({ onUnlock, onRecover }: LockScreenProps) => {
   };
   return (
     <div
-      className="flex flex-col items-center justify-center w-full  min-w-[400px] min-h-[500px]
+      className="flex flex-col items-center justify-center w-full  min-w-115 min-h-130
     p-4 bg-background/95 backdrop-blur-xl animate-in fade-in duration-300 overflow-y-hidden"
     >
       <div
         className={cn(
           "w-full max-w-sm space-y-6 transition-transform duration-100",
-          isShake ? "translate-x-[-10px] animate-pulse" : "",
+          isShake ? "-translate-x-2.5 animate-pulse" : "",
         )}
       >
         <div className="text-center space-y-2">

@@ -23,7 +23,11 @@ const useSettings = () => {
       if (typeof chrome !== "undefined" && chrome.storage) {
         chrome.storage.sync.get(["aegis_settings"], (result) => {
           if (result.aegis_settings) {
-            setSettings({ ...DEFAULT_SETTINGS, ...result.aegis_settings });
+            const remoteSettings = result.aegis_settings as AppSettings;
+            setSettings({ ...DEFAULT_SETTINGS, ...remoteSettings });
+            if (remoteSettings.theme) {
+              localStorage.setItem("vite-ui-theme", remoteSettings.theme);
+            }
           }
           setLoading(false);
         });
@@ -38,21 +42,6 @@ const useSettings = () => {
     initializeSettings();
   }, []);
 
-  useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.remove("light", "dark");
-
-    if (settings.theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-      root.classList.add(systemTheme);
-    } else {
-      root.classList.add(settings.theme);
-    }
-  }, [settings.theme]);
-
   const updateSetting = <K extends keyof AppSettings>(
     key: K,
     value: AppSettings[K],
@@ -64,6 +53,10 @@ const useSettings = () => {
       chrome.storage.sync.set({ aegis_settings: newSettings });
     } else {
       localStorage.setItem("aegis_settings", JSON.stringify(newSettings));
+    }
+
+    if (key === "theme") {
+      localStorage.setItem("vite-ui-theme", value as string);
     }
 
     if (key === "language") applyLanguage(value as string);

@@ -31,16 +31,17 @@ export default function App({ isOptionsPage = false }: AppProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { isLocked, timeLeft, handleEnableLock } = useLockState();
-  const { rules, isLoading, handleAdd, handleRemove, loadRules } = useRules();
+  const {
+    rules,
+    isLoading: isLoadingRules,
+    handleAdd,
+    handleRemove,
+    loadRules,
+  } = useRules();
   const { currentDomain, clearDomain } = useCurrentTab(isOptionsPage);
   const { settings, updateSetting } = useSettings();
-  const {
-    isSecurityEnabled,
-    isAuthenticated,
-    isLoading: isAuthLoading,
-    login,
-    recoverAccount,
-  } = useSecurity();
+  const { isSecurityEnabled, isAuthenticated, login, recoverAccount } =
+    useSecurity();
 
   const handleRemoveRequest = async (id: number) => {
     if (isLocked) {
@@ -111,22 +112,16 @@ export default function App({ isOptionsPage = false }: AppProps) {
     syncRules().catch(console.error);
   }, []);
 
-  if (isAuthLoading) {
-    return <div className="w-full h-full bg-background" />;
-  }
-
   if (isSecurityEnabled && !isAuthenticated) {
     return <LockScreen onUnlock={login} onRecover={recoverAccount} />;
   }
-
-  console.log(settings);
 
   return (
     <main
       className={cn(
         "w-115 h-130 bg-background flex flex-col text-foreground font-sans animate-in fade-in slide-in-from-right-4 duration-300",
         {
-          "w-full max-w-5xl mx-auto justify-start": isOptionsPage,
+          "w-full max-w-5xl mx-auto justify-start ": isOptionsPage,
         },
       )}
     >
@@ -166,7 +161,7 @@ export default function App({ isOptionsPage = false }: AppProps) {
 
           <div
             className={cn("flex-1 overflow-hidden flex flex-col p-4 gap-4", {
-              "bg-aegis-neutral-900/50 border border-border rounded-xl p-6 flex-none shadown-none z-auto container-size":
+              "dark:bg-aegis-neutral-925 bg-card border border-border rounded-xl p-6 flex-none shadown-none z-auto container-size":
                 isOptionsPage,
             })}
           >
@@ -180,7 +175,7 @@ export default function App({ isOptionsPage = false }: AppProps) {
             <AddRuleForm
               isOptionsPage={isOptionsPage}
               inputValue={inputValue}
-              isLoading={isLoading}
+              isLoading={isLoadingRules}
               onInputChange={setInputValue}
               onSubmit={handleSubmit}
             />

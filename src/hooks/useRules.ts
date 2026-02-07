@@ -5,11 +5,18 @@ import { t } from "../lib/i18n";
 
 const useRules = () => {
   const [rules, setRules] = useState<BlockRule[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const loadRules = async () => {
-    const loaded = await getRules();
-    setRules(loaded);
+    setIsLoading(true);
+    try {
+      const loaded = await getRules();
+      setRules(loaded);
+    } catch (error) {
+      console.error("Failed to load rules:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -31,7 +38,6 @@ const useRules = () => {
       await loadRules();
     } catch (error) {
       console.error(error);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -47,4 +53,5 @@ const useRules = () => {
 
   return { rules, isLoading, handleAdd, handleRemove, loadRules };
 };
+
 export default useRules;
