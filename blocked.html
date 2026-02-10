@@ -1,13 +1,30 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!doctype html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Aegis - Acesso Negado</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aegis - Access Restricted</title>
     <style>
+      :root {
+        --bg-page: #0d0d0d;
+        --bg-card: #171c26;
+        --border: #1e293b;
+        --brand-gold: #d99543;
+        --text-main: #f5f7fa;
+        --text-muted: #94a3b8;
+        --radius: 12px;
+      }
+
       body {
-        background-color: #020617;
-        color: #e2e8f0;
-        font-family: system-ui, -apple-system, sans-serif;
+        background-color: var(--bg-page);
+        color: var(--text-main);
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
         height: 100vh;
         margin: 0;
         display: flex;
@@ -15,53 +32,110 @@
         align-items: center;
         justify-content: center;
         text-align: center;
+        overflow: hidden;
       }
+
+      .card {
+        background-color: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 3rem 2rem;
+        max-width: 420px;
+        width: 90%;
+        box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        animation: fadeIn 0.4s ease-out;
+      }
+
+      .icon-container {
+        background-color: rgba(217, 149, 67, 0.1);
+        border-radius: 50%;
+        padding: 20px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(217, 149, 67, 0.2);
+      }
+
       .icon {
-        color: #6366f1;
-        width: 80px;
-        height: 80px;
-        margin-bottom: 20px;
+        color: var(--brand-gold);
+        width: 48px;
+        height: 48px;
       }
+
       h1 {
-        font-size: 2.5rem;
-        margin: 0 0 10px 0;
-        font-weight: 800;
+        font-size: 1.75rem;
+        margin: 0 0 12px 0;
+        font-weight: 700;
+        letter-spacing: -0.025em;
       }
-      p {
-        font-size: 1.2rem;
-        color: #94a3b8;
-        max-width: 500px;
+
+      p.desc {
+        font-size: 1.05rem;
+        color: var(--text-muted);
         line-height: 1.6;
+        margin: 0;
       }
-      .quote {
-        margin-top: 40px;
-        font-style: italic;
-        opacity: 0.6;
-        font-size: 0.9rem;
-        border-top: 1px solid #334155;
+
+      .quote-container {
+        margin-top: 20px;
+        border-top: 1px solid var(--border);
         padding-top: 20px;
+        width: 100%;
+      }
+
+      .quote {
+        font-style: italic;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+        opacity: 0.7;
+        font-family: serif;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
     </style>
   </head>
   <body>
-    <svg
-      class="icon"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      <path d="M12 8v4" />
-      <path d="M12 16h.01" />
-    </svg>
-    <h1>Aegis Active</h1>
-    <p>This site does not contribute to your current goals.</p>
-    <p class="quote">
-      "Discipline is the bridge between goals and achievements."
-    </p>
+    <div class="card">
+      <div class="icon-container">
+        <svg
+          class="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+          <path d="M12 8v4" />
+          <path d="M12 16h.01" />
+        </svg>
+      </div>
+
+      <h1>Access Restricted</h1>
+      <p class="desc">
+        The Aegis Shield has blocked this site to protect your focus session.
+      </p>
+
+      <div class="quote-container">
+        <p class="quote">
+          "Discipline is the bridge between goals and achievements."
+        </p>
+      </div>
+    </div>
   </body>
 </html>
