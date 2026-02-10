@@ -39,20 +39,14 @@ const Header = ({
     >
       <div className="flex items-center gap-3">
         <div
-          className={cn(
-            "p-2 rounded-lg transition-colors duration-300 bg-primary/10",
-            { "bg-destructive/40": isLocked },
-          )}
+          className={cn("rounded-lg transition-colors duration-300 ", {
+            "bg-destructive/40": isLocked,
+          })}
         >
-          <ShieldAlert
-            className={cn(
-              "transition-colors duration-300 w-6 h-6 text-primary",
-              {
-                "w-8 h-8": isOptionsPage,
-                "text-destructive-foreground": isLocked,
-              },
-            )}
-            aria-hidden="true"
+          <img
+            src="/assets/icons/48.png"
+            alt="Aegis Logo"
+            className="size-12 rounded-md"
           />
         </div>
 

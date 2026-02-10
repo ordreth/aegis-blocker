@@ -124,7 +124,7 @@ export default function PasswordSetupModal({
               <div className="flex items-center gap-2 text-amber-500 mb-2">
                 <ShieldAlert className="w-6 h-6" />
                 <span className="font-bold text-sm uppercase tracking-wider">
-                  Crucial Step
+                  {t("crucial_step")}
                 </span>
               </div>
               <DialogTitle>{t("recovery_step_title")}</DialogTitle>
@@ -152,10 +152,10 @@ export default function PasswordSetupModal({
 
               <Alert
                 variant="destructive"
-                className="bg-destructive/10 border-destructive/20 text-destructive"
+                className="bg-destructive/10 border-destructive/20 text-aegis-danger-500"
               >
                 <AlertTriangle className="h-4 w-4" />
-                <AlertDescription className="text-xs font-medium">
+                <AlertDescription className="text-xs font-medium text-foreground!">
                   {t("recovery_warning")}
                 </AlertDescription>
               </Alert>

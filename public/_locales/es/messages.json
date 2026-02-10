@@ -97,5 +97,7 @@
   "btn_copy_code": { "message": "Copiar" },
   "btn_copied": { "message": "Copiado" },
   "checkbox_saved_confirmation": { "message": "He guardado mi código de recuperación." },
-  "btn_finish_setup": { "message": "Activar" }
+  "btn_finish_setup": { "message": "Activar" },
+  "crucial_step": { "message": "Paso Crucial" }
+
 }

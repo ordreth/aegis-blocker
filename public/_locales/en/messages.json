@@ -354,5 +354,6 @@
   "btn_finish_setup": {
     "message": "Activate",
     "description": "Final button to enable security."
-  }
+  },
+  "crucial_step": { "message": "Crucial Step" }
 }

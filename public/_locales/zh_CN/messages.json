@@ -97,5 +97,6 @@
   "btn_copy_code": { "message": "复制" },
   "btn_copied": { "message": "已复制" },
   "checkbox_saved_confirmation": { "message": "我已保存恢复代码。" },
-  "btn_finish_setup": { "message": "激活" }
+  "btn_finish_setup": { "message": "激活" },
+  "crucial_step": { "message": "关键步骤" }
 }

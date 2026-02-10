@@ -120,6 +120,7 @@ export const LOCALES: Record<string, LocaleData> = {
     btn_copied: { message: "Copied" },
     checkbox_saved_confirmation: { message: "I have saved my recovery code." },
     btn_finish_setup: { message: "Activate" },
+    crucial_step: { message: "Crucial Step" },
   },
   pt: {
     appName: { message: "Aegis Blocker" },
@@ -245,6 +246,7 @@ export const LOCALES: Record<string, LocaleData> = {
       message: "Eu salvei meu código de recuperação.",
     },
     btn_finish_setup: { message: "Ativar" },
+    crucial_step: { message: "Etapa Crucial" },
   },
   es: {
     appName: { message: "Aegis Blocker" },
@@ -374,6 +376,7 @@ export const LOCALES: Record<string, LocaleData> = {
       message: "He guardado mi código de recuperación.",
     },
     btn_finish_setup: { message: "Activar" },
+    crucial_step: { message: "Paso Crucial" },
   },
   de: {
     appName: { message: "Aegis Blocker" },
@@ -511,6 +514,7 @@ export const LOCALES: Record<string, LocaleData> = {
       message: "Ich habe meinen Wiederherstellungscode gespeichert.",
     },
     btn_finish_setup: { message: "Aktivieren" },
+    crucial_step: { message: "Entscheidender Schritt" },
   },
   zh_CN: {
     appName: { message: "Aegis Blocker" },
@@ -609,5 +613,6 @@ export const LOCALES: Record<string, LocaleData> = {
     btn_copied: { message: "已复制" },
     checkbox_saved_confirmation: { message: "我已保存恢复代码。" },
     btn_finish_setup: { message: "激活" },
+    crucial_step: { message: "关键步骤" },
   },
 };
