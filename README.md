@@ -1,4 +1,10 @@
-# 🛡️ Aegis Blocker
+<div align="center">
+  <img src="public/assets/icons/128.png" alt="Aegis Logo" width="100" height="100">
+  <h1>Aegis Blocker</h1>
+  <p>
+    <strong>Focus Guard for Deep Work</strong>
+  </p>
+</div>
 
 > *"The Aegis... which produced a sound as from a myriad roaring dragons."* — The Iliad
 
