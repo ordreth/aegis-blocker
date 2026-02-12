@@ -19,11 +19,47 @@ const chromeMock = {
     },
   },
   tabs: {
-    query: vi.fn(),
+    query: vi.fn(() => Promise.resolve([])),
+    update: vi.fn(),
   },
   declarativeNetRequest: {
-    updateDynamicRules: vi.fn(),
+    getDynamicRules: vi.fn(() => Promise.resolve([])),
+    updateDynamicRules: vi.fn(() => Promise.resolve()),
+    RuleActionType: {
+      BLOCK: "block",
+      REDIRECT: "redirect",
+      ALLOW: "allow",
+      UPGRADE_SCHEME: "upgradeScheme",
+      MODIFY_HEADERS: "modifyHeaders",
+      ALLOW_ALL_REQUESTS: "allowAllRequests",
+    },
+    ResourceType: {
+      MAIN_FRAME: "main_frame",
+      SUB_FRAME: "sub_frame",
+      STYLESHEET: "stylesheet",
+      SCRIPT: "script",
+      IMAGE: "image",
+      FONT: "font",
+      OBJECT: "object",
+      XMLHTTPREQUEST: "xmlhttprequest",
+      PING: "ping",
+      CSP_REPORT: "csp_report",
+      MEDIA: "media",
+      WEBSOCKET: "websocket",
+      OTHER: "other",
+    },
+  },
+  alarms: {
+    create: vi.fn(),
+    clear: vi.fn(),
+    onAlarm: {
+      addListener: vi.fn(),
+    },
   },
 };
 
 vi.stubGlobal("chrome", chromeMock);
+
+vi.mock("@/lib/i18n", () => ({
+  t: (key: string) => key,
+}));
