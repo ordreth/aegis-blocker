@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/assets/icons/128.png" alt="Aegis Logo" width="100" height="100">
+  <img width="128" height="128" alt="aegies-blocker-logo" src="https://github.com/user-attachments/assets/d7abe73d-1027-4c43-8419-d4818fe6e3f7" />
   <h1>Aegis Blocker</h1>
   <p>
     <strong>Focus Guard for Deep Work</strong>
