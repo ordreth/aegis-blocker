@@ -109,6 +109,17 @@ If you are currently browsing a site you shouldn't be (e.g., TikTok):
 * **Download:** Click the ⬇️ icon to save your rules as a JSON file.
 * **Upload:** Click the ⬆️ icon to load rules into a different browser profile.
 
+## Interface & Preview
+
+A minimalist shield for a distracted mind. The UI is designed to stay out of your way while providing all the tools you need to regain control.
+
+<div align="center">
+  <img width="1423" height="998" alt="aegis-blocker-preview" src="https://github.com/user-attachments/assets/d1aa72fb-561e-4617-b2b1-66feac627f50" />
+  <p><em>The Aegis Dashboard: Clean, intuitive, and ruthless against distractions.</em></p>
+</div>
+
+---
+
 ## License
 
 This project is open-source. Feel free to fork it, modify it, and forge your own shield.
