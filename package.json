@@ -12,7 +12,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@crxjs/vite-plugin": "^2.3.0",
+    "@crxjs/vite-plugin": "^1.0.14",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.4",
     "@tailwindcss/vite": "^4.1.18",
