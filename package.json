@@ -1,8 +1,9 @@
 {
   "name": "aegis-blocker",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "1.0.0",
   "type": "module",
+  "author": "Ordreth <ordreth.dev@gmail.com>",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
