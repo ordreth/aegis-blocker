@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { ShieldAlert } from "lucide-react";
 import LockButton from "./LockButton";
 import LockTimer from "./LockTimer";
 import ActionButtons from "./ActionButtons";
