@@ -1,6 +1,6 @@
 {
-  "appName": {
-    "message": "Aegis Blocker",
+ "appName": {
+    "message": "Aegis Blocker - Strict Website Blocker",
     "description": "The name of the extension as it appears in the store and permission dialogs."
   },
   "appDesc": {

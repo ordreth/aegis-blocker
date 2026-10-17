@@ -6,7 +6,7 @@ export default defineManifest({
   short_name: "Aegis",
   description: "__MSG_appDesc__",
   default_locale: "en",
-  version: "1.0.0",
+  version: "1.0.1",
 
   icons: {
     "16": "assets/icons/16.png",

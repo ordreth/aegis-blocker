@@ -1,6 +1,12 @@
 {
-  "appName": { "message": "Aegis Blocker" },
-  "appDesc": { "message": "Um bloqueador rígido de distrações para trabalho profundo. Código aberto e focado em privacidade." },
+  "appName": {
+    "message": "Aegis Blocker - Bloqueador Rígido de Sites",
+    "description": "The name of the extension as it appears in the store and permission dialogs."
+  },
+  "appDesc": {
+    "message": "Um bloqueador rígido de distrações para trabalho profundo. Código aberto e focado em privacidade.",
+    "description": "The short description of the extension shown in the Chrome Web Store."
+  },
   "status_locked": { "message": "Aegis Travado" },
   "status_active": { "message": "Aegis Blocker" },
   "header_desc_locked": { "message": "Modo Absoluto ativado. Libera em:" },

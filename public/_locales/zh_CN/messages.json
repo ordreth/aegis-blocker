@@ -1,6 +1,12 @@
 {
-  "appName": { "message": "Aegis Blocker" },
-  "appDesc": { "message": "专为深度工作设计的严格干扰拦截器。开源且注重隐私。" },
+  "appName": {
+    "message": "Aegis Blocker - 严格的网站拦截器",
+    "description": "The name of the extension as it appears in the store and permission dialogs."
+  },
+  "appDesc": {
+    "message": "专为深度工作设计的严格干扰拦截器。开源且注重隐私。",
+    "description": "The short description of the extension shown in the Chrome Web Store."
+  },
   "status_locked": { "message": "Aegis 已锁定" },
   "status_active": { "message": "Aegis Blocker" },
   "header_desc_locked": { "message": "绝对模式已启用。解锁倒计时：" },
