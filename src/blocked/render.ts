@@ -184,7 +184,7 @@ export async function renderBlockPage(
   }
 
   // automatic redirect
-  if (cfg.redirect.enabled && isHttpUrl(cfg.redirect.url)) {
+  if (cfg.redirect.enabled && isHttpUrl(cfg.redirect.url) && ctx.info?.canRedirect !== false) {
     let left = cfg.redirect.delaySec;
     const stay = el("button", "btn ghost", t("bk_stay"));
     stay.type = "button";

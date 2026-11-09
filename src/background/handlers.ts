@@ -245,17 +245,22 @@ const table: Table = {
     }),
 
   "blocked.info": async (r): Promise<BlockedInfo> => {
-    const [cfg, rules, settings, lockUntil] = await Promise.all([
+    const [cfg, rules, settings, lockUntil, snoozed] = await Promise.all([
       getBlockPage(),
       getRules(),
       getSettings(),
       getLockUntil(),
+      getSnoozed(),
     ]);
     const rule = rules.find((x) => x.n === Number(r.n));
+    // The target was allowed when the redirect was saved, but rules change: sending
+    // the tab to a blocked address would bounce it back here over and over.
+    const target = decide(rules, { url: cfg.redirect.url }, Date.now(), new Set(Object.keys(snoozed)));
     return {
       pattern: cfg.showRule && rule ? rule.pattern : null,
       lockUntil,
       snooze: settings.snooze.enabled && !lockUntil && rule ? settings.snooze : null,
+      canRedirect: target.action !== "block",
     };
   },
 

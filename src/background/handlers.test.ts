@@ -189,6 +189,13 @@ describe("blocked page", () => {
     await call({ t: "blockpage.set", config: { ...cfg, showRule: true } as never });
     expect(((await call({ t: "blocked.info", n: 1 })) as { pattern: unknown }).pattern).toBe("x.com");
   });
+  it("reports the redirect as unusable once its target gets blocked", async () => {
+    await call({ t: "blockpage.set", config: { redirect: { enabled: true, url: "https://calm.example/", delaySec: 3 } } as never });
+    const info = () => call({ t: "blocked.info", n: 1 }) as Promise<{ canRedirect: boolean }>;
+    expect((await info()).canRedirect).toBe(true);
+    await add("domain", "calm.example");
+    expect((await info()).canRedirect).toBe(false);
+  });
   it("refuses a redirect target that is itself blocked", async () => {
     await add("domain", "x.com");
     const cfg = ((await call({ t: "state" })) as { blockPage: object }).blockPage;

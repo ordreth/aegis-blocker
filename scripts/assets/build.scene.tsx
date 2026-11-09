@@ -60,7 +60,7 @@ async function blockHtml(cfg: Partial<BlockPageConfig>, mediaUrl?: string): Prom
   await renderBlockPage(document.getElementById("app") as HTMLElement, sanitizeBlockPage(cfg), {
     t: createT("en"),
     url: "https://distracting-site.example/feed",
-    info: { pattern: "distracting-site.example", lockUntil: null, snooze: null },
+    info: { pattern: "distracting-site.example", lockUntil: null, snooze: null, canRedirect: true },
     preview: true,
     ...(mediaUrl ? { mediaUrl } : {}),
   });

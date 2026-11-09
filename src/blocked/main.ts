@@ -63,6 +63,7 @@ async function boot() {
         pattern: "distracting-site.example",
         lockUntil: Date.now() + 5 * 3_600_000,
         snooze: null,
+        canRedirect: true,
       });
     });
     parent.postMessage({ type: "aegis-preview-ready" }, location.origin);

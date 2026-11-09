@@ -35,6 +35,8 @@ export interface BlockedInfo {
   pattern: string | null;
   lockUntil: number | null;
   snooze: Settings["snooze"] | null;
+  /** False when the automatic redirect points at an address that is blocked right now. */
+  canRedirect: boolean;
 }
 
 export interface ResponseMap {
