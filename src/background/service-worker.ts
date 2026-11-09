@@ -3,6 +3,7 @@ import { handlers, KNOWN } from "./handlers";
 import { checkTab, enforceGuard, isAegisAlarm, syncAll } from "./engine";
 import { migrate } from "./migrate";
 import { K } from "./state";
+import { createTabPacer } from "./tab-check";
 
 const isTrustedSender = (sender: chrome.runtime.MessageSender) =>
   sender.id === chrome.runtime.id &&
@@ -49,9 +50,20 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   if (isAegisAlarm(alarm.name)) void ready.then(() => syncAll());
 });
 
-chrome.tabs.onUpdated.addListener((_id, change, tab) => {
-  if (change.url || change.title) void ready.then(() => checkTab(tab));
+// Navigations are blocked by the browser's own rules; this covers what those
+// cannot see (titles, single-page-app navigations). The tab is read again at
+// check time so the decision is always about what it shows now.
+const pacer = createTabPacer((tabId) => {
+  void ready
+    .then(() => chrome.tabs.get(tabId))
+    .then(checkTab, () => undefined /* the tab is gone */);
 });
+
+chrome.tabs.onUpdated.addListener((id, change) => {
+  if (change.url || change.title) pacer.changed(id);
+});
+
+chrome.tabs.onRemoved.addListener((id) => pacer.closed(id));
 
 // Any storage change that did not come from this worker while Absolute Mode is
 // on is reverted; otherwise the engine just resyncs.
