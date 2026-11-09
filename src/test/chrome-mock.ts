@@ -50,8 +50,14 @@ export function installChrome(seed?: {
     runtime: {
       id: "test-ext",
       getURL: (p: string) => `chrome-extension://test-ext/${p}`,
+      openOptionsPage: vi.fn(),
     },
-    storage: { local: m.local, session: m.session, sync: m.sync },
+    storage: {
+      local: m.local,
+      session: m.session,
+      sync: m.sync,
+      onChanged: { addListener: vi.fn(), removeListener: vi.fn() },
+    },
     alarms: {
       create: vi.fn(async (name: string, info: { when: number }) => {
         m.alarms.set(name, info.when);

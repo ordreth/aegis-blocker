@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Children, cloneElement, isValidElement, useId, type ReactElement, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 
@@ -13,11 +13,29 @@ export function Field({
   children: ReactNode;
   className?: string;
 }) {
+  const id = useId();
+  const items = Children.toArray(children);
+  const first = items.findIndex(isValidElement);
+  // Associate the label (and hint) with the first control for assistive technology.
+  const labelled = items.map((child, i) =>
+    i === first && isValidElement(child)
+      ? cloneElement(child as ReactElement<Record<string, unknown>>, {
+          "aria-labelledby": `${id}-label`,
+          ...(hint ? { "aria-describedby": `${id}-hint` } : {}),
+        })
+      : child,
+  );
   return (
     <div className={cn("grid gap-1.5", className)}>
-      <Label className="text-sm font-medium">{label}</Label>
-      {children}
-      {hint && <p className="text-muted-foreground text-xs leading-relaxed">{hint}</p>}
+      <Label id={`${id}-label`} className="text-sm font-medium">
+        {label}
+      </Label>
+      {labelled}
+      {hint && (
+        <p id={`${id}-hint`} className="text-muted-foreground text-xs leading-relaxed">
+          {hint}
+        </p>
+      )}
     </div>
   );
 }
