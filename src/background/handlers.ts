@@ -13,7 +13,7 @@ import {
 import { decide } from "@/shared/schedule";
 import type { AppState, BlockPageConfig, Rule, RuleInput, Settings } from "@/shared/types";
 import * as auth from "./auth";
-import { isRegexSupported, scheduleAlarms, syncAll } from "./engine";
+import { isRegexSupported, syncAll } from "./engine";
 import {
   getAuth,
   getBlockPage,
@@ -206,7 +206,9 @@ const table: Table = {
       const current = (await getLockUntil()) ?? 0;
       const until = Math.max(current, Date.now() + hours * 3_600_000);
       await setLockUntil(until);
-      await scheduleAlarms();
+      // A snooze granted before the lock would keep its rule off inside it.
+      await setSnoozed({});
+      await syncAll();
       return { until };
     }),
 

@@ -261,3 +261,15 @@ describe("odd patterns", () => {
     expect(next.pattern).toBe("/shorts/");
   });
 });
+
+describe("a snooze granted before Absolute Mode", () => {
+  it("ends when the lock is switched on", async () => {
+    await call({ t: "settings.set", patch: { snooze: { enabled: true, waitSeconds: 5, minutes: 60 } } });
+    const r = (await add("domain", "x.example")) as { n: number };
+    await call({ t: "blocked.snooze", n: r.n, url: "https://x.example/feed" });
+    expect(mock.dnr.rules).toHaveLength(0);
+    await call({ t: "lock.enable", hours: 1 });
+    expect(mock.dnr.rules.map((x) => x.id)).toEqual([r.n]);
+    expect(mock.session.dump()[K.snooze]).toEqual({});
+  });
+});
