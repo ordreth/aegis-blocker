@@ -1,0 +1,4 @@
+# Supply-chain hardening: only install versions that have been public for at
+# least a day, never run dependency lifecycle scripts unless allow-listed.
+minimumReleaseAge: 1440
+strictDepBuilds: true

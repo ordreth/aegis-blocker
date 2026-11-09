@@ -1,4 +1,5 @@
 import { defineManifest } from "@crxjs/vite-plugin";
+import pkg from "./package.json" with { type: "json" };
 
 export default defineManifest({
   manifest_version: 3,
@@ -6,7 +7,8 @@ export default defineManifest({
   short_name: "Aegis",
   description: "__MSG_appDesc__",
   default_locale: "en",
-  version: "1.0.1",
+  version: pkg.version,
+  minimum_chrome_version: "120",
 
   icons: {
     "16": "assets/icons/16.png",
@@ -16,7 +18,7 @@ export default defineManifest({
   },
 
   action: {
-    default_popup: "index.html",
+    default_popup: "popup.html",
     default_title: "__MSG_appName__",
     default_icon: {
       "16": "assets/icons/16.png",
@@ -24,28 +26,30 @@ export default defineManifest({
     },
   },
 
-  options_ui: {
-    page: "options.html",
-    open_in_tab: true,
-  },
+  options_ui: { page: "options.html", open_in_tab: true },
 
-  background: {
-    service_worker: "src/background/service-worker.ts",
-    type: "module",
-  },
+  background: { service_worker: "src/background/service-worker.ts", type: "module" },
 
-  permissions: ["declarativeNetRequest", "storage", "tabs"],
-
-  host_permissions: ["<all_urls>"],
+  // No `tabs` permission: host access already exposes the URL/title of the
+  // pages Aegis may block, and nothing else is read.
+  permissions: ["declarativeNetRequest", "storage", "alarms"],
+  host_permissions: ["http://*/*", "https://*/*"],
 
   web_accessible_resources: [
-    {
-      resources: ["blocked.html", "assets/*"],
-      matches: ["<all_urls>"],
-    },
+    { resources: ["blocked.html", "assets/*"], matches: ["http://*/*", "https://*/*"] },
   ],
 
   content_security_policy: {
-    extension_pages: "script-src 'self'; object-src 'self'",
+    extension_pages: [
+      "default-src 'self'",
+      "script-src 'self'",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob:",
+      "media-src 'self' blob:",
+      "connect-src 'none'",
+      "object-src 'none'",
+      "base-uri 'none'",
+      "form-action 'none'",
+    ].join("; "),
   },
 });

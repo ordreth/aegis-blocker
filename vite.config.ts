@@ -1,29 +1,18 @@
-import { defineConfig } from "vitest/config";
-import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
-import path from "path";
 import { crx } from "@crxjs/vite-plugin";
-import manifest from "./manifest";
+import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vitest/config";
+import manifest from "./manifest.ts";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss(), crx({ manifest })],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-  server: {
-    port: 5173,
-    strictPort: true,
-    hmr: {
-      port: 5173,
-    },
-  },
+  resolve: { alias: { "@": new URL("./src", import.meta.url).pathname } },
+  build: { target: "es2023", sourcemap: false },
+  server: { port: 5173, strictPort: true, hmr: { port: 5173 } },
   test: {
     globals: true,
-    environment: "jsdom",
+    environment: "node",
     setupFiles: "./src/test/setup.ts",
-    include: ["src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    include: ["src/**/*.test.{ts,tsx}"],
   },
 });
