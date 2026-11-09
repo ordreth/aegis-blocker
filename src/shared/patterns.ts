@@ -173,6 +173,9 @@ function keywordSource(kw: string): string {
   return parts.length === 1 ? (parts[0] ?? "") : `(?:${parts.join("|")})`;
 }
 
+/** After the host: an optional root dot (`example.com.` is the same site) and port. */
+const HOST_END = "\\.?(?::\\d+)?";
+
 /**
  * RE2-compatible source (also valid for JS) for the URL part of a rule.
  * Matches the full URL; domain/path rules are anchored to the host.
@@ -185,14 +188,14 @@ export function urlSource(rule: Pick<Rule, "kind" | "pattern">): string {
     case "regex":
       return rule.pattern;
     case "domain":
-      return `${prefix}${escapeRe(rule.pattern)}(?::\\d+)?(?:[/?#]|$)`;
+      return `${prefix}${escapeRe(rule.pattern)}${HOST_END}(?:[/?#]|$)`;
     case "path": {
       const slash = rule.pattern.indexOf("/");
       const host = rule.pattern.slice(0, slash);
       const path = rule.pattern.slice(slash);
       const open = path.endsWith("*") || path.includes("?");
       const body = path.split("*").map(escapeRe).join("[^#]*");
-      return `${prefix}${escapeRe(host)}(?::\\d+)?${body}${open ? "" : "(?:[/?#]|$)"}`;
+      return `${prefix}${escapeRe(host)}${HOST_END}${body}${open ? "" : "(?:[/?#]|$)"}`;
     }
   }
 }
@@ -221,6 +224,15 @@ function test(src: string, text: string): boolean {
   return match(text);
 }
 
+/**
+ * `%73horts` and `shorts` are the same address to a server, but not to a filter.
+ * Escapes of letters, digits and `-._~` are decoded before matching; escapes of
+ * characters with a meaning in URLs (`%2F`, `%3F`, `%25`...) are left alone.
+ */
+const PLAIN_ESCAPE = /%(?:3[0-9]|[46][1-9a-f]|[57][0-9a]|2[de]|5f|7e)/gi;
+const unescapePlain = (url: string) =>
+  url.replace(PLAIN_ESCAPE, (m) => String.fromCharCode(parseInt(m.slice(1), 16)));
+
 export interface MatchContext {
   url?: string | undefined;
   title?: string | undefined;
@@ -234,7 +246,10 @@ export function ruleMatches(
   const scopes: RuleScope[] =
     rule.kind === "domain" || rule.kind === "path" ? ["url"] : rule.scopes;
   if (scopes.includes("url") && ctx.url && /^https?:\/\//i.test(ctx.url)) {
-    if (test(src, ctx.url.slice(0, MAX_MATCH_URL))) return true;
+    const url = ctx.url.slice(0, MAX_MATCH_URL);
+    if (test(src, url)) return true;
+    // The browser's own filter cannot do this; the service worker catches it on the tab.
+    if (url.includes("%") && test(src, unescapePlain(url))) return true;
   }
   if (scopes.includes("title") && ctx.title) {
     if (test(src, ctx.title.slice(0, MAX_MATCH_TITLE))) return true;
