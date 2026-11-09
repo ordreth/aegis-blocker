@@ -1,3 +1,4 @@
+import { compile, type Matcher } from "./linear";
 import type { ErrorCode, Rule, RuleKind, RuleScope } from "./types";
 
 export const MAX_RULES = 900; // declarativeNetRequest allows 1000 regex rules
@@ -53,10 +54,10 @@ function splitHostPath(raw: string): HostPath | null {
 const MAX_UNBOUNDED_QUANTIFIERS = 4;
 
 /**
- * Guard against catastrophic backtracking: the service worker runs user regexes
- * with the JS engine (DNR uses RE2, which is linear). Rejects back-references,
- * look-around, any repetition applied to a group (`(a|a)+`, `((a+))+`, `(x){30}`)
- * and patterns stacking many quantifiers, which can go polynomial.
+ * Keeps user regexes small and plain: rejects back-references, look-around, any
+ * repetition applied to a group (`(a|a)+`, `((a+))+`, `(x){30}`) and patterns
+ * stacking many quantifiers. Matching itself never backtracks (see linear.ts),
+ * so this is a second line of defence, not the one safety relies on.
  */
 export function isRegexSafe(src: string): boolean {
   if (/\\[1-9]|\(\?[=!<]/.test(src)) return false;
@@ -86,14 +87,14 @@ function parseRegex(input: string): ParseResult {
   const src = (m ? m[1] : input.trim()) ?? "";
   if (!src) return fail("empty");
   if (src.length > MAX_PATTERN_LENGTH) return fail("too_long");
-  let re: RegExp;
   try {
-    re = new RegExp(src, "i");
+    new RegExp(src, "i");
   } catch {
     return fail("invalid_regex");
   }
-  if (!isRegexSafe(src)) return fail("unsafe_regex");
-  if (re.test("") || re.test("https://example.com/")) return fail("too_broad");
+  const match = isRegexSafe(src) ? compile(src) : null;
+  if (!match) return fail("unsafe_regex");
+  if (match("") || match("https://example.com/")) return fail("too_broad");
   return { ok: true, kind: "regex", pattern: src };
 }
 
@@ -185,15 +186,16 @@ export function urlSource(rule: Pick<Rule, "kind" | "pattern">): string {
   }
 }
 
-const reCache = new Map<string, RegExp>();
+const never: Matcher = () => false;
+const matchers = new Map<string, Matcher>();
 function test(src: string, text: string): boolean {
-  let re = reCache.get(src);
-  if (!re) {
-    re = new RegExp(src, "i");
-    if (reCache.size > 2000) reCache.clear();
-    reCache.set(src, re);
+  let match = matchers.get(src);
+  if (!match) {
+    match = compile(src) ?? never;
+    if (matchers.size > 2000) matchers.clear();
+    matchers.set(src, match);
   }
-  return re.test(text);
+  return match(text);
 }
 
 export interface MatchContext {
