@@ -243,3 +243,21 @@ describe("migration from v1", () => {
     expect((m.local.dump()[K.auth] as { password: { kdf: string } }).password.kdf).toBe("pbkdf2-sha256");
   });
 });
+
+describe("odd patterns", () => {
+  it("skips an imported keyword that cannot be encoded and keeps the engine working", async () => {
+    const json = JSON.stringify({
+      app: "aegis-blocker",
+      version: 2,
+      rules: [{ kind: "keyword", pattern: "\ud800x" }, { kind: "domain", pattern: "ok.example" }],
+    });
+    expect(await call({ t: "rules.import", json, mode: "merge" })).toEqual({ added: 1, skipped: 1 });
+    expect(mock.dnr.rules).toHaveLength(1);
+  });
+  it("leaves the stored pattern alone when a rule is only toggled", async () => {
+    const r = (await add("regex", "//shorts//")) as { id: string; pattern: string };
+    expect(r.pattern).toBe("/shorts/");
+    const next = (await call({ t: "rule.update", id: r.id, patch: { enabled: false } })) as { pattern: string };
+    expect(next.pattern).toBe("/shorts/");
+  });
+});

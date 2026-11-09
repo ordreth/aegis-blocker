@@ -96,7 +96,7 @@ const KINDS: readonly RuleKind[] = ["domain", "path", "keyword", "regex"];
 export function sanitizeRule(raw: unknown): Rule | null {
   if (!isObj(raw)) return null;
   const kind = oneOf(raw.kind, KINDS, "domain");
-  const parsed = parseAs(kind, str(raw.pattern, 400));
+  const parsed = parseAs(kind, str(raw.pattern, 400), true);
   if (!parsed.ok) return null;
   const scopes: RuleScope[] = Array.isArray(raw.scopes)
     ? (raw.scopes.filter((s) => s === "url" || s === "title") as RuleScope[])

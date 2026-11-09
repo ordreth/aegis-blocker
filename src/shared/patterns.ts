@@ -82,9 +82,10 @@ export function isRegexSafe(src: string): boolean {
   return quantifiers <= MAX_UNBOUNDED_QUANTIFIERS;
 }
 
-function parseRegex(input: string): ParseResult {
-  const m = /^\/(.+)\/[a-z]*$/s.exec(input.trim());
-  const src = (m ? m[1] : input.trim()) ?? "";
+/** `stored` patterns are bare sources; typed ones may come as `/source/flags`. */
+function parseRegex(input: string, stored = false): ParseResult {
+  const m = stored ? null : /^\/(.+)\/[a-z]*$/s.exec(input.trim());
+  const src = stored ? input : ((m ? m[1] : input.trim()) ?? "");
   if (!src) return fail("empty");
   if (src.length > MAX_PATTERN_LENGTH) return fail("too_long");
   try {
@@ -98,13 +99,18 @@ function parseRegex(input: string): ParseResult {
   return { ok: true, kind: "regex", pattern: src };
 }
 
+const LONE_SURROGATE = /[\ud800-\udbff](?![\udc00-\udfff])|(?:^|[^\ud800-\udbff])[\udc00-\udfff]/;
+
 function parseKeyword(input: string): ParseResult {
-  const kw = input.trim().replace(/\s+/g, " ");
+  // Lower-cased first: a few letters grow when folded, and the limit applies to what is stored.
+  const kw = input.trim().replace(/\s+/g, " ").toLowerCase();
   // eslint-disable-next-line no-control-regex
   if (/[\u0000-\u001f]/.test(kw)) return fail("invalid");
+  // Half of a surrogate pair cannot be percent-encoded for the URL form of the keyword.
+  if (LONE_SURROGATE.test(kw)) return fail("invalid");
   if (kw.length < 2) return fail(kw ? "too_broad" : "empty");
   if (kw.length > MAX_PATTERN_LENGTH) return fail("too_long");
-  return { ok: true, kind: "keyword", pattern: kw.toLowerCase() };
+  return { ok: true, kind: "keyword", pattern: kw };
 }
 
 function parseHostPath(input: string, wanted?: "domain" | "path"): ParseResult {
@@ -133,11 +139,14 @@ export function parseInput(raw: string): ParseResult {
   return parseKeyword(t);
 }
 
-/** Normalises a pattern for an already-known kind. */
-export function parseAs(kind: RuleKind, raw: string): ParseResult {
+/**
+ * Normalises a pattern for an already-known kind. `stored` marks a pattern that
+ * was normalised before (storage, exports): parsing it again must not change it.
+ */
+export function parseAs(kind: RuleKind, raw: string, stored = false): ParseResult {
   switch (kind) {
     case "regex":
-      return parseRegex(raw);
+      return parseRegex(raw, stored);
     case "keyword":
       return parseKeyword(raw);
     case "domain":
@@ -148,6 +157,8 @@ export function parseAs(kind: RuleKind, raw: string): ParseResult {
         ? fail("invalid")
         : { ok: true, kind: r.kind, pattern: r.pattern };
     }
+    default:
+      return fail("invalid");
   }
 }
 

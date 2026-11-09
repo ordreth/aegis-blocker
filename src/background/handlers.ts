@@ -40,11 +40,16 @@ async function assertWritable(): Promise<void> {
   await auth.requireUnlocked();
 }
 
-async function validateRule(input: unknown, rules: Rule[], lockedOnlyBlock: boolean): Promise<Rule> {
+async function validateRule(
+  input: unknown,
+  rules: Rule[],
+  lockedOnlyBlock: boolean,
+  stored = false,
+): Promise<Rule> {
   if (!isObject(input) || typeof input.pattern !== "string" || typeof input.kind !== "string")
     throw new AegisError("invalid");
   const kind = input.kind as RuleInput["kind"];
-  const parsed = parseAs(kind, input.pattern);
+  const parsed = parseAs(kind, input.pattern, stored);
   if (!parsed.ok) throw new AegisError(parsed.reason);
   const rule = sanitizeRule({
     ...input,
@@ -143,7 +148,9 @@ export const handlers: { [K in Request["t"]]: Handler<K> } = {
       const patch: RulePatch = isObject(r.patch) ? r.patch : {};
       if (locked && Object.keys(patch).some((k) => k !== "note")) throw new AegisError("locked");
       const merged = { ...old, ...patch };
-      const rule = await validateRule({ ...merged }, rules.filter((x) => x.id !== r.id), false);
+      // Without a new pattern the stored one is kept as it is, not read again as typed text.
+      const untouched = patch.pattern === undefined && (patch.kind ?? old.kind) === old.kind;
+      const rule = await validateRule({ ...merged }, rules.filter((x) => x.id !== r.id), false, untouched);
       const next: Rule = { ...rule, id: old.id, n: old.n, createdAt: old.createdAt };
       const list = rules.map((x) => (x.id === old.id ? next : x));
       if (sanitizeRules(list).length !== list.length) throw new AegisError("duplicate");
