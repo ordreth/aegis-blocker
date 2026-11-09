@@ -34,7 +34,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "zip": "pnpm build && cd dist && zip -qr ../aegis-blocker.zip .",
+    "zip": "rm -f aegis-blocker.zip && pnpm build && cd dist && zip -qr ../aegis-blocker.zip .",
     "icons": "node scripts/icons.mjs",
     "assets": "pnpm build && vitest run --config vitest.assets.config.ts && node scripts/assets/shots.mjs"
   },
