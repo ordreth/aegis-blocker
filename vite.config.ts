@@ -7,7 +7,13 @@ import manifest from "./manifest.ts";
 export default defineConfig({
   plugins: [react(), tailwindcss(), crx({ manifest })],
   resolve: { alias: { "@": new URL("./src", import.meta.url).pathname } },
-  build: { target: "es2023", sourcemap: false },
+  build: {
+    target: "es2023",
+    sourcemap: false,
+    // The block page is only reachable through web_accessible_resources, which the
+    // plugin copies untouched unless it is also a build entry.
+    rollupOptions: { input: { blocked: "blocked.html" } },
+  },
   server: { port: 5173, strictPort: true, hmr: { port: 5173 } },
   test: {
     globals: true,
