@@ -50,10 +50,35 @@ function splitHostPath(raw: string): HostPath | null {
   return { host, path };
 }
 
-/** Heuristic guard against catastrophic backtracking in the JS engine. */
+const MAX_UNBOUNDED_QUANTIFIERS = 4;
+
+/**
+ * Guard against catastrophic backtracking: the service worker runs user regexes
+ * with the JS engine (DNR uses RE2, which is linear). Rejects back-references,
+ * look-around, any repetition applied to a group (`(a|a)+`, `((a+))+`, `(x){30}`)
+ * and patterns stacking many quantifiers, which can go polynomial.
+ */
 export function isRegexSafe(src: string): boolean {
   if (/\\[1-9]|\(\?[=!<]/.test(src)) return false;
-  return !/\((?:[^()\\]|\\.)*[*+{](?:[^()\\]|\\.)*\)\s*[*+{]/.test(src);
+  let quantifiers = 0;
+  let inClass = false;
+  for (let i = 0; i < src.length; i++) {
+    const c = src[i];
+    if (c === "\\") {
+      i++;
+    } else if (inClass) {
+      if (c === "]") inClass = false;
+    } else if (c === "[") {
+      inClass = true;
+    } else if (c === "*" || c === "+") {
+      quantifiers++;
+    } else if (c === "{" && /^\{\d+(?:,\d*)?\}/.test(src.slice(i))) {
+      quantifiers++;
+    } else if (c === ")" && /^(?:[*+]|\{\d+(?:,\d*)?\})/.test(src.slice(i + 1))) {
+      return false;
+    }
+  }
+  return quantifiers <= MAX_UNBOUNDED_QUANTIFIERS;
 }
 
 function parseRegex(input: string): ParseResult {
@@ -214,5 +239,15 @@ export function isHttpUrl(value: string): boolean {
     return (u.protocol === "http:" || u.protocol === "https:") && !u.username;
   } catch {
     return false;
+  }
+}
+
+/** The browser-normalised form of an http(s) URL (no credentials), or null. */
+export function normalizeHttpUrl(value: string): string | null {
+  try {
+    const u = new URL(value);
+    return (u.protocol === "http:" || u.protocol === "https:") && !u.username ? u.href : null;
+  } catch {
+    return null;
   }
 }

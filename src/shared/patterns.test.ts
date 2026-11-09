@@ -36,6 +36,14 @@ describe("parseInput", () => {
     expect(parseInput("/(/")).toMatchObject({ ok: false, reason: "invalid_regex" });
     expect(parseInput("/(?=x)y/")).toMatchObject({ ok: false });
   });
+  it("rejects regexes that backtrack catastrophically in the JS engine", () => {
+    for (const src of ["(a|a)+$", "((a+))+$", "(x+x+)+y", "(a|aa){30}z", "a*a*a*a*a*b"])
+      expect(parseInput(`/${src}/`), src).toMatchObject({ ok: false, reason: "unsafe_regex" });
+  });
+  it("keeps accepting ordinary regexes", () => {
+    for (const src of ["(doomscroll|rage[-_ ]?bait)", "youtube\\.com/.*shorts.*", "[a-z]+\\(x\\)+", "r/(memes|funny)"])
+      expect(parseInput(`/${src}/`), src).toMatchObject({ ok: true });
+  });
   it("converts IDN hosts to punycode", () => {
     expect(parseInput("exemplo.com.br")).toMatchObject({ pattern: "exemplo.com.br" });
     expect(parseInput("münchen.de")).toMatchObject({ pattern: "xn--mnchen-3ya.de" });

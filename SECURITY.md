@@ -18,7 +18,8 @@ meant to resist impulsive self-sabotage. The design goals, in order:
    There are no content scripts and no `externally_connectable` entries; the only message
    listener is `runtime.onMessage` (own extension only) and every message is sender-checked,
    schema-validated and authorised. The only web-accessible resource is the block page, which
-   renders user text with `textContent` and links only `http(s)` URLs.
+   renders user text with `textContent`, links only `http(s)` URLs and refuses to render when
+   framed by a website (anti-clickjacking).
 3. **Malware with local file access** can read the browser profile like any extension's storage;
    Aegis does not claim to defend against that. It does avoid making things worse: nothing is
    synced to cloud storage and passwords are stored only as salted PBKDF2 hashes.
@@ -43,8 +44,8 @@ meant to resist impulsive self-sabotage. The design goals, in order:
   lockout back-off (30 s doubling up to 15 min after 5 failures). v1's single-round SHA-256 hashes
   are upgraded on first successful login and the recovery code is rotated.
 - Data in `chrome.storage.sync` (v1) is migrated to `storage.local` and deleted from sync.
-- Regular expressions are length-limited, rejected if they contain nested quantifiers, look-around or
-  back-references, must be RE2-compatible, and must not match every URL.
+- Regular expressions are length-limited, rejected if they repeat a group (`(a|b)+`), stack more than four
+  quantifiers, or use look-around or back-references (backtracking guard for the JS engine), must be RE2-compatible, and must not match every URL.
 - Imports: size-limited, schema-validated, re-normalised; at most 900 rules.
 - Snooze ("temptation delay") only unblocks the exact address the matching rule blocked.
 - Dependencies are installed with pnpm, `minimumReleaseAge` and `strictDepBuilds`; lifecycle scripts

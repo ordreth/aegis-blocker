@@ -176,6 +176,8 @@ describe("blocked page", () => {
     await call({ t: "settings.set", patch: { snooze: { enabled: true, waitSeconds: 10, minutes: 5 } } });
     expect(((await call({ t: "blocked.info", n: 1 })) as { snooze: unknown }).snooze).not.toBeNull();
     expect(await code(call({ t: "blocked.snooze", n: 1, url: "https://evil.io/" }))).toBe("forbidden");
+    // The raw string matches `x.com`, but the browser reads the host as evil.io.
+    expect(await code(call({ t: "blocked.snooze", n: 1, url: "https://evil.io\\@x.com/" }))).toBe("forbidden");
     await call({ t: "blocked.snooze", n: 1, url: "https://x.com/page" });
     expect(mock.dnr.rules).toHaveLength(0);
     expect(mock.alarms.has("aegis:snooze")).toBe(true);

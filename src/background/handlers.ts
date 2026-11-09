@@ -1,5 +1,5 @@
 import { AegisError, type BlockedInfo, type Request, type ResponseMap, type RulePatch } from "@/shared/messages";
-import { MAX_RULES, parseAs, ruleMatches, urlSource } from "@/shared/patterns";
+import { MAX_RULES, normalizeHttpUrl, parseAs, ruleMatches, urlSource } from "@/shared/patterns";
 import {
   exportRules,
   MAX_LOCK_HOURS,
@@ -258,9 +258,10 @@ export const handlers: { [K in Request["t"]]: Handler<K> } = {
     if (!settings.snooze.enabled || lockUntil) throw new AegisError("locked");
     const rule = rules.find((x) => x.n === Number(r.n) && x.mode === "block");
     if (!rule) throw new AegisError("not_found");
-    // Only the address that this rule actually blocks may be unblocked.
-    if (typeof r.url !== "string" || !ruleMatches(rule, { url: r.url, title: undefined }))
-      throw new AegisError("forbidden");
+    // Only the address that this rule actually blocks may be unblocked. The address is
+    // compared in the browser's normalised form: `https://a.example\@b.com/` is a.example.
+    const url = typeof r.url === "string" ? normalizeHttpUrl(r.url) : null;
+    if (!url || !ruleMatches(rule, { url, title: undefined })) throw new AegisError("forbidden");
     snoozed[rule.id] = Date.now() + settings.snooze.minutes * 60_000;
     await setSnoozed(snoozed);
     await syncAll();

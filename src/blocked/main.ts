@@ -1,6 +1,6 @@
 import "./blocked.css";
 import { createT, resolveLocale } from "@/i18n";
-import { isHttpUrl } from "@/shared/patterns";
+import { normalizeHttpUrl } from "@/shared/patterns";
 import { AegisError } from "@/shared/messages";
 import { DEFAULT_BLOCK_PAGE } from "@/shared/schema";
 import { sanitizeBlockPage } from "@/shared/schema";
@@ -13,7 +13,7 @@ const params = new URLSearchParams(location.search);
 const preview = params.get("preview") === "1";
 const n = Number(params.get("r") ?? 0);
 const hashUrl = decodeSafe(location.hash.slice(1));
-const original = isHttpUrl(hashUrl) ? hashUrl : null;
+const original = normalizeHttpUrl(hashUrl);
 
 function decodeSafe(s: string) {
   try {
@@ -50,6 +50,9 @@ async function draw(config: unknown, url: string | null, info: Parameters<typeof
 }
 
 async function boot() {
+  // A website could frame this page (it is web-accessible) and trick a click on the
+  // snooze/redirect buttons. Only the editor's inert preview may be framed.
+  if (!preview && window.top !== window) return;
   if (preview) {
     window.addEventListener("message", (e) => {
       if (e.origin !== location.origin || e.source !== parent) return;
