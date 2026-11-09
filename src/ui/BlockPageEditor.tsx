@@ -7,7 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import type { MessageKey } from "@/i18n";
-import { deleteMedia, putMedia, validateMedia } from "@/shared/media";
+import { pruneMedia, putMedia, validateMedia } from "@/shared/media";
 import {
   DEFAULT_BLOCK_PAGE,
   MAX_BUTTONS,
@@ -97,7 +97,6 @@ export function BlockPageEditor() {
   const saved = state?.blockPage ?? DEFAULT_BLOCK_PAGE;
   const [draft, setDraft] = useState<BlockPageConfig>(saved);
   const [quotesText, setQuotesText] = useState(saved.quotes.join("\n"));
-  const staleMedia = useRef<string[]>([]);
   const touched = useRef(false);
 
   useEffect(() => {
@@ -127,12 +126,10 @@ export function BlockPageEditor() {
     } catch {
       return toast(errorText("bad_media"), "error");
     }
-    if (draft.background.mediaId) staleMedia.current.push(draft.background.mediaId);
     update({ background: { ...draft.background, kind, mediaId: id } });
   };
 
   const removeMedia = () => {
-    if (draft.background.mediaId) staleMedia.current.push(draft.background.mediaId);
     update({ background: { ...draft.background, kind: "none", mediaId: null } });
   };
 
@@ -145,12 +142,12 @@ export function BlockPageEditor() {
     if (!res) return;
     touched.current = false;
     setDraft(res);
-    await Promise.all(staleMedia.current.filter((id) => id !== res.background.mediaId).map((id) => deleteMedia(id).catch(() => undefined)));
-    staleMedia.current = [];
+    // Whatever is not the saved background is a leftover: replaced, removed, or uploaded
+    // in a draft that was never saved.
+    await pruneMedia(res.background.mediaId).catch(() => undefined);
   };
 
   const reset = () => {
-    if (draft.background.mediaId) staleMedia.current.push(draft.background.mediaId);
     touched.current = true;
     setDraft({ ...DEFAULT_BLOCK_PAGE });
     setQuotesText("");

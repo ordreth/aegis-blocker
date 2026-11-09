@@ -33,5 +33,13 @@ export const validateMedia = (file: File): "image" | "video" | null => {
 
 export const putMedia = (id: string, blob: Blob) => tx("readwrite", (s) => s.put(blob, id));
 export const deleteMedia = (id: string) => tx("readwrite", (s) => s.delete(id));
+const listMedia = () => tx<IDBValidKey[]>("readonly", (s) => s.getAllKeys());
+
+/** Deletes every stored file but `keep`: uploads that were replaced, removed or never saved. */
+export async function pruneMedia(keep: string | null): Promise<void> {
+  const ids = await listMedia();
+  await Promise.all(ids.filter((id) => id !== keep).map((id) => deleteMedia(String(id))));
+}
+
 export const getMedia = (id: string) =>
   tx<Blob | undefined>("readonly", (s) => s.get(id) as IDBRequest<Blob | undefined>);
