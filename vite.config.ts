@@ -10,6 +10,9 @@ export default defineConfig({
   build: {
     target: "es2023",
     sourcemap: false,
+    // Chromium preloads modules natively; the polyfill would only add a fetch() call
+    // to pages whose policy forbids network access.
+    modulePreload: { polyfill: false },
     // The block page is only reachable through web_accessible_resources, which the
     // plugin copies untouched unless it is also a build entry.
     rollupOptions: { input: { blocked: "blocked.html" } },
