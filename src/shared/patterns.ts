@@ -186,6 +186,18 @@ export function urlSource(rule: Pick<Rule, "kind" | "pattern">): string {
   }
 }
 
+/**
+ * The same condition as `urlSource`, written so that it spans the whole address.
+ * A declarativeNetRequest redirect only replaces the text its filter matched and
+ * keeps the rest of the URL, so a filter that matches a part of it (a keyword, a
+ * user regex) would send the tab to a mangled address on the very site being
+ * blocked. Matching everything makes the substitution `\0` the full address.
+ */
+export function dnrFilter(rule: Pick<Rule, "kind" | "pattern">): string {
+  const src = urlSource(rule);
+  return rule.kind === "domain" || rule.kind === "path" ? `${src}.*$` : `^.*(?:${src}).*$`;
+}
+
 const never: Matcher = () => false;
 const matchers = new Map<string, Matcher>();
 function test(src: string, text: string): boolean {

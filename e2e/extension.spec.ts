@@ -104,7 +104,9 @@ test("keyword rules match search terms, other searches pass", async () => {
   await expect(fine.locator("#ok")).toBeVisible();
   const page = await context.newPage();
   await page.goto(`${other}/search?q=Cat+Videos`).catch(() => undefined);
-  await expect.poll(() => page.url()).toContain("blocked.html");
+  await expect.poll(() => page.url()).toContain(`chrome-extension://${extId}/blocked.html`);
+  // a keyword matches in the middle of the address: the redirect must still carry all of it
+  expect(new URL(page.url()).hash).toBe(`#${other}/search?q=Cat+Videos`);
 });
 
 test("Absolute Mode refuses removal and reverts storage tampering", async () => {

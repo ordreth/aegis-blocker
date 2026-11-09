@@ -1,4 +1,4 @@
-import { urlSource } from "@/shared/patterns";
+import { dnrFilter } from "@/shared/patterns";
 import { decide, isRuleActive, nextBoundary } from "@/shared/schedule";
 import type { Rule } from "@/shared/types";
 import {
@@ -36,7 +36,7 @@ export function buildDnrRules(
     .filter((r) => !snoozed.has(r.id) && isRuleActive(r, at) && appliesToUrl(r))
     .map((r): DnrRule => {
       const condition: DnrRule["condition"] = {
-        regexFilter: urlSource(r),
+        regexFilter: dnrFilter(r),
         isUrlFilterCaseSensitive: false,
         resourceTypes: ["main_frame" as chrome.declarativeNetRequest.ResourceType],
       };

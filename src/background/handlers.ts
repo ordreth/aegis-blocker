@@ -1,5 +1,5 @@
 import { AegisError, type BlockedInfo, type Request, type ResponseMap, type RulePatch } from "@/shared/messages";
-import { MAX_RULES, normalizeHttpUrl, parseAs, ruleMatches, urlSource } from "@/shared/patterns";
+import { dnrFilter, MAX_RULES, normalizeHttpUrl, parseAs, ruleMatches } from "@/shared/patterns";
 import {
   exportRules,
   MAX_LOCK_HOURS,
@@ -56,7 +56,7 @@ async function validateRule(input: unknown, rules: Rule[], lockedOnlyBlock: bool
   });
   if (!rule) throw new AegisError("invalid");
   if (lockedOnlyBlock && (rule.mode !== "block" || !rule.enabled)) throw new AegisError("locked");
-  if (rule.kind === "regex" && !(await isRegexSupported(urlSource(rule))))
+  if (rule.kind === "regex" && !(await isRegexSupported(dnrFilter(rule))))
     throw new AegisError("unsupported_regex");
   return rule;
 }
@@ -172,7 +172,7 @@ export const handlers: { [K in Request["t"]]: Handler<K> } = {
       let added = 0;
       for (const rule of parsed.rules) {
         if (locked && (rule.mode !== "block" || !rule.enabled)) { skipped++; continue; }
-        if (rule.kind === "regex" && !(await isRegexSupported(urlSource(rule)))) { skipped++; continue; }
+        if (rule.kind === "regex" && !(await isRegexSupported(dnrFilter(rule)))) { skipped++; continue; }
         const candidate = { ...rule, n: next };
         if (current.length >= MAX_RULES) { skipped++; continue; }
         const merged = [...current, candidate];
