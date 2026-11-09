@@ -99,6 +99,7 @@ function parseRegex(input: string, stored = false): ParseResult {
   return { ok: true, kind: "regex", pattern: src };
 }
 
+const ADDRESS_STARTS = ["https://www.", "http://www."];
 const LONE_SURROGATE = /[\ud800-\udbff](?![\udc00-\udfff])|(?:^|[^\ud800-\udbff])[\udc00-\udfff]/;
 
 function parseKeyword(input: string): ParseResult {
@@ -110,6 +111,10 @@ function parseKeyword(input: string): ParseResult {
   if (LONE_SURROGATE.test(kw)) return fail("invalid");
   if (kw.length < 2) return fail(kw ? "too_broad" : "empty");
   if (kw.length > MAX_PATTERN_LENGTH) return fail("too_long");
+  // A word found in the part every address starts with ("tt", "://", "www") would block
+  // the whole web, with no way back while Absolute Mode is on.
+  const src = keywordSource(kw);
+  if (ADDRESS_STARTS.some((start) => test(src, start))) return fail("too_broad");
   return { ok: true, kind: "keyword", pattern: kw };
 }
 

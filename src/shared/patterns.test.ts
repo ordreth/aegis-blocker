@@ -50,6 +50,18 @@ describe("parseInput", () => {
   });
 });
 
+describe("keywords", () => {
+  it("refuses a word found in the start of every address", () => {
+    for (const kw of ["tt", "ht", "ps", "p:", "://", "//", "www", "w.", "http", "HTTPS"])
+      expect(parseAs("keyword", kw), kw).toEqual({ ok: false, reason: "too_broad" });
+    expect(parseInput("tt")).toEqual({ ok: false, reason: "too_broad" });
+  });
+  it("still accepts ordinary short words", () => {
+    for (const kw of ["pst", "wwe", "com", "ww2 games", "cat videos", "tv"])
+      expect(parseAs("keyword", kw).ok, kw).toBe(true);
+  });
+});
+
 describe("parseAs", () => {
   it("refuses a domain rule that carries a path", () => {
     expect(parseAs("domain", "a.com/x")).toMatchObject({ ok: false });
