@@ -5,6 +5,7 @@ import {
   MAX_LOCK_HOURS,
   MIN_LOCK_HOURS,
   parseImport,
+  ruleKey,
   sanitizeBlockPage,
   sanitizeRule,
   sanitizeRules,
@@ -176,18 +177,17 @@ const table: Table = {
       const parsed = typeof r.json === "string" ? parseImport(r.json) : null;
       if (!parsed) throw new AegisError("bad_import");
       let skipped = parsed.skipped;
-      let current = r.mode === "replace" ? [] : rules;
+      const current = r.mode === "replace" ? [] : [...rules];
+      const seen = new Set(current.map(ruleKey));
       let next = await nextRuleNumber(current);
       let added = 0;
       for (const rule of parsed.rules) {
+        const key = ruleKey(rule);
         if (locked && (rule.mode !== "block" || !rule.enabled)) { skipped++; continue; }
+        if (current.length >= MAX_RULES || seen.has(key)) { skipped++; continue; }
         if (rule.kind === "regex" && !(await isRegexSupported(dnrFilter(rule)))) { skipped++; continue; }
-        const candidate = { ...rule, n: next };
-        if (current.length >= MAX_RULES) { skipped++; continue; }
-        const merged = [...current, candidate];
-        if (sanitizeRules(merged).length !== merged.length) { skipped++; continue; }
-        current = merged;
-        next++;
+        seen.add(key);
+        current.push({ ...rule, n: next++ });
         added++;
       }
       await commit(current);

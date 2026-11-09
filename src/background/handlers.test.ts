@@ -251,6 +251,21 @@ describe("migration from v1", () => {
   });
 });
 
+describe("large imports", () => {
+  it("fills up to the limit, skipping duplicates and the overflow", async () => {
+    await add("domain", "site0.example");
+    const rules = Array.from({ length: 950 }, (_, i) => ({ kind: "domain", pattern: `site${i % 920}.example` }));
+    rules.push({ kind: "keyword", pattern: "same word" }, { kind: "keyword", pattern: "Same  Word" });
+    const json = JSON.stringify({ app: "aegis-blocker", version: 2, rules });
+    // 920 distinct sites, one already there: 899 fit next to it; the rest are duplicates or over the limit
+    expect(await call({ t: "rules.import", json, mode: "merge" })).toEqual({ added: 899, skipped: 53 });
+    const stored = mock.local.dump()[K.rules] as { n: number }[];
+    expect(stored).toHaveLength(900);
+    expect(new Set(stored.map((r) => r.n)).size).toBe(900);
+    expect(mock.dnr.rules).toHaveLength(900);
+  });
+});
+
 describe("odd patterns", () => {
   it("skips an imported keyword that cannot be encoded and keeps the engine working", async () => {
     const json = JSON.stringify({

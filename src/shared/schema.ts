@@ -118,6 +118,10 @@ export function sanitizeRule(raw: unknown): Rule | null {
   };
 }
 
+/** Two rules with the same key do the same thing; only the first one is kept. */
+export const ruleKey = (r: Pick<Rule, "mode" | "kind" | "pattern" | "schedule">) =>
+  `${r.mode}|${r.kind}|${r.pattern}|${JSON.stringify(r.schedule)}`;
+
 /** Sanitises a list, drops invalid/duplicate rules and assigns missing numeric ids. */
 export function sanitizeRules(raw: unknown): Rule[] {
   if (!Array.isArray(raw)) return [];
@@ -128,7 +132,7 @@ export function sanitizeRules(raw: unknown): Rule[] {
   for (const item of raw) {
     const r = sanitizeRule(item);
     if (!r) continue;
-    const key = `${r.mode}|${r.kind}|${r.pattern}|${JSON.stringify(r.schedule)}`;
+    const key = ruleKey(r);
     if (seenKey.has(key) || seenIds.has(r.id)) continue;
     seenKey.add(key);
     seenIds.add(r.id);
