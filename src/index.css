@@ -215,7 +215,7 @@ body,
   --color-aegis-danger-500: var(--aegis-danger-500);
   --color-aegis-danger-900: var(--aegis-danger-900);
 
-  --color-destructive-foreground: (--destructive-foreground);
+  --color-destructive-foreground: var(--destructive-foreground);
 }
 
 @layer base {
@@ -242,7 +242,10 @@ body,
   opacity: 0.3;
 }
 
-.container-size {
-  min-height: calc(100vh - 204px);
-  height: calc(100vh - 204px);
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

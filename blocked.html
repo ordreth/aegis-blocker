@@ -3,139 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aegis - Access Restricted</title>
+    <meta name="referrer" content="no-referrer" />
+    <title>Aegis</title>
     <style>
-      :root {
-        --bg-page: #0d0d0d;
-        --bg-card: #171c26;
-        --border: #1e293b;
-        --brand-gold: #d99543;
-        --text-main: #f5f7fa;
-        --text-muted: #94a3b8;
-        --radius: 12px;
-      }
-
-      body {
-        background-color: var(--bg-page);
-        color: var(--text-main);
-        font-family:
-          system-ui,
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Roboto,
-          sans-serif;
-        height: 100vh;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        overflow: hidden;
-      }
-
-      .card {
-        background-color: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 3rem 2rem;
-        max-width: 420px;
-        width: 90%;
-        box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        animation: fadeIn 0.4s ease-out;
-      }
-
-      .icon-container {
-        background-color: rgba(217, 149, 67, 0.1);
-        border-radius: 50%;
-        padding: 20px;
-        margin-bottom: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid rgba(217, 149, 67, 0.2);
-      }
-
-      .icon {
-        color: var(--brand-gold);
-        width: 48px;
-        height: 48px;
-      }
-
-      h1 {
-        font-size: 1.75rem;
-        margin: 0 0 12px 0;
-        font-weight: 700;
-        letter-spacing: -0.025em;
-      }
-
-      p.desc {
-        font-size: 1.05rem;
-        color: var(--text-muted);
-        line-height: 1.6;
-        margin: 0;
-      }
-
-      .quote-container {
-        margin-top: 20px;
-        border-top: 1px solid var(--border);
-        padding-top: 20px;
-        width: 100%;
-      }
-
-      .quote {
-        font-style: italic;
-        color: var(--text-muted);
-        font-size: 0.875rem;
-        opacity: 0.7;
-        font-family: serif;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+      html { background: #0d0d0d; }
     </style>
   </head>
   <body>
-    <div class="card">
-      <div class="icon-container">
-        <svg
-          class="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-          <path d="M12 8v4" />
-          <path d="M12 16h.01" />
-        </svg>
-      </div>
-
-      <h1>Access Restricted</h1>
-      <p class="desc">
-        The Aegis Shield has blocked this site to protect your focus session.
-      </p>
-
-      <div class="quote-container">
-        <p class="quote">
-          "Discipline is the bridge between goals and achievements."
-        </p>
-      </div>
-    </div>
+    <div id="app"></div>
+    <script type="module" src="/src/blocked/main.ts"></script>
   </body>
 </html>

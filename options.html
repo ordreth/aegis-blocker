@@ -5,28 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aegis Blocker</title>
     <style>
-      html,
-      body,
-      #root {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        background: #0d0d0d;
-      }
-
-      body {
-        color: #e2e8f0;
-        font-family:
-          system-ui,
-          -apple-system,
-          sans-serif;
-        overflow-x: hidden;
-      }
+      html { background: #0d0d0d; }
+      html:not(.dark) { background: #f5f7fa; }
     </style>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/options/index.tsx"></script>
+    <script type="module" src="/src/options/main.tsx"></script>
   </body>
 </html>

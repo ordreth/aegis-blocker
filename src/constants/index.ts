@@ -1,1 +1,0 @@
-export const LOCK_CHECK_INTERVAL = 1000;
