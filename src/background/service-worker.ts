@@ -8,7 +8,15 @@ const isTrustedSender = (sender: chrome.runtime.MessageSender) =>
   sender.id === chrome.runtime.id &&
   (!sender.url || sender.url.startsWith(chrome.runtime.getURL("")));
 
+// Storage is brought up to date before anything reads it. Doing this on every
+// start of the worker (not only on install) picks up a migration that was
+// interrupted or had to be postponed.
+const ready: Promise<void> = migrate()
+  .then((migrated) => (migrated ? syncAll() : undefined))
+  .catch((err: unknown) => console.error("Aegis: start-up failed", err));
+
 async function dispatch(msg: unknown): Promise<unknown> {
+  await ready;
   if (typeof msg !== "object" || msg === null) throw new AegisError("invalid");
   const req = msg as Request;
   if (typeof req.t !== "string" || !KNOWN.has(req.t)) throw new AegisError("invalid");
@@ -30,22 +38,19 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 });
 
 chrome.runtime.onInstalled.addListener(() => {
-  void (async () => {
-    await migrate();
-    await syncAll();
-  })();
+  void ready.then(() => syncAll());
 });
 
 chrome.runtime.onStartup.addListener(() => {
-  void enforceGuard().then(() => syncAll());
+  void ready.then(() => enforceGuard()).then(() => syncAll());
 });
 
 chrome.alarms.onAlarm.addListener((alarm) => {
-  if (isAegisAlarm(alarm.name)) void syncAll();
+  if (isAegisAlarm(alarm.name)) void ready.then(() => syncAll());
 });
 
 chrome.tabs.onUpdated.addListener((_id, change, tab) => {
-  if (change.url || change.title) void checkTab(tab);
+  if (change.url || change.title) void ready.then(() => checkTab(tab));
 });
 
 // Any storage change that did not come from this worker while Absolute Mode is
