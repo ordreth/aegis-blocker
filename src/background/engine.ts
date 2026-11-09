@@ -62,10 +62,12 @@ export function buildDnrRules(
     });
 }
 
-export async function isRegexSupported(regex: string): Promise<boolean> {
+/** `capturing`: also fit for a substitution redirect, which needs more of RE2's small memory budget. */
+export async function isRegexSupported(regex: string, capturing = false): Promise<boolean> {
   const res = await chrome.declarativeNetRequest.isRegexSupported({
     regex,
     isCaseSensitive: false,
+    requireCapturing: capturing,
   });
   return res.isSupported;
 }
@@ -83,23 +85,29 @@ export async function syncDnr(): Promise<void> {
   const [rules, snoozed] = await Promise.all([getRules(), getSnoozed()]);
   const ids = new Set(Object.keys(snoozed));
   const now = Date.now();
+  const full = buildDnrRules(rules, now, ids, true);
   try {
-    await applyDnr(buildDnrRules(rules, now, ids, true));
+    return await applyDnr(full);
   } catch (err) {
-    console.warn("Aegis: substitution redirect rejected, using plain redirect", err);
-    try {
-      await applyDnr(buildDnrRules(rules, now, ids, false));
-    } catch (err2) {
-      // Drop rules the engine refuses one by one so a bad rule never disables the rest.
-      console.error("Aegis: bulk rule update failed", err2);
-      const good: DnrRule[] = [];
-      for (const r of buildDnrRules(rules, now, ids, false)) {
-        const re = r.condition.regexFilter;
-        if (re && (await isRegexSupported(re))) good.push(r);
-      }
-      await applyDnr(good);
-    }
+    console.warn("Aegis: rule update refused, checking the rules one by one", err);
   }
+  // A single rule the browser cannot take refuses the whole update. Keep every rule
+  // it does accept, with the best redirect each one supports; whatever is left out is
+  // still enforced by the tab check.
+  const plain = new Map(buildDnrRules(rules, now, ids, false).map((r) => [r.id, r]));
+  const kept: DnrRule[] = [];
+  for (const r of full) {
+    const regex = r.condition.regexFilter ?? "";
+    const substitutes = !!r.action.redirect?.regexSubstitution;
+    if (await isRegexSupported(regex, substitutes)) kept.push(r);
+    else if (substitutes && (await isRegexSupported(regex))) kept.push(plain.get(r.id) as DnrRule);
+  }
+  try {
+    return await applyDnr(kept);
+  } catch (err) {
+    console.warn("Aegis: substitution redirect refused, using the plain redirect", err);
+  }
+  await applyDnr(kept.map((r) => plain.get(r.id) as DnrRule));
 }
 
 export async function scheduleAlarms(): Promise<void> {
@@ -146,10 +154,29 @@ export async function sweepTabs(): Promise<void> {
   await Promise.all(tabs.map((tab) => checkTab(tab, rules)));
 }
 
-export async function syncAll(): Promise<void> {
-  await syncDnr();
+async function syncNow(): Promise<void> {
+  try {
+    await syncDnr();
+  } catch (err) {
+    // Storage stays the source of truth: alarms and open tabs are still brought in
+    // line, and the next sync tries the browser's rules again.
+    console.error("Aegis: could not update the browser's rules", err);
+  }
   await scheduleAlarms();
   await sweepTabs();
+}
+
+let syncing: Promise<void> = Promise.resolve();
+
+/**
+ * Brings the browser's rules, the alarms and the open tabs in line with storage.
+ * Runs never overlap: each one replaces the rules it found, so an older run that
+ * finished after a newer one would bring back what the newer one removed.
+ */
+export function syncAll(): Promise<void> {
+  const run = syncing.then(syncNow);
+  syncing = run.catch(() => undefined);
+  return run;
 }
 
 /**
