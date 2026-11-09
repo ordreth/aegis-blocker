@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="gold" x1="18" y1="8" x2="110" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f6d08f"/>
+      <stop offset="0.55" stop-color="#d99543"/>
+      <stop offset="1" stop-color="#c8693a"/>
+    </linearGradient>
+    <linearGradient id="face" x1="64" y1="18" x2="64" y2="116" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#232a3a"/>
+      <stop offset="1" stop-color="#0f121a"/>
+    </linearGradient>
+    <linearGradient id="glyph" x1="64" y1="36" x2="64" y2="92" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffe2a8"/>
+      <stop offset="1" stop-color="#e0a04b"/>
+    </linearGradient>
+  </defs>
+  <path d="M64 8 108 24v38c0 28-18 46-44 58C38 108 20 90 20 62V24z" fill="url(#gold)"/>
+  <path d="M64 16 101 29.500V62c0 23.500-15 38.500-37 48.500C42 100.500 27 85.500 27 62V29.500z" fill="url(#face)"/>
+  <path d="M64 38 84 90H73.200l-3.600-10.400H58.400L54.800 90H44zm0 17.600-4.700 14.400h9.400z" fill="url(#glyph)" fill-rule="evenodd"/>
+  <path d="M64 16 101 29.500v6L64 22 27 35.500v-6z" fill="#fff" fill-opacity=".08"/>
+</svg>

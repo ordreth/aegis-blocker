@@ -20,7 +20,7 @@ interface Toast {
   kind: ToastKind;
 }
 
-interface Ctx {
+export interface Ctx {
   state: AppState | null;
   t: TFunction;
   locale: Locale;
@@ -35,7 +35,7 @@ interface Ctx {
   errorText: (code: ErrorCode) => string;
 }
 
-const AegisContext = createContext<Ctx | null>(null);
+export const AegisContext = createContext<Ctx | null>(null);
 
 export function useAegis(): Ctx {
   const ctx = useContext(AegisContext);

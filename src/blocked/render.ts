@@ -11,6 +11,8 @@ export interface RenderContext {
   url: string | null;
   info: BlockedInfo | null;
   preview: boolean;
+  /** Overrides the IndexedDB lookup (used for store screenshots). */
+  mediaUrl?: string;
   onSnooze?: () => Promise<boolean>;
   onLeave?: (url: string) => void;
 }
@@ -88,10 +90,10 @@ export async function renderBlockPage(
   const bg = cfg.background;
   if (bg.kind !== "none" && bg.mediaId) {
     try {
-      const blob = await getMedia(bg.mediaId);
-      if (blob) {
-        const url = URL.createObjectURL(blob);
-        cleanups.push(() => URL.revokeObjectURL(url));
+      const blob = ctx.mediaUrl ? null : await getMedia(bg.mediaId);
+      if (blob || ctx.mediaUrl) {
+        const url = ctx.mediaUrl ?? URL.createObjectURL(blob as Blob);
+        if (!ctx.mediaUrl) cleanups.push(() => URL.revokeObjectURL(url));
         const media = bg.kind === "video" ? el("video", "media") : el("img", "media");
         if (media instanceof HTMLVideoElement) {
           Object.assign(media, { src: url, autoplay: true, muted: true, loop: true, playsInline: true });

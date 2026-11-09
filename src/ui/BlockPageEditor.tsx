@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { ImagePlus, Plus, RotateCcw, Save, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,16 +46,33 @@ function Preview({ config }: { config: BlockPageConfig }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config, language]);
 
+  // The block page is laid out for a full window, so it is rendered at 1280x800 and scaled down.
+  const box = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0.35);
+  useLayoutEffect(() => {
+    const el = box.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(() => setScale(el.clientWidth / 1280));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   return (
     <div className="grid gap-2">
       <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">{t("bp_preview")}</p>
-      <iframe
-        ref={frame}
-        title={t("bp_preview")}
-        src={chrome.runtime.getURL("blocked.html?preview=1")}
-        className="aspect-16/10 w-full rounded-xl border"
-        sandbox="allow-scripts allow-same-origin"
-      />
+      <div ref={box} className="relative aspect-16/10 w-full overflow-hidden rounded-xl border">
+        <iframe
+          ref={frame}
+          title={t("bp_preview")}
+          src={chrome.runtime.getURL("blocked.html?preview=1")}
+          width={1280}
+          height={800}
+          scrolling="no"
+          className="absolute top-0 left-0 origin-top-left border-0"
+          style={{ transform: `scale(${scale})` }}
+          sandbox="allow-scripts allow-same-origin"
+        />
+      </div>
     </div>
   );
 }

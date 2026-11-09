@@ -35,9 +35,8 @@ export default defineManifest({
   permissions: ["declarativeNetRequest", "storage", "alarms"],
   host_permissions: ["http://*/*", "https://*/*"],
 
-  web_accessible_resources: [
-    { resources: ["blocked.html", "assets/*"], matches: ["http://*/*", "https://*/*"] },
-  ],
+  // Only the block page is reachable from web pages (needed for the redirect).
+  web_accessible_resources: [{ resources: ["blocked.html"], matches: ["http://*/*", "https://*/*"] }],
 
   content_security_policy: {
     extension_pages: [

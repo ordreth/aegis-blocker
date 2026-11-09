@@ -12,3 +12,4 @@ playwright-report
 .vscode/*
 !.vscode/extensions.json
 *.sw?
+store-assets/.build

@@ -38,7 +38,7 @@ export function PopupApp() {
           <ExternalLink />
         </Button>
       </header>
-      <div className="custom-scrollbar grid flex-1 content-start gap-4 overflow-y-auto p-4">
+      <div className="custom-scrollbar grid flex-1 grid-cols-[minmax(0,1fr)] content-start gap-4 overflow-y-auto p-4">
         <LockBanner />
         <QuickBlock />
         <RulesPanel compact />

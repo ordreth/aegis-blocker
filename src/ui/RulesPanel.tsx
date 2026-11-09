@@ -234,7 +234,7 @@ export function RulesPanel({ compact = false }: { compact?: boolean }) {
   };
 
   return (
-    <div className="grid gap-4">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-4">
       <AddRule onAdvanced={(p) => openDialog(null, p)} />
 
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -296,7 +296,7 @@ export function RulesPanel({ compact = false }: { compact?: boolean }) {
       ) : visible.length === 0 ? (
         <p className="text-muted-foreground py-6 text-center text-sm">{t("rules_no_results")}</p>
       ) : (
-        <ul className="grid gap-2">
+        <ul className="grid grid-cols-[minmax(0,1fr)] gap-2">
           {visible.map((r) => (
             <RuleRow key={r.id} rule={r} onEdit={() => openDialog(r)} onDelete={() => requestDelete(r)} />
           ))}

@@ -18,7 +18,6 @@ export function QuickBlock() {
         <Button
           size="sm"
           className="max-w-full"
-          disabled={false}
           onClick={() => void run({ t: "rule.add", input: { kind: "domain", pattern: site.host } })}
         >
           <ShieldBan /> <span className="truncate">{t("quick_block", { site: site.host })}</span>

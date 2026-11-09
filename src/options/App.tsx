@@ -67,7 +67,7 @@ export function OptionsApp() {
           ))}
         </nav>
       </aside>
-      <main className="grid min-w-0 content-start gap-5">
+      <main className="grid min-w-0 grid-cols-[minmax(0,1fr)] content-start gap-5">
         <LockBanner />
         <h2 className="text-2xl font-semibold tracking-tight">{t(active.label)}</h2>
         <active.View />
