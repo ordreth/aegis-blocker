@@ -101,7 +101,9 @@ async function withAuth<T>(fn: () => Promise<T>): Promise<T> {
   return fn();
 }
 
-export const handlers: { [K in Request["t"]]: Handler<K> } = {
+type Table = { [K in Request["t"]]: Handler<K> };
+
+const table: Table = {
   state,
 
   "auth.login": (r) => auth.login(r.password),
@@ -275,6 +277,26 @@ export const handlers: { [K in Request["t"]]: Handler<K> } = {
     return null;
   },
 };
+
+/**
+ * Requests are handled one at a time. Every handler reads state, decides and
+ * writes back; interleaved, two of them could lose a rule, and a burst of
+ * password guesses would all pass the back-off check before the first failure
+ * is recorded.
+ */
+let queue: Promise<unknown> = Promise.resolve();
+function exclusive<T>(fn: () => Promise<T>): Promise<T> {
+  const run = queue.then(fn);
+  queue = run.catch(() => undefined);
+  return run;
+}
+
+export const handlers = Object.fromEntries(
+  Object.entries(table).map(([t, handler]) => [
+    t,
+    (req: never) => exclusive(() => (handler as (r: never) => Promise<unknown>)(req)),
+  ]),
+) as Table;
 
 export const KNOWN = new Set(Object.keys(handlers));
 export const hasAuth = async () => !!(await getAuth());
