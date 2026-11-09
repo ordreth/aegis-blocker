@@ -3,7 +3,7 @@
 import { Resvg } from "@resvg/resvg-js";
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 
-const full = readFileSync("public/assets/icon.svg");
+const full = readFileSync("scripts/assets/icon.svg");
 const small = readFileSync("scripts/assets/icon-small.svg");
 const render = (svg, size) => new Resvg(svg, { fitTo: { mode: "width", value: size } }).render().asPng();
 

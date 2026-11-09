@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="128" height="128" alt="Aegis Blocker logo" src="public/assets/icon.svg" />
+  <img width="128" height="128" alt="Aegis Blocker logo" src="scripts/assets/icon.svg" />
   <h1>Aegis Blocker</h1>
   <p><strong>Block the distraction, not the whole internet.</strong></p>
   <p>A strict, private and 100% local website blocker for deep work — Chrome, Edge, Brave and other Chromium browsers.</p>
@@ -99,7 +99,7 @@ pnpm lint
 pnpm test         # unit + UI tests (Vitest)
 pnpm build && pnpm test:e2e   # real-browser tests (Playwright); set AEGIS_CHROME if Chrome is not on PATH
 pnpm zip          # build and zip dist/ for the Chrome Web Store
-pnpm icons        # re-render icons from public/assets/icon.svg
+pnpm icons        # re-render icons from scripts/assets/icon.svg
 pnpm assets       # regenerate store screenshots (needs Firefox on PATH, or AEGIS_FIREFOX)
 ```
 

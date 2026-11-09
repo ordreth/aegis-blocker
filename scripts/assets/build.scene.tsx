@@ -155,7 +155,7 @@ it("builds the store scenes", async () => {
   .ok{color:#34d399}.no{color:#fb7185}.frame{border-radius:18px;border:1px solid rgba(255,255,255,.14);box-shadow:0 40px 90px -30px rgba(0,0,0,.8);overflow:hidden;background:#0d0d0d}
   iframe{border:0;display:block}`;
   const logo = (s: number) =>
-    readFileSync("public/assets/icon.svg", "utf8").replace("<svg ", `<svg class="logo" style="--s:${s}px" `);
+    readFileSync("scripts/assets/icon.svg", "utf8").replace("<svg ", `<svg class="logo" style="--s:${s}px" `);
 
   write(
     "screenshots__01-block-precisely",
