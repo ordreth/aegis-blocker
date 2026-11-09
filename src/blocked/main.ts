@@ -73,7 +73,7 @@ async function boot() {
   try {
     const state = await send({ t: "state" });
     language = state.settings.language;
-    const info = await send({ t: "blocked.info", n });
+    const info = await send({ t: "blocked.info", n, ...(original ? { url: original } : {}) });
     await draw(state.blockPage, original, info);
   } catch (e) {
     console.error(e);

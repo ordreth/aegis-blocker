@@ -174,7 +174,14 @@ describe("blocked page", () => {
     await add("domain", "x.com");
     expect(await code(call({ t: "blocked.snooze", n: 1, url: "https://x.com/" }))).toBe("locked"); // disabled by default
     await call({ t: "settings.set", patch: { snooze: { enabled: true, waitSeconds: 10, minutes: 5 } } });
-    expect(((await call({ t: "blocked.info", n: 1 })) as { snooze: unknown }).snooze).not.toBeNull();
+    const offered = async (n: number, url?: string) =>
+      ((await call({ t: "blocked.info", n, ...(url ? { url } : {}) })) as { snooze: unknown }).snooze !== null;
+    expect(await offered(1, "https://x.com/feed")).toBe(true);
+    // not offered where the request would be refused: another address, or a page blocked for its title
+    expect(await offered(1, "https://evil.io/")).toBe(false);
+    expect(await offered(1)).toBe(false);
+    const byTitle = (await add("keyword", "memes", { scopes: ["title"] })) as { n: number };
+    expect(await offered(byTitle.n, "https://funny.example/")).toBe(false);
     expect(await code(call({ t: "blocked.snooze", n: 1, url: "https://evil.io/" }))).toBe("forbidden");
     // The raw string matches `x.com`, but the browser reads the host as evil.io.
     expect(await code(call({ t: "blocked.snooze", n: 1, url: "https://evil.io\\@x.com/" }))).toBe("forbidden");

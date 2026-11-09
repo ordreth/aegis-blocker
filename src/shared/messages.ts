@@ -28,7 +28,7 @@ export type Request =
   | { t: "lock.enable"; hours?: number }
   | { t: "settings.set"; patch: Partial<Settings> }
   | { t: "blockpage.set"; config: BlockPageConfig }
-  | { t: "blocked.info"; n: number }
+  | { t: "blocked.info"; n: number; url?: string }
   | { t: "blocked.snooze"; n: number; url: string };
 
 export interface BlockedInfo {

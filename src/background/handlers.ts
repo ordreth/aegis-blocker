@@ -253,13 +253,17 @@ const table: Table = {
       getSnoozed(),
     ]);
     const rule = rules.find((x) => x.n === Number(r.n));
+    // Snoozing is only possible for the address the rule blocked (see blocked.snooze);
+    // a page blocked for its title has none, so the button is not offered at all.
+    const url = typeof r.url === "string" ? normalizeHttpUrl(r.url) : null;
+    const snoozable = !!rule && rule.mode === "block" && !!url && ruleMatches(rule, { url, title: undefined });
     // The target was allowed when the redirect was saved, but rules change: sending
     // the tab to a blocked address would bounce it back here over and over.
     const target = decide(rules, { url: cfg.redirect.url }, Date.now(), new Set(Object.keys(snoozed)));
     return {
       pattern: cfg.showRule && rule ? rule.pattern : null,
       lockUntil,
-      snooze: settings.snooze.enabled && !lockUntil && rule ? settings.snooze : null,
+      snooze: settings.snooze.enabled && !lockUntil && snoozable ? settings.snooze : null,
       canRedirect: target.action !== "block",
     };
   },
