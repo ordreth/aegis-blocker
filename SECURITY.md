@@ -36,16 +36,29 @@ meant to resist impulsive self-sabotage. The design goals, in order:
   tamper guard (it keeps its reference copy in memory-only storage that DevTools can also write).
   This is a deliberate trade-off: the guard defends against casual and impulsive bypasses.
 - The block page is web-accessible so declarativeNetRequest can redirect to it; a website that
-  knows the extension id can therefore probe whether Aegis is installed (not what it blocks).
+  knows the extension id can therefore probe whether Aegis is installed.
+- Keyword and regex rules can be probed. They apply to any address or title, so a page can put a
+  guess in its own title or URL and watch whether it gets blocked, learning that word. Tab checks
+  are paced to one per second per tab, which slows this down but does not prevent it. Site and
+  page rules only react to their own address and cannot be probed this way: use them for anything
+  sensitive (the rule editor says so).
+- The lock is timed with the computer's clock. Whoever can set the clock forward can end it.
+- An address spelled with escaped letters (`/%73horts`) is not seen by the browser's own filter; the
+  service worker catches it on the tab, a moment after the page starts loading.
 
 ## Hardening in v2
 
 - Password hashes: PBKDF2-SHA256, 600 000 iterations, 16-byte random salt, constant-time compare,
   lockout back-off (30 s doubling up to 15 min after 5 failures). v1's single-round SHA-256 hashes
   are upgraded on first successful login and the recovery code is rotated.
-- Data in `chrome.storage.sync` (v1) is migrated to `storage.local` and deleted from sync.
-- Regular expressions are length-limited, rejected if they repeat a group (`(a|b)+`), stack more than four
-  quantifiers, or use look-around or back-references (backtracking guard for the JS engine), must be RE2-compatible, and must not match every URL.
+- Data in `chrome.storage.sync` (v1) is migrated to `storage.local` and deleted from sync, but only
+  after it has been read: if sync is unavailable the migration waits instead of dropping the password.
+- Rules are matched in the service worker by a matcher that cannot backtrack (time bounded by pattern
+  size × text length), so no rule, typed or imported, can stall it. Regular expressions are also
+  length-limited, rejected if they repeat a group (`(a|b)+`), stack more than four quantifiers, or use
+  look-around or back-references, must be RE2-compatible, and must not match every URL.
+- Requests to the service worker are handled one at a time, so parallel password guesses cannot get
+  ahead of the lockout.
 - Imports: size-limited, schema-validated, re-normalised; at most 900 rules.
 - Snooze ("temptation delay") only unblocks the exact address the matching rule blocked.
 - Dependencies are installed with pnpm, `minimumReleaseAge` and `strictDepBuilds`; lifecycle scripts
