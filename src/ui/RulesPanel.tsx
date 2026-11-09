@@ -113,6 +113,9 @@ function AddRule({ onAdvanced }: { onAdvanced: (pattern: string) => void }) {
           ]}
         />
       </div>
+      {parsed?.ok && (parsed.kind === "keyword" || parsed.kind === "regex") && mode === "block" && (
+        <p className="text-muted-foreground text-xs leading-relaxed">{t("probe_note")}</p>
+      )}
     </form>
   );
 }

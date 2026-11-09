@@ -63,6 +63,8 @@ Requirements: Node.js ≥ 24 and [pnpm](https://pnpm.io). On NixOS/Nix, `nix-she
 
 1. Click the shield in the toolbar and type a site, a page, a word or `/regex/` — then **Add**.
 2. Use **Always allow** for exceptions, or the slider icon for schedules and notes.
+   Prefer a site or page rule for anything private: a website can find out which *words* or
+   *patterns* you block by testing guesses against them, but not which sites or pages.
 3. Open the dashboard (↗) for quick packs, the block page designer, Absolute Mode and security.
 4. Caught doomscrolling? **Block *site*** appears in the popup for the site you are on.
 

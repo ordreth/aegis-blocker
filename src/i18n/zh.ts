@@ -58,6 +58,7 @@ export const zh: Messages = {
   kind_path_hint: "仅该路径，例如 reddit.com/r/memes",
   kind_keyword_hint: "任何包含该词的地址（或标题）",
   kind_regex_hint: "高级模式，例如 /(shorts|reels)/",
+  probe_note: "网站可以通过反复试探得知你屏蔽了哪些词。涉及隐私的内容，请改为屏蔽网站或页面。",
   mode_block: "拦截",
   mode_allow: "始终允许",
   mode_allow_hint: "允许规则优先于拦截规则",

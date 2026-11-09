@@ -58,6 +58,7 @@ export const de: Messages = {
   kind_path_hint: "Nur dieser Pfad, z. B. reddit.com/r/memes",
   kind_keyword_hint: "Jede Adresse (oder jeder Titel) mit dem Wort",
   kind_regex_hint: "Erweitertes Muster, z. B. /(shorts|reels)/",
+  probe_note: "Websites können durch Ausprobieren herausfinden, welche Wörter du blockierst. Für Privates lieber die Website oder die Seite blockieren.",
   mode_block: "Blockieren",
   mode_allow: "Immer erlauben",
   mode_allow_hint: "Erlauben-Regeln haben Vorrang vor Blockieren-Regeln",

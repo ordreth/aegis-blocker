@@ -56,6 +56,7 @@ export const en = {
   kind_path_hint: "Only that path, e.g. reddit.com/r/memes",
   kind_keyword_hint: "Any address (or title) containing the word",
   kind_regex_hint: "Advanced pattern, e.g. /(shorts|reels)/",
+  probe_note: "Websites can find out which words you block by testing guesses. For anything private, block the site or the page instead.",
   mode_block: "Block",
   mode_allow: "Always allow",
   mode_allow_hint: "Allow rules override block rules",

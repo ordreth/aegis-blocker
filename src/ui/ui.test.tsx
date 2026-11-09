@@ -41,10 +41,13 @@ describe("popup", () => {
     const input = screen.getByPlaceholderText(/reddit.com\/r\/memes/);
     await user.type(input, "/(shorts|reels)/");
     expect(await screen.findByText(/Detected: Regex/)).toBeTruthy();
+    // words and patterns can be guessed by a website; sites and pages cannot
+    expect(screen.getByText(/by testing guesses/)).toBeTruthy();
 
     await user.clear(input);
     await user.type(input, "reddit.com/r/memes");
     expect(await screen.findByText(/Detected: Page \/ section/)).toBeTruthy();
+    expect(screen.queryByText(/by testing guesses/)).toBeNull();
     await user.click(screen.getByRole("button", { name: /^Add$/ }));
 
     expect(await screen.findByText("reddit.com/r/memes")).toBeTruthy();

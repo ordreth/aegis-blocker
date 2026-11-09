@@ -113,6 +113,9 @@ function RuleForm({
               maxLength={200}
             />
             {error && <p className="text-xs text-red-400">{error}</p>}
+            {textual && mode === "block" && (
+              <p className="text-muted-foreground text-xs leading-relaxed">{t("probe_note")}</p>
+            )}
           </Field>
 
           <Segmented

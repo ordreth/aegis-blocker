@@ -58,6 +58,7 @@ export const es: Messages = {
   kind_path_hint: "Solo esa ruta, p. ej. reddit.com/r/memes",
   kind_keyword_hint: "Cualquier dirección (o título) que contenga la palabra",
   kind_regex_hint: "Patrón avanzado, p. ej. /(shorts|reels)/",
+  probe_note: "Los sitios web pueden averiguar qué palabras bloqueas probando suposiciones. Para algo privado, bloquea el sitio o la página.",
   mode_block: "Bloquear",
   mode_allow: "Permitir siempre",
   mode_allow_hint: "Las reglas de permiso anulan las de bloqueo",
