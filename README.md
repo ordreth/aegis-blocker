@@ -45,7 +45,12 @@ remote code — everything stays in your browser.
 
 ## Install
 
-**From source** (Chromium-based browsers):
+**From the Chrome Web Store** (the recommended way, and the one that keeps itself updated): open
+[Aegis Blocker on the Chrome Web Store](https://chromewebstore.google.com/detail/aegis-blocker/akpenkikehfjnegapideebekbpaijmjd)
+and add it to your browser. Then open the extension's **Details** and enable **Allow in Incognito**
+so private windows are covered too.
+
+**From source**, for anyone who prefers to build it (Chromium-based browsers):
 
 ```bash
 git clone https://github.com/ordreth/aegis-blocker.git
