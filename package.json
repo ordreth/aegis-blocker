@@ -1,12 +1,12 @@
 {
   "name": "aegis-blocker",
   "private": false,
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Strict, private, 100% local website blocker for deep work (Chromium, Manifest V3).",
   "type": "module",
   "author": "Ordreth <contact@ordreth.com>",
   "license": "MIT",
-  "homepage": "https://github.com/ordreth/aegis-blocker#readme",
+  "homepage": "https://ordreth.com/apps/aegis/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ordreth/aegis-blocker.git"

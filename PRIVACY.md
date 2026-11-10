@@ -22,5 +22,6 @@ only happen when you click them (or when you enabled the automatic redirect).
 (save your data locally), `alarms` (schedules, lock expiry, temporary unblocks) and access to http(s)
 sites (required by the browser for redirects and to read the address of open tabs).
 
-**Contact.** Open an issue at https://github.com/ordreth/aegis-blocker or use the private
-vulnerability reporting described in SECURITY.md.
+**Contact.** Write to contact@ordreth.com, visit https://ordreth.com/apps/aegis/, or open an issue at
+https://github.com/ordreth/aegis-blocker. For vulnerabilities, use the private reporting described in
+SECURITY.md.

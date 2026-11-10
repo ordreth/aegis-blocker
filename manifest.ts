@@ -8,6 +8,7 @@ export default defineManifest({
   description: "__MSG_appDesc__",
   default_locale: "en",
   version: pkg.version,
+  homepage_url: "https://ordreth.com/apps/aegis/",
   minimum_chrome_version: "120",
 
   icons: {

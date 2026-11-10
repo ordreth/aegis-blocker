@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- Contact email (contact@ordreth.com) and website (https://ordreth.com/apps/aegis/) corrected.
+
 ## 2.0.0
 
 A ground-up rebuild focused on security, rigor and customization.
